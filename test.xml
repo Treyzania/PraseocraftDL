@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data>
+	
+	<group name="generic">
+		
+		<file format="normal" priority="0" src="http://pieisgood.org/images/slice.jpg">test/1/pie.jpg</file>
+		<file format="normal" priority="0" src="http://upload.wikimedia.org/wikipedia/commons/4/43/Ambersweet_oranges.jpg">test/1/oranges.jpg</file>
+		
+	</group>
+	
+	<group name="client">
+		
+	</group>
+	
+	<group name="server">
+		
+	</group>
+	
+</data>
