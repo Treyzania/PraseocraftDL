@@ -1,6 +1,6 @@
 package com.treyzania.praseocraft.ftb.downloader.resouces;
 
-import java.awt.FlowLayout;
+import java.awt.*;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -10,6 +10,8 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 import com.treyzania.praseocraft.ftb.downloader.PCDL;
 import com.treyzania.praseocraft.ftb.downloader.State;
@@ -24,14 +26,16 @@ public class MasterFrame extends JFrame implements Runnable {
 
 	public Thread cycle;
 
-	public JPanel titles;
-	public JPanel version;
+	public JPanel title;
+	public JPanel author;
+	public JPanel address;
 	public JPanel radio;
 	public JPanel download;
 	public JPanel bar;
 	public JPanel status;
+	public JPanel jobInfo;
 
-	public JTextField verField = new JTextField(10);
+	public JTextField addrField = new JTextField(20);
 
 	public ButtonGroup dlType;
 	public JRadioButton buttonClient;
@@ -45,22 +49,25 @@ public class MasterFrame extends JFrame implements Runnable {
 
 		this.cycle = new Thread("MF-CYCLER");
 
-		this.titles = new DLPanel();
-		this.version = new DLPanel();
-		this.radio = new DLPanel();
-		this.download = new DLPanel();
-		this.bar = new DLPanel();
-		this.status = new DLPanel();
+		this.title = new JPanel();
+		this.author = new JPanel();
+		this.address = new JPanel();
+		this.radio = new JPanel();
+		this.download = new JPanel();
+		this.bar = new JPanel();
+		this.status = new JPanel();
+		this.jobInfo = new JPanel();
 
-		titles.add(new JLabel("Praseocraft FTB Pack Installer " + PCDL.VERSION));
-		//titles.add(new JLabel("Written by Treyzania"));
-		titles.setVisible(true);
+		title.add(new JLabel("Praseocraft FTB Pack Installer " + PCDL.VERSION));
+		author.add(new JLabel("Written by Treyzania"));
+		title.setVisible(true);
+		author.setVisible(true);
 
-		version.add(new JLabel("Pack version:"));
-		version.add(verField);
-		version.setVisible(true);
+		address.add(new JLabel("Pack address:"));
+		address.add(addrField);
+		address.setVisible(true);
 
-		verField.setText("I don\'t work!");
+		addrField.setText("");
 		
 		dlType = new ButtonGroup();
 		buttonClient = new JRadioButton("Client"); buttonClient.setSelected(true);
@@ -80,25 +87,32 @@ public class MasterFrame extends JFrame implements Runnable {
 		status.add(this.dlStatus);
 		status.setVisible(true);
 
-		progressBar = new JProgressBar(0, 100);
+		progressBar = new JProgressBar(0, 1);
 		progressBar.setValue(0);
 		progressBar.setStringPainted(true);
 		bar.add(progressBar);
 		
+		jobInfo.add(new JLabel("weiners"));
+		jobInfo.setBackground(Color.GREEN);
+		jobInfo.setToolTipText("PENIS!");
+		
 		this.setLayout(new FlowLayout());
 		//this.setLayout(new CardLayout());
 		
-		this.add(this.titles);
-		this.add(this.version);
+		this.add(this.title);
+		this.add(this.author);
+		this.add(this.address);
 		this.add(this.radio);
 		this.add(this.download);
 		this.add(this.bar);
 		this.add(this.status);
+		this.add(this.jobInfo);
 		
-		this.setBounds(0, 0, 500, 500);
+		this.setBounds(0, 0, 275, 325);
 		this.setFocusable(true);
+		this.setResizable(false);
 		this.setVisible(true);
-
+		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		this.revalidate();
@@ -114,6 +128,12 @@ public class MasterFrame extends JFrame implements Runnable {
 		
 	}
 	
+	public void beep() {
+		
+		this.getToolkit().beep();
+		
+	}
+	
 	@Override
 	public void run() {
 
@@ -123,8 +143,8 @@ public class MasterFrame extends JFrame implements Runnable {
 		// It's an infinite loop!
 		while (true) {
 
-			titles.repaint();
-			version.repaint();
+			title.repaint();
+			address.repaint();
 			radio.repaint();
 			download.repaint();
 			bar.repaint();
@@ -134,6 +154,18 @@ public class MasterFrame extends JFrame implements Runnable {
 
 		}
 
+	}
+	
+	// Static methods.
+	public static void laf() { // AKA "Look and Feel"
+		
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (ClassNotFoundException | InstantiationException
+				| IllegalAccessException | UnsupportedLookAndFeelException e) {
+			PCDL.log.fine("Look and Feel error!");
+		}
+		
 	}
 
 }

@@ -31,6 +31,8 @@ public class PCDL {
 		//XomLoader.downloadJar();
 		XomLoader.classloadJar();
 		
+		MasterFrame.laf();
+		
 		log.finest("finest");
 		log.finer("finer");
 		log.fine("fine");
@@ -41,7 +43,7 @@ public class PCDL {
 		log.fine("\t...done!");
 
 	}
-
+	
 	// Do I need these two methods?
 	public static String fs_genericPath(String path) {
 		
