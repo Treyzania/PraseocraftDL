@@ -2,7 +2,6 @@ package com.treyzania.praseocraft.ftb.downloader;
 
 import com.treyzania.praseocraft.ftb.downloader.parsing.FileOp;
 import com.treyzania.praseocraft.ftb.downloader.parsing.OpList;
-import com.treyzania.praseocraft.ftb.downloader.parsing.Parser;
 
 @Deprecated
 public class Compiler {
@@ -13,7 +12,7 @@ public class Compiler {
 	
 	public static void compile() {
 		
-		theFiles = Parser.parseXML(PCDL.address);
+		//theFiles = Parser.parseXML(PCDL.address);
 		
 	}
 	

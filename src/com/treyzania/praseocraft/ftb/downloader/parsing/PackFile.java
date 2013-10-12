@@ -37,7 +37,7 @@ public class PackFile {
 			this.doc = b.build(this.addr);
 		} catch (ParsingException | IOException e) {
 			String msg = e.getMessage();
-			PCDL.log.severe(msg);
+			PCDL.log.info(msg);
 		}
 		
 	}
@@ -48,7 +48,7 @@ public class PackFile {
 		ArrayList<Element> elementPool = new ArrayList<Element>(); // The pool for all of the individual process tags.
 		
 		// Start extracting data.
-		Element root = doc.getRootElement();
+		Element root = doc.getRootElement(); // Should be a "pack" tag.
 		
 		Elements groupTags = root.getChildElements("group");
 		Elements globalMetaTags = root.getChildElements("meta");

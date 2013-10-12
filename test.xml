@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<data>
+<pack>
 	
-	<group name="generic">
+	<group domain="generic">
 		
-		<file format="normal" priority="0" src="http://pieisgood.org/images/slice.jpg">test/1/pie.jpg</file>
-		<file format="normal" priority="0" src="http://upload.wikimedia.org/wikipedia/commons/4/43/Ambersweet_oranges.jpg">test/1/oranges.jpg</file>
-		
-	</group>
-	
-	<group name="client">
+		<write file="testXML/tt_write_1.txt">I can't believe it works!</write>
 		
 	</group>
 	
-	<group name="server">
+	<group domain="client">
+		
+		<write file="testXML/tt_write_2.txt">This it from the client group!</write>
+		
+	</generic>
+	
+	<group domain="server">
+		
+		
 		
 	</group>
 	
-</data>
+</pack>

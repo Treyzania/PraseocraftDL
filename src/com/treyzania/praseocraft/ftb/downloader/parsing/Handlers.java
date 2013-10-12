@@ -2,6 +2,8 @@ package com.treyzania.praseocraft.ftb.downloader.parsing;
 
 import java.util.ArrayList;
 
+import com.treyzania.praseocraft.ftb.downloader.PCDL;
+
 import nu.xom.Element;
 
 public class Handlers {
@@ -21,7 +23,7 @@ public class Handlers {
 		// Find which TagHandler to use.
 		for ( TagHandler triedTH : handlers ) {
 			
-			if (triedTH.getHandledTag() == ele.getQualifiedName()) {
+			if (triedTH.getHandledTag() == ele.getLocalName()) {
 				
 				tagHandler = triedTH;
 				break;
@@ -30,6 +32,7 @@ public class Handlers {
 			
 		}
 		
+		PCDL.log.info(tagHandler == null ? "null!" : tagHandler.toString());
 		tagHandler.handleTag(pf, ele);
 		
 		// Not the best possible code for this method, but I don't care.
@@ -42,6 +45,7 @@ public class Handlers {
 		
 		registerHandler(new THFile());
 		registerHandler(new THMeta());
+		registerHandler(new THWrite());
 		// Probably going to add more.
 		
 	}

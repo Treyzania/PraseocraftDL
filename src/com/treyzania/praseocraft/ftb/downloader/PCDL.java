@@ -11,10 +11,10 @@ public class PCDL {
 	public static final String VERSION = "v0.1";
 	public static final String thisPath = PCDL.class.getProtectionDomain().getCodeSource().getLocation().getPath();
 	public static MasterFrame frame;
-	
 	public static PackFile packfile;
+	
 	public static String packFolder = "Praseocraft_FTB";
-	public static String address = "test.xml";
+	//public static String address = "test.xml";
 	
 	public static Logger log = Logger.getLogger("PCDL");
 	

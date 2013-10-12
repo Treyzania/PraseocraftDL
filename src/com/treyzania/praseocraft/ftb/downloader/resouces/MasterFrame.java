@@ -29,6 +29,7 @@ public class MasterFrame extends JFrame implements Runnable {
 	public JPanel title;
 	public JPanel author;
 	public JPanel address;
+	public JPanel packVer;
 	public JPanel radio;
 	public JPanel download;
 	public JPanel bar;
@@ -36,6 +37,7 @@ public class MasterFrame extends JFrame implements Runnable {
 	public JPanel jobInfo;
 
 	public JTextField addrField = new JTextField(20);
+	public JTextField verField = new JTextField(20);
 
 	public ButtonGroup dlType;
 	public JRadioButton buttonClient;
@@ -52,21 +54,28 @@ public class MasterFrame extends JFrame implements Runnable {
 		this.title = new JPanel();
 		this.author = new JPanel();
 		this.address = new JPanel();
+		this.packVer = new JPanel();
 		this.radio = new JPanel();
 		this.download = new JPanel();
 		this.bar = new JPanel();
 		this.status = new JPanel();
 		this.jobInfo = new JPanel();
-
+		
 		title.add(new JLabel("Praseocraft FTB Pack Installer " + PCDL.VERSION));
 		author.add(new JLabel("Written by Treyzania"));
 		title.setVisible(true);
 		author.setVisible(true);
 
-		address.add(new JLabel("Pack address:"));
+		address.add(new JLabel("Pack host:"));
 		address.add(addrField);
 		address.setVisible(true);
+		//address.setAlignmentX(Component.LEFT_ALIGNMENT);
 
+		packVer.add(new JLabel("Desired version:"));
+		packVer.add(verField);
+		packVer.setVisible(true);
+		//packVer.setAlignmentX(Component.LEFT_ALIGNMENT);
+		
 		addrField.setText("");
 		
 		dlType = new ButtonGroup();
@@ -96,12 +105,13 @@ public class MasterFrame extends JFrame implements Runnable {
 		jobInfo.setBackground(Color.GREEN);
 		jobInfo.setToolTipText("PENIS!");
 		
-		this.setLayout(new FlowLayout());
+		this.setLayout(new FlowLayout(FlowLayout.LEFT));
 		//this.setLayout(new CardLayout());
 		
 		this.add(this.title);
 		this.add(this.author);
 		this.add(this.address);
+		this.add(this.packVer);
 		this.add(this.radio);
 		this.add(this.download);
 		this.add(this.bar);
