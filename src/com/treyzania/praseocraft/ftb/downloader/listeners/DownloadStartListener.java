@@ -33,18 +33,22 @@ public class DownloadStartListener implements ActionListener {
 		PCDL.log.info("Document built successfully!");
 		
 		Domain d = null;
+		String dString = "";
 		
 		if (frame.buttonClient.isSelected()) {
 			
 			d = Domain.CILENT;
+			dString = "client";
 			
 		} else if (frame.buttonServer.isSelected()) {
 			
 			d = Domain.SERVER;
+			dString = "server";
 			
 		} // There will always be one selected because the Client button is selected by default.
 		PCDL.log.info("Dowload Type: " + d.toString());
 		
+		PCDL.dlMode = dString;
 		pf.readJobs(d);
 		PCDL.log.info("Job list created and organized successfully.");
 		

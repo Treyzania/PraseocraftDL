@@ -8,7 +8,7 @@ public class Worker implements Runnable {
 	public Joblist list;
 	public Thread jobExecutor;
 
-	public Worker(String name) {
+	public Worker(String name, Joblist jl) {
 		
 		this.name = name;
 		jobExecutor = new Thread("WT_Thread-" + this.name);

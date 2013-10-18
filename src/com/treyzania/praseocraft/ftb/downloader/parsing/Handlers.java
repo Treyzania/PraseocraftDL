@@ -33,8 +33,8 @@ public class Handlers {
 			
 		}
 		
-		PCDL.log.info(tagHandler == null ? "null!" : tagHandler.toString());
-		tagHandler.handleTag(pf, ele);
+		PCDL.log.info(tagHandler == null ? "Tag (" + ele.getQualifiedName() + ") not supported!  Ignoring!" : "Using tag handler: " + tagHandler.toString());
+		if (tagHandler != null) tagHandler.handleTag(pf, ele);
 		
 		// Not the best possible code for this method, but I don't care.
 		

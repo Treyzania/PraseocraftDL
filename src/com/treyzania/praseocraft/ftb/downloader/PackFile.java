@@ -32,7 +32,7 @@ public class PackFile {
 		this.workers = new Worker[2];
 		for (int i = 0; i < workers.length; i++) {
 			
-			this.workers[i] = new Worker(wNames[i]);
+			this.workers[i] = new Worker(wNames[i], joblist);
 			
 		}
 		

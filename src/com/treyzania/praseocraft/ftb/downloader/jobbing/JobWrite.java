@@ -25,12 +25,14 @@ public class JobWrite extends Job {
 		
 		boolean out = true;
 		
-		String file = e.getAttributeValue("file");
+		String file = e.getAttributeValue("file") + PCDL.thisPath;
 		String content = e.getValue();
 		
 		File f = new File(file);
 		FileOutputStream fos = null;
 		DataOutputStream dos = null;
+		
+		PCDL.log.info("JOBS: Writing to file \'" + file + "\'.");
 		
 		try {
 			
