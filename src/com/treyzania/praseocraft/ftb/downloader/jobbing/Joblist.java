@@ -8,7 +8,7 @@ public class Joblist {
 	
 	public Joblist() {
 		
-		// Huh?
+		this.jobs = new ArrayList<Job>();
 		
 	}
 	

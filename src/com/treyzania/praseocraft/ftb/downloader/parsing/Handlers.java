@@ -3,6 +3,7 @@ package com.treyzania.praseocraft.ftb.downloader.parsing;
 import java.util.ArrayList;
 
 import com.treyzania.praseocraft.ftb.downloader.PCDL;
+import com.treyzania.praseocraft.ftb.downloader.PackFile;
 
 import nu.xom.Element;
 

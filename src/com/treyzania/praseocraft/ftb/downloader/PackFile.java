@@ -1,4 +1,4 @@
-package com.treyzania.praseocraft.ftb.downloader.parsing;
+package com.treyzania.praseocraft.ftb.downloader;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,23 +10,33 @@ import nu.xom.Element;
 import nu.xom.Elements;
 import nu.xom.ParsingException;
 
-import com.treyzania.praseocraft.ftb.downloader.Domain;
-import com.treyzania.praseocraft.ftb.downloader.PCDL;
 import com.treyzania.praseocraft.ftb.downloader.jobbing.Joblist;
 import com.treyzania.praseocraft.ftb.downloader.jobbing.Worker;
+import com.treyzania.praseocraft.ftb.downloader.parsing.Handlers;
 
 public class PackFile {
+	
+	private static final String[] wNames = {"Alpha", "Bravo", "Charlie", "Delta", "Echo", "Foxtrot", "Golf", "Hotel"};
 	
 	public final String addr; // The place the pack file is hosted.
 	
 	public Joblist joblist;
-	public Worker[] workers = new Worker[4];
+	public Worker[] workers = null;
 	
 	public Document doc;
 	
 	public PackFile(String addr) {
 		
 		this.addr = addr;
+		
+		this.workers = new Worker[2];
+		for (int i = 0; i < workers.length; i++) {
+			
+			this.workers[i] = new Worker(wNames[i]);
+			
+		}
+		
+		this.joblist = new Joblist();
 		
 	}
 	

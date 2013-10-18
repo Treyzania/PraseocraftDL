@@ -3,7 +3,6 @@ package com.treyzania.praseocraft.ftb.downloader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.treyzania.praseocraft.ftb.downloader.parsing.PackFile;
 import com.treyzania.praseocraft.ftb.downloader.resouces.MasterFrame;
 
 public class PCDL {

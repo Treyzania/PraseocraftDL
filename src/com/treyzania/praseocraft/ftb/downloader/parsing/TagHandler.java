@@ -1,5 +1,7 @@
 package com.treyzania.praseocraft.ftb.downloader.parsing;
 
+import com.treyzania.praseocraft.ftb.downloader.PackFile;
+
 import nu.xom.Element;
 
 public abstract class TagHandler {

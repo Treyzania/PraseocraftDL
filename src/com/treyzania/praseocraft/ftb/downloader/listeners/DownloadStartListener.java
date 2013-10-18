@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 
 import com.treyzania.praseocraft.ftb.downloader.Domain;
 import com.treyzania.praseocraft.ftb.downloader.PCDL;
-import com.treyzania.praseocraft.ftb.downloader.parsing.PackFile;
+import com.treyzania.praseocraft.ftb.downloader.PackFile;
 import com.treyzania.praseocraft.ftb.downloader.resouces.MasterFrame;
 
 public class DownloadStartListener implements ActionListener {
@@ -17,6 +17,7 @@ public class DownloadStartListener implements ActionListener {
 		PCDL.log.info("Preparing to start downloads...");
 		
 		MasterFrame frame = PCDL.frame;
+		
 		//System.out.println("FRAME_WIDTH = " + PCDL.frame.getWidth()
 		//		+ ", FRAME_HEIGHT = " + PCDL.frame.getHeight());
 		
@@ -24,7 +25,9 @@ public class DownloadStartListener implements ActionListener {
 		//PCDL.frame.progressBar.setValue(barValue + 10);
 				
 		PackFile pf = new PackFile(frame.addrField.getText());
-		PCDL.log.info(frame.addrField.getText());
+		PCDL.packfile = pf;
+		
+		PCDL.log.info("Pack Location: " + frame.addrField.getText());
 		
 		pf.buildDocument();
 		PCDL.log.info("Document built successfully!");
