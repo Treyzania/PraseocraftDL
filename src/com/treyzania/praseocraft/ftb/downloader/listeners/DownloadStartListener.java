@@ -10,6 +10,7 @@ import com.treyzania.praseocraft.ftb.downloader.resouces.MasterFrame;
 
 public class DownloadStartListener implements ActionListener {
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 
@@ -24,7 +25,7 @@ public class DownloadStartListener implements ActionListener {
 		//int barValue = PCDL.frame.progressBar.getValue();
 		//PCDL.frame.progressBar.setValue(barValue + 10);
 				
-		PackFile pf = new PackFile(frame.addrField.getText());
+		PackFile pf = new PackFile(frame.addrField.getText().trim());
 		PCDL.packfile = pf;
 		
 		PCDL.log.info("Pack Location: " + frame.addrField.getText());
@@ -50,7 +51,9 @@ public class DownloadStartListener implements ActionListener {
 		
 		PCDL.dlMode = dString;
 		pf.readJobs(d);
-		PCDL.log.info("Job list created and organized successfully.");
+		PCDL.log.info("Job list created and organized successfully. (Hopefully...)");
+		
+		frame.progressBar.setMaximum(pf.joblist.getJobsRemaining());
 		
 		PCDL.log.info("Starting workers...");
 		pf.startWorkers();

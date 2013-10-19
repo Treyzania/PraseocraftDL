@@ -25,7 +25,7 @@ public class THFile extends TagHandler {
 		FileOp fo = null;
 		
 		String e_src = element.getAttribute("src").getValue();
-		int e_priority = Integer.parseInt(element.getAttribute("priority").getValue());
+		int e_priority = Integer.parseInt(element.getAttribute("priority").getValue()); // TODO Depreciate this soon.
 		String e_action = element.getAttribute("action").getValue();
 		String e_dom = ((Element) element.getParent()).getAttribute("domain").getValue(); // I hope this works.
 		

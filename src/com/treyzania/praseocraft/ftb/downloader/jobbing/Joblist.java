@@ -32,9 +32,15 @@ public class Joblist {
 		
 	}
 	
+	public int getJobsRemaining() {
+		
+		return this.jobs.size();
+		
+	}
+	
 	public boolean isEmpty() {
 		
-		return jobs.size() == 0;
+		return (getJobsRemaining() == 0);
 		
 	}
 	
