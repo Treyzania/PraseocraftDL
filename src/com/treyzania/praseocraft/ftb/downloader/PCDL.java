@@ -1,5 +1,6 @@
 package com.treyzania.praseocraft.ftb.downloader;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.FileHandler;
@@ -19,6 +20,9 @@ public class PCDL {
 	public static String packFolder = "Praseocraft_FTB";
 	//public static String address = "test.xml";
 	
+	public static File tmpDir;
+	public static File packDir;
+	
 	public static Logger log = Logger.getLogger("PCDL");
 	public static Handler consoleHandler;;
 	public static Handler fileHandler;
@@ -28,10 +32,15 @@ public class PCDL {
 	
 	public static void main(String[] args) {
 		
+		tmpDir = new File("tmp");
+		packDir = new File(packFolder);
+		tmpDir.mkdir();
+		//packDir.mkdir(); // Move this line elsewere, for when the pack is actually being made.
+		
 		log.setUseParentHandlers(false); // Wow.  This was extremely important that fixed a HUUUUUGE problem.
 		
 		consoleHandler = new ConsoleHandler();
-		try { fileHandler = new FileHandler("pcdl-log.log");
+		try { fileHandler = new FileHandler("tmp/pcdl-log.log");
 		} catch (SecurityException | IOException e) {}
 		consoleHandler.setLevel(Level.FINEST);
 		fileHandler.setLevel(Level.FINEST);

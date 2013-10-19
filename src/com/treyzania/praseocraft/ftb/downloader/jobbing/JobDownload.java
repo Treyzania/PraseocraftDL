@@ -18,6 +18,7 @@ public class JobDownload extends Job {
 		
 	}
 	
+	@SuppressWarnings("deprecation")
 	@Override
 	public boolean runJob() {
 		
