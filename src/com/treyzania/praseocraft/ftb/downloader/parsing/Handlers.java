@@ -47,6 +47,7 @@ public class Handlers {
 		registerHandler(new THFile());
 		registerHandler(new THMeta());
 		registerHandler(new THWrite());
+		registerHandler(new THMod());
 		// Probably going to add more.
 		
 	}
