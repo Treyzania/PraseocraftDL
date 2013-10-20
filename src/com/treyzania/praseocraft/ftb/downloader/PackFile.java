@@ -51,6 +51,44 @@ public class PackFile implements Runnable {
 		
 	}
 	
+	@SuppressWarnings("deprecation")
+	public void init() {
+		
+		MasterFrame frame = PCDL.frame;
+		PCDL.packDir.mkdir();
+
+		PCDL.log.info("Pack Location: " + frame.addrField.getText());
+		
+		this.buildDocument();
+		PCDL.log.info("Document built successfully!");
+		
+		Domain d = null;
+		String dString = "";
+		
+		if (frame.buttonClient.isSelected()) {
+			
+			d = Domain.CILENT;
+			dString = "client";
+			
+		} else if (frame.buttonServer.isSelected()) {
+			
+			d = Domain.SERVER;
+			dString = "server";
+			
+		} // There will always be one selected because the Client button is selected by default.
+		PCDL.log.info("Dowload Type: " + d.toString());
+		
+		PCDL.dlMode = dString;
+		this.readJobs(d);
+		PCDL.log.info("Job list created and organized successfully. (Hopefully...)");
+		
+		frame.progressBar.setMaximum(this.joblist.getJobsRemaining());
+		
+		PCDL.log.info("Starting workers...");
+		this.startWorkers();
+		
+	}
+	
 	public void buildDocument() {
 		
 		Builder b = new Builder();
@@ -148,38 +186,7 @@ public class PackFile implements Runnable {
 	@Override
 	public void run() {
 		
-		MasterFrame frame = PCDL.frame;
-		PCDL.packDir.mkdir();
-
-		PCDL.log.info("Pack Location: " + frame.addrField.getText());
-		
-		this.buildDocument();
-		PCDL.log.info("Document built successfully!");
-		
-		Domain d = null;
-		String dString = "";
-		
-		if (frame.buttonClient.isSelected()) {
-			
-			d = Domain.CILENT;
-			dString = "client";
-			
-		} else if (frame.buttonServer.isSelected()) {
-			
-			d = Domain.SERVER;
-			dString = "server";
-			
-		} // There will always be one selected because the Client button is selected by default.
-		PCDL.log.info("Dowload Type: " + d.toString());
-		
-		PCDL.dlMode = dString;
-		this.readJobs(d);
-		PCDL.log.info("Job list created and organized successfully. (Hopefully...)");
-		
-		frame.progressBar.setMaximum(this.joblist.getJobsRemaining());
-		
-		PCDL.log.info("Starting workers...");
-		this.startWorkers();
+		this.init();
 		
 	}
 	

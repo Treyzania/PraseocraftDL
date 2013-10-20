@@ -5,12 +5,10 @@ import java.awt.event.ActionListener;
 
 import com.treyzania.praseocraft.ftb.downloader.PCDL;
 import com.treyzania.praseocraft.ftb.downloader.PackFile;
-import com.treyzania.praseocraft.ftb.downloader.resouces.Domain;
 import com.treyzania.praseocraft.ftb.downloader.resouces.MasterFrame;
 
 public class DownloadStartListener implements ActionListener {
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 
@@ -29,6 +27,8 @@ public class DownloadStartListener implements ActionListener {
 		
 		PackFile pf = new PackFile(frame.addrField.getText().trim(), frame.verField.getText()); // Gotta trim them because we are working with humans!
 		PCDL.packfile = pf;
+		
+		pf.pfexe.start();
 		
 	}
 
