@@ -54,7 +54,7 @@ public class PCDL {
 		log.info("Thank you for using Treyzania's Prasocraft FTB Pack Installer!");
 		log.fine("Installer starting up...");
 		
-		XomLoader.classloadJar();
+		LibLoader.classloadJar();
 		
 		MasterFrame.laf();
 		
@@ -87,6 +87,23 @@ public class PCDL {
 		}
 		
 		return adj;
+		
+	}
+
+	public static String getMinecraftDir() {
+		
+		String dir = "C:/minecraft/";
+		String os = System.getProperty("os.name").toLowerCase();
+		
+		if (os.contains("windows")) {
+			dir = "%appdata%/.minecraft";
+		} else if (os.contains("linux") || os.contains("debian") || os.contains("ubuntu")) { // I hope this is good enough
+			dir = "~/.minecraft";
+		} else if (os.contains("osx")) {
+			dir = "~/Library/Application Support/minecraft";
+		}
+		
+		return dir;
 		
 	}
 

@@ -13,6 +13,7 @@ import nu.xom.ParsingException;
 import com.treyzania.praseocraft.ftb.downloader.jobbing.Joblist;
 import com.treyzania.praseocraft.ftb.downloader.parsing.Handlers;
 import com.treyzania.praseocraft.ftb.downloader.resouces.Domain;
+import com.treyzania.praseocraft.ftb.downloader.resouces.MetaCollector;
 import com.treyzania.praseocraft.ftb.downloader.resouces.Worker;
 
 public class PackFile {
@@ -26,11 +27,14 @@ public class PackFile {
 	public Worker[] workers = null;
 	
 	public Document doc;
+	public MetaCollector metadata;
 	
 	public PackFile(String addr, String ver) {
 		
 		this.packAddr = addr;
 		this.packVer = ver;
+		
+		this.metadata = new MetaCollector();
 		
 		this.workers = new Worker[2]; // Expand/abstractify as necessary!
 		for (int i = 0; i < workers.length; i++) {

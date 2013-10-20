@@ -16,7 +16,10 @@ public class THMeta extends TagHandler {
 	@Override
 	public boolean handleTag(PackFile pf, Element element) {
 		
-		// DO SOMETHING WITH THIS!!!
+		String name = element.getAttribute("name").getValue();
+		String val = element.getValue();
+		
+		pf.metadata.define(name, val);
 		
 		return true;
 		
