@@ -24,8 +24,6 @@ public class JobDownload extends Job {
 		
 		Domain ft = file.type;
 		
-		String dest = file.action == "zip" ? "/tmp/" + file.loc : "/" + PCDL.packFolder + "/" + file.loc;
-		
 		boolean doDownload = false;
 		boolean good = true;
 		
@@ -45,12 +43,6 @@ public class JobDownload extends Job {
 		if (doDownload) {
 			
 			good = Downloader.download(file.src, "/" + PCDL.packFolder + "/" + file.loc);
-			
-		}
-		
-		if (file.isActionUnzip()) {
-			
-			pool.addJob(new JobUnzip(pool, dest, "/" + PCDL.packFolder + "/" + file.loc));
 			
 		}
 		

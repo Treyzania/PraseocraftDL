@@ -34,6 +34,14 @@ public class JobWrite extends Job {
 		
 		PCDL.log.info("JOBS: Writing to file \'" + file + "\'.");
 		
+		// Replace bad characters with better ones.
+		String newContent = content
+				.replace("\n", "")
+				.replace("\t", "")
+				.replace("\\n", "\n")
+				.replace("\\t", "\t")
+				;
+		
 		try {
 			
 			// Check to see if the file needs to be created.
@@ -44,7 +52,7 @@ public class JobWrite extends Job {
 			dos = new DataOutputStream(fos);
 			
 			// Write the content.
-			dos.writeBytes(content);
+			dos.writeBytes(newContent);
 			dos.flush();
 			
 			// Close them for closure.
