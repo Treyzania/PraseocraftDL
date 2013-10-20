@@ -56,7 +56,7 @@ public class PackFile implements Runnable {
 		
 		MasterFrame frame = PCDL.frame;
 		PCDL.packDir.mkdir();
-
+		
 		PCDL.log.info("Pack Location: " + frame.addrField.getText());
 		
 		this.buildDocument();
