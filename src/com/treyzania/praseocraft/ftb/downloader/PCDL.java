@@ -36,7 +36,6 @@ public class PCDL {
 		tmpDir = new File("tmp");
 		packDir = new File(packFolder);
 		tmpDir.mkdir();
-		//packDir.mkdir(); // Move this line elsewere, for when the pack is actually being made.
 		
 		log.setUseParentHandlers(false); // Wow.  This was extremely important that fixed a HUUUUUGE problem.
 		
@@ -106,5 +105,30 @@ public class PCDL {
 		return dir;
 		
 	}
-
+	
+	// Not safe to use yet!  Don't depend on this!
+	public static String getPCDLDir() {
+		
+		String dir = "";
+		String os = System.getProperty("os.name").toLowerCase();
+		
+		if (os.contains("windows")) {
+			dir = "%appdata%/.pcdlmc";
+		} else if (os.contains("linux") || os.contains("debian") || os.contains("ubuntu")) { // I hope this is good enough
+			dir = "~/.pcdlmc";
+		} else if (os.contains("osx")) {
+			dir = "~/Library/Application Support/pcdlmc";
+		}
+		
+		return dir;
+		
+	}
+	
+	// Technically not safe yet either!
+	public static String getTempDir() {
+		
+		return (getPCDLDir() + "/tmp");
+		
+	}
+	
 }

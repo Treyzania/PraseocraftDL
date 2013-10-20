@@ -13,10 +13,11 @@ import nu.xom.ParsingException;
 import com.treyzania.praseocraft.ftb.downloader.jobbing.Joblist;
 import com.treyzania.praseocraft.ftb.downloader.parsing.Handlers;
 import com.treyzania.praseocraft.ftb.downloader.resouces.Domain;
+import com.treyzania.praseocraft.ftb.downloader.resouces.MasterFrame;
 import com.treyzania.praseocraft.ftb.downloader.resouces.MetaCollector;
 import com.treyzania.praseocraft.ftb.downloader.resouces.Worker;
 
-public class PackFile {
+public class PackFile implements Runnable {
 	
 	private static final String[] wNames = {"Alpha", "Bravo", "Charlie", "Delta", "Echo", "Foxtrot", "Golf", "Hotel"};
 	
@@ -28,6 +29,7 @@ public class PackFile {
 	
 	public Document doc;
 	public MetaCollector metadata;
+	public Thread pfexe; 
 	
 	public PackFile(String addr, String ver) {
 		
@@ -35,6 +37,8 @@ public class PackFile {
 		this.packVer = ver;
 		
 		this.metadata = new MetaCollector();
+		
+		this.pfexe = new Thread("PackFile-ExecutorThread");
 		
 		this.workers = new Worker[2]; // Expand/abstractify as necessary!
 		for (int i = 0; i < workers.length; i++) {
@@ -138,6 +142,44 @@ public class PackFile {
 			w.jobExecutor.start();
 			
 		}
+		
+	}
+
+	@Override
+	public void run() {
+		
+		MasterFrame frame = PCDL.frame;
+		PCDL.packDir.mkdir();
+
+		PCDL.log.info("Pack Location: " + frame.addrField.getText());
+		
+		this.buildDocument();
+		PCDL.log.info("Document built successfully!");
+		
+		Domain d = null;
+		String dString = "";
+		
+		if (frame.buttonClient.isSelected()) {
+			
+			d = Domain.CILENT;
+			dString = "client";
+			
+		} else if (frame.buttonServer.isSelected()) {
+			
+			d = Domain.SERVER;
+			dString = "server";
+			
+		} // There will always be one selected because the Client button is selected by default.
+		PCDL.log.info("Dowload Type: " + d.toString());
+		
+		PCDL.dlMode = dString;
+		this.readJobs(d);
+		PCDL.log.info("Job list created and organized successfully. (Hopefully...)");
+		
+		frame.progressBar.setMaximum(this.joblist.getJobsRemaining());
+		
+		PCDL.log.info("Starting workers...");
+		this.startWorkers();
 		
 	}
 	

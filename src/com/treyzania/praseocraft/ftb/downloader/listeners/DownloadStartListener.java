@@ -30,36 +30,6 @@ public class DownloadStartListener implements ActionListener {
 		PackFile pf = new PackFile(frame.addrField.getText().trim(), frame.verField.getText()); // Gotta trim them because we are working with humans!
 		PCDL.packfile = pf;
 		
-		PCDL.log.info("Pack Location: " + frame.addrField.getText());
-		
-		pf.buildDocument();
-		PCDL.log.info("Document built successfully!");
-		
-		Domain d = null;
-		String dString = "";
-		
-		if (frame.buttonClient.isSelected()) {
-			
-			d = Domain.CILENT;
-			dString = "client";
-			
-		} else if (frame.buttonServer.isSelected()) {
-			
-			d = Domain.SERVER;
-			dString = "server";
-			
-		} // There will always be one selected because the Client button is selected by default.
-		PCDL.log.info("Dowload Type: " + d.toString());
-		
-		PCDL.dlMode = dString;
-		pf.readJobs(d);
-		PCDL.log.info("Job list created and organized successfully. (Hopefully...)");
-		
-		frame.progressBar.setMaximum(pf.joblist.getJobsRemaining());
-		
-		PCDL.log.info("Starting workers...");
-		pf.startWorkers();
-		
 	}
 
 }
