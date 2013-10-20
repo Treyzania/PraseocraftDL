@@ -2,7 +2,6 @@ package com.treyzania.praseocraft.ftb.downloader;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Date;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.FileHandler;
 import java.util.logging.Handler;
@@ -42,7 +41,7 @@ public class PCDL {
 		log.setUseParentHandlers(false); // Wow.  This was extremely important that fixed a HUUUUUGE problem.
 		
 		consoleHandler = new ConsoleHandler();
-		try { fileHandler = new FileHandler("tmp/pcdl-log_" + (new Date(System.currentTimeMillis())).toString() + ".log");
+		try { fileHandler = new FileHandler("tmp/pcdl-log_" + Long.toString(System.currentTimeMillis()) + ".log");
 		} catch (SecurityException | IOException e) {}
 		consoleHandler.setLevel(Level.FINEST);
 		fileHandler.setLevel(Level.FINEST);
