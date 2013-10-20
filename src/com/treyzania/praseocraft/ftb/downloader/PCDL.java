@@ -41,7 +41,7 @@ public class PCDL {
 		log.setUseParentHandlers(false); // Wow.  This was extremely important that fixed a HUUUUUGE problem.
 		
 		consoleHandler = new ConsoleHandler();
-		try { fileHandler = new FileHandler("tmp/pcdl-log.log");
+		try { fileHandler = new FileHandler("tmp/pcdl-log_" + Long.toString(System.currentTimeMillis()) + ".log");
 		} catch (SecurityException | IOException e) {}
 		consoleHandler.setLevel(Level.FINEST);
 		fileHandler.setLevel(Level.FINEST);
