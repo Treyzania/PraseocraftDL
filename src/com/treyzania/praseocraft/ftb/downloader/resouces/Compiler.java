@@ -1,4 +1,4 @@
-package com.treyzania.praseocraft.ftb.downloader;
+package com.treyzania.praseocraft.ftb.downloader.resouces;
 
 import com.treyzania.praseocraft.ftb.downloader.parsing.FileOp;
 import com.treyzania.praseocraft.ftb.downloader.parsing.OpList;

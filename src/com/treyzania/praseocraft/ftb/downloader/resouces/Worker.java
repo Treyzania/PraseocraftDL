@@ -1,6 +1,8 @@
-package com.treyzania.praseocraft.ftb.downloader.jobbing;
+package com.treyzania.praseocraft.ftb.downloader.resouces;
 
 import com.treyzania.praseocraft.ftb.downloader.PCDL;
+import com.treyzania.praseocraft.ftb.downloader.jobbing.Job;
+import com.treyzania.praseocraft.ftb.downloader.jobbing.Joblist;
 
 public class Worker implements Runnable {
 
@@ -29,6 +31,15 @@ public class Worker implements Runnable {
 			Job j = list.dequeueJob();
 			PCDL.log.finer("WORKER \'" + this.name + "\' EXECUTING JOB: \'" + j.toString() + "\'");
 			boolean success = j.runJob();
+			
+			synchronized (PCDL.frame.progressBar) {
+				
+				int oldValue = PCDL.frame.progressBar.getValue();
+				int newValue = oldValue + 1;
+				
+				PCDL.frame.progressBar.setValue(newValue);
+				
+			}
 			
 			if (!success) failures++;
 			

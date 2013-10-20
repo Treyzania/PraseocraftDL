@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.zip.ZipException;
 
 import com.treyzania.praseocraft.ftb.downloader.PCDL;
-import com.treyzania.praseocraft.ftb.downloader.Unzipper;
+import com.treyzania.praseocraft.ftb.downloader.resouces.Unzipper;
 
 public class JobUnzip extends Job {
 

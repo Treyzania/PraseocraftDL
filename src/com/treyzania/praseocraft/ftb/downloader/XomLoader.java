@@ -5,6 +5,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 
+import com.treyzania.praseocraft.ftb.downloader.resouces.Downloader;
+
 public class XomLoader {
 
 	public static final String xomDirectLink = "http://www.cafeconleche.org/XOM/xom-1.2.10.jar";

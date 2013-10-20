@@ -1,4 +1,4 @@
-package com.treyzania.praseocraft.ftb.downloader;
+package com.treyzania.praseocraft.ftb.downloader.resouces;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;

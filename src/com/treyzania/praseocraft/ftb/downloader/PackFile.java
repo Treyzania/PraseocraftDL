@@ -11,23 +11,26 @@ import nu.xom.Elements;
 import nu.xom.ParsingException;
 
 import com.treyzania.praseocraft.ftb.downloader.jobbing.Joblist;
-import com.treyzania.praseocraft.ftb.downloader.jobbing.Worker;
 import com.treyzania.praseocraft.ftb.downloader.parsing.Handlers;
+import com.treyzania.praseocraft.ftb.downloader.resouces.Domain;
+import com.treyzania.praseocraft.ftb.downloader.resouces.Worker;
 
 public class PackFile {
 	
 	private static final String[] wNames = {"Alpha", "Bravo", "Charlie", "Delta", "Echo", "Foxtrot", "Golf", "Hotel"};
 	
 	public final String addr; // The place the pack file is hosted.
+	public final String version; // The "v" attribute of the "verison" tag.  Can be a fancy name like the Android devs do.  (ie. "Jelly Bean")
 	
 	public Joblist joblist;
 	public Worker[] workers = null;
 	
 	public Document doc;
 	
-	public PackFile(String addr) {
+	public PackFile(String addr, String ver) {
 		
 		this.addr = addr;
+		this.version = ver;
 		
 		this.workers = new Worker[2];
 		for (int i = 0; i < workers.length; i++) {
@@ -60,7 +63,16 @@ public class PackFile {
 		// Start extracting data.
 		Element root = doc.getRootElement(); // Should be a "pack" tag.
 		
-		Elements groupTags = root.getChildElements("group");
+		// Make sure we are dealing with the proper version of the files to use!
+		Elements verTags = root.getChildElements("version");
+		Element ver = null;
+		for (int i = 0; i < verTags.size(); i++) {
+			if (verTags.get(i).getAttribute("v").getValue() == this.version) {
+				ver = verTags.get(i);
+			}
+		}
+		
+		Elements groupTags = ver.getChildElements("group");
 		Elements globalMetaTags = root.getChildElements("meta");
 		
 		// Deal with the global Metas.

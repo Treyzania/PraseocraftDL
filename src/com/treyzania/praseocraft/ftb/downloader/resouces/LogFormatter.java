@@ -1,4 +1,4 @@
-package com.treyzania.praseocraft.ftb.downloader;
+package com.treyzania.praseocraft.ftb.downloader.resouces;
 
 import java.util.Date;
 import java.util.logging.Formatter;

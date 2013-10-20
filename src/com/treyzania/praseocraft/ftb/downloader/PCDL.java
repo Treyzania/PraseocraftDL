@@ -8,6 +8,7 @@ import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.treyzania.praseocraft.ftb.downloader.resouces.LogFormatter;
 import com.treyzania.praseocraft.ftb.downloader.resouces.MasterFrame;
 
 public class PCDL {

@@ -3,9 +3,9 @@ package com.treyzania.praseocraft.ftb.downloader.listeners;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import com.treyzania.praseocraft.ftb.downloader.Domain;
 import com.treyzania.praseocraft.ftb.downloader.PCDL;
 import com.treyzania.praseocraft.ftb.downloader.PackFile;
+import com.treyzania.praseocraft.ftb.downloader.resouces.Domain;
 import com.treyzania.praseocraft.ftb.downloader.resouces.MasterFrame;
 
 public class DownloadStartListener implements ActionListener {
@@ -25,7 +25,7 @@ public class DownloadStartListener implements ActionListener {
 		//int barValue = PCDL.frame.progressBar.getValue();
 		//PCDL.frame.progressBar.setValue(barValue + 10);
 				
-		PackFile pf = new PackFile(frame.addrField.getText().trim());
+		PackFile pf = new PackFile(frame.addrField.getText().trim(), frame.verField.getText().trim()); // Gotta trim them because we are working with humans!
 		PCDL.packfile = pf;
 		
 		PCDL.log.info("Pack Location: " + frame.addrField.getText());
