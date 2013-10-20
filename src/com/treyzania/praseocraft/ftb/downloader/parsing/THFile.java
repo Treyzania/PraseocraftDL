@@ -25,13 +25,12 @@ public class THFile extends TagHandler {
 		FileOp fo = null;
 		
 		String e_src = element.getAttribute("src").getValue();
-		int e_priority = Integer.parseInt(element.getAttribute("priority").getValue()); // TODO Depreciate this soon.
 		String e_action = element.getAttribute("action").getValue();
 		String e_dom = ((Element) element.getParent()).getAttribute("domain").getValue(); // I hope this works.
 		
 		String e_dest = element.getValue();
 		
-		fo = new FileOp(e_src, e_dest, Domain.Calc.parseDomain(e_dom), e_priority, e_action);
+		fo = new FileOp(e_src, e_dest, Domain.Calc.parseDomain(e_dom));
 		j = new JobDownload(pf.joblist, fo);
 		
 		pf.joblist.addJob(j);
