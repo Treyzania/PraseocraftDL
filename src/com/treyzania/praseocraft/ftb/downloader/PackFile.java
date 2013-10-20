@@ -19,8 +19,8 @@ public class PackFile {
 	
 	private static final String[] wNames = {"Alpha", "Bravo", "Charlie", "Delta", "Echo", "Foxtrot", "Golf", "Hotel"};
 	
-	public final String addr; // The place the pack file is hosted.
-	public final String version; // The "v" attribute of the "verison" tag.  Can be a fancy name like the Android devs do.  (ie. "Jelly Bean")
+	public final String packAddr; // The place the pack file is hosted.
+	public final String packVer; // The "ver" attribute of the "verison" tag.  Can be a fancy name like the Android devs do.  (ie. "Jelly Bean")
 	
 	public Joblist joblist;
 	public Worker[] workers = null;
@@ -29,10 +29,10 @@ public class PackFile {
 	
 	public PackFile(String addr, String ver) {
 		
-		this.addr = addr;
-		this.version = ver;
+		this.packAddr = addr;
+		this.packVer = ver;
 		
-		this.workers = new Worker[2];
+		this.workers = new Worker[2]; // Expand/abstractify as necessary!
 		for (int i = 0; i < workers.length; i++) {
 			
 			this.workers[i] = new Worker(wNames[i], joblist);
@@ -47,7 +47,7 @@ public class PackFile {
 		
 		Builder b = new Builder();
 		try {
-			this.doc = b.build(this.addr);
+			this.doc = b.build(this.packAddr);
 		} catch (ParsingException | IOException e) {
 			String msg = e.getMessage();
 			PCDL.log.info(msg);
@@ -67,10 +67,16 @@ public class PackFile {
 		Elements verTags = root.getChildElements("version");
 		Element ver = null;
 		for (int i = 0; i < verTags.size(); i++) {
-			if (verTags.get(i).getAttribute("v").getValue() == this.version) {
+			Element e = verTags.get(i);
+			System.out.println("VER_TAG: " + i + ", " + e.toString() + ", " + e.getAttribute("v"));
+			if (e.getAttribute("ver").getValue().equals(this.packVer)) {
+				System.out.println("I found it! " + i);
 				ver = verTags.get(i);
 			}
 		}
+		
+		System.out.println(ver);
+		this.readJobs_readoutElements(root, ver, null);
 		
 		Elements groupTags = ver.getChildElements("group");
 		Elements globalMetaTags = root.getChildElements("meta");
@@ -112,6 +118,12 @@ public class PackFile {
 			Handlers.handleTag(this, ele);
 			
 		}
+		
+	}
+	
+	private void readJobs_readoutElements(Element root, Element ver, Element group) {
+		
+		PCDL.log.info("ELEMENTS READOUT: " + root + "," + ver + "," + group);
 		
 	}
 	

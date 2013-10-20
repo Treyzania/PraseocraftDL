@@ -24,8 +24,10 @@ public class DownloadStartListener implements ActionListener {
 		
 		//int barValue = PCDL.frame.progressBar.getValue();
 		//PCDL.frame.progressBar.setValue(barValue + 10);
-				
-		PackFile pf = new PackFile(frame.addrField.getText().trim(), frame.verField.getText().trim()); // Gotta trim them because we are working with humans!
+		
+		System.out.println("addr: \"" + frame.addrField.getText() + "\", ver: \"" + frame.verField.getText() + "\"");
+		
+		PackFile pf = new PackFile(frame.addrField.getText().trim(), frame.verField.getText()); // Gotta trim them because we are working with humans!
 		PCDL.packfile = pf;
 		
 		PCDL.log.info("Pack Location: " + frame.addrField.getText());

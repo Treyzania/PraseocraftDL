@@ -66,15 +66,15 @@ public class MasterFrame extends JFrame implements Runnable {
 		title.setVisible(true);
 		author.setVisible(true);
 
-		address.add(new JLabel("Pack host:"));
+		address.add(new JLabel("Pack host: "));
 		address.add(addrField);
 		address.setVisible(true);
-		// address.setAlignmentX(Component.LEFT_ALIGNMENT);
+		//address.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-		packVer.add(new JLabel("Desired version:"));
+		packVer.add(new JLabel("Desired version: "));
 		packVer.add(verField);
 		packVer.setVisible(true);
-		// packVer.setAlignmentX(Component.LEFT_ALIGNMENT);
+		//packVer.setAlignmentX(Component.LEFT_ALIGNMENT);
 
 		addrField.setText("");
 
@@ -155,7 +155,8 @@ public class MasterFrame extends JFrame implements Runnable {
 
 		// It's an infinite loop!
 		while (true) {
-
+			
+			// Do I need to individually repaint these all?
 			title.repaint();
 			address.repaint();
 			radio.repaint();
@@ -176,7 +177,7 @@ public class MasterFrame extends JFrame implements Runnable {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (ClassNotFoundException | InstantiationException
 				| IllegalAccessException | UnsupportedLookAndFeelException e) {
-			PCDL.log.fine("Look and Feel error!");
+			PCDL.log.fine("Look and Feel error!  (It doesn't feel right!)");
 		}
 
 	}
