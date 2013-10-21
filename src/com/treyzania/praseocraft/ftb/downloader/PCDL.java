@@ -65,7 +65,7 @@ public class PCDL {
 		frame.setTitle("Praseocraft FTB Pack Downloader");
 		
 		log.fine("\t...done!");
-
+		
 	}
 	
 	// Do I need these two methods?

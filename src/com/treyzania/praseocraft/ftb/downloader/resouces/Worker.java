@@ -13,16 +13,19 @@ public class Worker implements Runnable {
 	public Worker(String name, Joblist jl) {
 		
 		this.name = name;
-		jobExecutor = new Thread("WT_Thread-" + this.name);
+		this.list = jl;
+		jobExecutor = new Thread(this, "WT_Thread-" + this.name);
 		
-		PCDL.log.finer("WORKER \'" + this.name + "\'" + "CREATED!");
+		PCDL.log.info("WORKER \'" + this.name + "\'" + "CREATED!");
+		
+		System.out.println(list);
 		
 	}
 	
 	@Override
 	public void run() {
 		
-		PCDL.log.fine("WORKER \'" + this.name + "\'" + "STARTED!");
+		PCDL.log.info("WORKER \'" + this.name + "\'" + " STARTED!");
 		
 		int failures = 0;
 		

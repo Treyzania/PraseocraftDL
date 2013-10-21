@@ -36,9 +36,9 @@ public class PackFile implements Runnable {
 		this.packAddr = addr;
 		this.packVer = ver;
 		
+		this.joblist = new Joblist();
 		this.metadata = new MetaCollector();
-		
-		this.pfexe = new Thread("PackFile-ExecutorThread");
+		this.pfexe = new Thread(this, "PackFile-Thread");
 		
 		this.workers = new Worker[2]; // Expand/abstractify as necessary!
 		for (int i = 0; i < workers.length; i++) {
@@ -59,8 +59,8 @@ public class PackFile implements Runnable {
 		
 		PCDL.log.info("Pack Location: " + frame.addrField.getText());
 		
-		this.buildDocument();
-		PCDL.log.info("Document built successfully!");
+		boolean docbuild = this.buildDocument();
+		PCDL.log.info(docbuild ? "Document build successfully!" : "Document build failure!  That's an ERROR!");
 		
 		Domain d = null;
 		String dString = "";
@@ -89,15 +89,20 @@ public class PackFile implements Runnable {
 		
 	}
 	
-	public void buildDocument() {
+	public boolean buildDocument() {
 		
+		boolean out = true;
 		Builder b = new Builder();
+		
 		try {
 			this.doc = b.build(this.packAddr);
 		} catch (ParsingException | IOException e) {
-			String msg = e.getMessage();
-			PCDL.log.info(msg);
+			System.out.println(e.getMessage());
+			out = false;
 		}
+		
+		System.out.println(this.doc);
+		return out;
 		
 	}
 	
@@ -121,8 +126,7 @@ public class PackFile implements Runnable {
 			}
 		}
 		
-		System.out.println(ver);
-		this.readJobs_readoutElements(root, ver, null);
+		//this.readJobs_readoutElements(root, ver, null);
 		
 		Elements groupTags = ver.getChildElements("group");
 		Elements globalMetaTags = root.getChildElements("meta");
@@ -152,7 +156,7 @@ public class PackFile implements Runnable {
 				
 			} else {
 				
-				PCDL.log.fine("Invalid domain used in Configuration.  Culprit: " + groupDomain.getValue());
+				System.out.println("Invalid domain used in Configuration.  Culprit: " + groupDomain.getValue());
 				
 			}
 			
@@ -165,11 +169,14 @@ public class PackFile implements Runnable {
 			
 		}
 		
+		PCDL.log.info("If this is being read, then the XML was probably parsed successfully!  " + elementPool);
+		
 	}
 	
+	@SuppressWarnings("unused")
 	private void readJobs_readoutElements(Element root, Element ver, Element group) {
 		
-		PCDL.log.info("ELEMENTS READOUT: " + root + "," + ver + "," + group);
+		System.out.println("ELEMENTS READOUT: " + root + "," + ver + "," + group);
 		
 	}
 	

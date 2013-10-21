@@ -25,7 +25,7 @@ public class JobWrite extends Job {
 		
 		boolean out = true;
 		
-		String file = e.getAttributeValue("file") + PCDL.thisPath;
+		String file = PCDL.thisPath + "/" + e.getAttributeValue("file");
 		String content = e.getValue();
 		
 		File f = new File(file);
