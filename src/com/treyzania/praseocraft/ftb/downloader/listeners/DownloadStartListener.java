@@ -25,7 +25,7 @@ public class DownloadStartListener implements ActionListener {
 		
 		System.out.println("addr: \"" + frame.addrField.getText() + "\", ver: \"" + frame.verField.getText() + "\"");
 		
-		PackFile pf = new PackFile(frame.addrField.getText().trim(), frame.verField.getText()); // Gotta trim them because we are working with humans!
+		PackFile pf = new PackFile(frame.addrField.getText().trim(), frame.verField.getText().trim()); // Gotta trim them because we are working with humans!
 		PCDL.packfile = pf;
 		
 		pf.pfexe.start();
