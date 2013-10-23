@@ -16,7 +16,7 @@ public class LibLoader {
 	
 	public static boolean isDownloaded() {
 		
-		File xomJarDir = new File(PCDL.thisPath + "xom.jar");
+		File xomJarDir = new File(Pcdl.thisPath + "xom.jar");
 		return xomJarDir.exists();
 		
 	}
@@ -24,7 +24,7 @@ public class LibLoader {
 	// Do I need to actually download this file?
 	public static void downloadJar() {
 		
-		Downloader.download(xomDirectLink, PCDL.thisPath + xomJarName);
+		Downloader.download(xomDirectLink, Pcdl.thisPath + xomJarName);
 		
 	}
 	
@@ -36,7 +36,7 @@ public class LibLoader {
 		try {
 			xomurl = new URL(xomDirectLink);
 		} catch (MalformedURLException e) {
-			PCDL.log.severe(e.getMessage());
+			Pcdl.log.severe(e.getMessage());
 		}
 		
 		URLClassLoader urlcl = new URLClassLoader(new URL[] { xomurl });

@@ -6,7 +6,7 @@ import java.io.FileOutputStream;
 
 import nu.xom.Element;
 
-import com.treyzania.praseocraft.ftb.downloader.PCDL;
+import com.treyzania.praseocraft.ftb.downloader.Pcdl;
 
 public class JobWrite extends Job {
 
@@ -25,14 +25,14 @@ public class JobWrite extends Job {
 		
 		boolean out = true;
 		
-		String file = PCDL.thisPath + "/" + e.getAttributeValue("file");
+		String file = Pcdl.thisPath + "/" + e.getAttributeValue("file");
 		String content = e.getValue();
 		
 		File f = new File(file);
 		FileOutputStream fos = null;
 		DataOutputStream dos = null;
 		
-		PCDL.log.info("JOBS: Writing to file \'" + file + "\'.");
+		Pcdl.log.info("JOBS: Writing to file \'" + file + "\'.");
 		
 		// Replace bad characters with better ones.
 		String newContent = content
@@ -61,7 +61,7 @@ public class JobWrite extends Job {
 			
 		} catch (Exception e) {
 			
-			PCDL.log.warning(e.getMessage());
+			Pcdl.log.warning(e.getMessage());
 			out = false;
 			
 		} finally {

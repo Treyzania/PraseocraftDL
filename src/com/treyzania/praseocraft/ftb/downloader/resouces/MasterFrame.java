@@ -13,7 +13,7 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import com.treyzania.praseocraft.ftb.downloader.PCDL;
+import com.treyzania.praseocraft.ftb.downloader.Pcdl;
 import com.treyzania.praseocraft.ftb.downloader.State;
 import com.treyzania.praseocraft.ftb.downloader.listeners.DownloadStartListener;
 
@@ -61,7 +61,7 @@ public class MasterFrame extends JFrame implements Runnable {
 		this.status = new JPanel();
 		this.jobInfo = new JPanel();
 
-		title.add(new JLabel("Praseocraft FTB Pack Installer " + PCDL.VERSION));
+		title.add(new JLabel("Praseocraft FTB Pack Installer " + Pcdl.VERSION));
 		author.add(new JLabel("Written by Treyzania"));
 		title.setVisible(true);
 		author.setVisible(true);
@@ -177,7 +177,7 @@ public class MasterFrame extends JFrame implements Runnable {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (ClassNotFoundException | InstantiationException
 				| IllegalAccessException | UnsupportedLookAndFeelException e) {
-			PCDL.log.fine("Look and Feel error!  (It doesn't feel right!)");
+			Pcdl.log.fine("Look and Feel error!  (It doesn't feel right!)");
 		}
 
 	}

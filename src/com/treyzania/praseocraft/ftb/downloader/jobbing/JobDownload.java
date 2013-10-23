@@ -1,6 +1,6 @@
 package com.treyzania.praseocraft.ftb.downloader.jobbing;
 
-import com.treyzania.praseocraft.ftb.downloader.PCDL;
+import com.treyzania.praseocraft.ftb.downloader.Pcdl;
 import com.treyzania.praseocraft.ftb.downloader.parsing.FileOp;
 import com.treyzania.praseocraft.ftb.downloader.resouces.Domain;
 import com.treyzania.praseocraft.ftb.downloader.resouces.Downloader;
@@ -30,9 +30,9 @@ public class JobDownload extends Job {
 		if (ft == Domain.GENERIC) {
 			doDownload = true;
 		} else {
-			if (ft == Domain.CILENT && PCDL.dlMode == "client") {
+			if (ft == Domain.CILENT && Pcdl.dlMode == "client") {
 				doDownload = true;
-			} else if (ft == Domain.SERVER && PCDL.dlMode == "server") {
+			} else if (ft == Domain.SERVER && Pcdl.dlMode == "server") {
 				doDownload = true;
 			} else {
 				Job.announceSkip(this, "Incorrect group type for download type.");
@@ -42,7 +42,7 @@ public class JobDownload extends Job {
 		
 		if (doDownload) {
 			
-			good = Downloader.download(file.src, "/" + PCDL.packFolder + "/" + file.loc);
+			good = Downloader.download(file.src, "/" + Pcdl.packFolder + "/" + file.loc);
 			
 		}
 		

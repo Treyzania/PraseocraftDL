@@ -7,7 +7,7 @@ import com.treyzania.praseocraft.ftb.downloader.resouces.Domain;
 
 import nu.xom.Element;
 
-public class THFile extends TagHandler {
+public class ThFile extends TagHandler {
 
 	@Override
 	public String getHandledTag() {

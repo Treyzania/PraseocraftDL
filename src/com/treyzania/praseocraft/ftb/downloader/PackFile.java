@@ -54,13 +54,13 @@ public class PackFile implements Runnable {
 	@SuppressWarnings("deprecation")
 	public void init() {
 		
-		MasterFrame frame = PCDL.frame;
-		PCDL.packDir.mkdir();
+		MasterFrame frame = Pcdl.frame;
+		Pcdl.packDir.mkdir();
 		
-		PCDL.log.info("Pack Location: " + frame.addrField.getText());
+		Pcdl.log.info("Pack Location: " + frame.addrField.getText());
 		
 		boolean docbuild = this.buildDocument();
-		PCDL.log.info(docbuild ? "Document build successfully!" : "Document build failure!  That's an ERROR!");
+		Pcdl.log.info(docbuild ? "Document build successfully!" : "Document build failure!  That's an ERROR!");
 		
 		Domain d = null;
 		String dString = "";
@@ -76,15 +76,15 @@ public class PackFile implements Runnable {
 			dString = "server";
 			
 		} // There will always be one selected because the Client button is selected by default.
-		PCDL.log.info("Dowload Type: " + d.toString());
+		Pcdl.log.info("Dowload Type: " + d.toString());
 		
-		PCDL.dlMode = dString;
+		Pcdl.dlMode = dString;
 		this.readJobs(d);
-		PCDL.log.info("Job list created and organized successfully. (Hopefully...)");
+		Pcdl.log.info("Job list created and organized successfully. (Hopefully...)");
 		
 		frame.progressBar.setMaximum(this.joblist.getJobsRemaining());
 		
-		PCDL.log.info("Starting workers...");
+		Pcdl.log.info("Starting workers...");
 		this.startWorkers();
 		
 	}
@@ -169,7 +169,7 @@ public class PackFile implements Runnable {
 			
 		}
 		
-		PCDL.log.info("If this is being read, then the XML was probably parsed successfully!  " + elementPool);
+		Pcdl.log.info("If this is being read, then the XML was probably parsed successfully!  " + elementPool);
 		
 	}
 	

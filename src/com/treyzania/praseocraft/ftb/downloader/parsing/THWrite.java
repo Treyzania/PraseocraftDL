@@ -6,7 +6,7 @@ import com.treyzania.praseocraft.ftb.downloader.jobbing.JobWrite;
 
 import nu.xom.Element;
 
-public class THWrite extends TagHandler {
+public class ThWrite extends TagHandler {
 
 	@Override
 	public String getHandledTag() {

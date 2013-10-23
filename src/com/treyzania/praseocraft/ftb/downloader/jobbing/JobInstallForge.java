@@ -9,7 +9,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
 
-import com.treyzania.praseocraft.ftb.downloader.PCDL;
+import com.treyzania.praseocraft.ftb.downloader.Pcdl;
 
 public class JobInstallForge extends Job {
 
@@ -36,7 +36,7 @@ public class JobInstallForge extends Job {
 		boolean out = true;
 		
 		String forgeJarZipThingy = "";
-		String mcJar = PCDL.getMinecraftDir() + "/versions/" + mcVerName + "/" + mcVerName + ".jar";
+		String mcJar = Pcdl.getMinecraftDir() + "/versions/" + mcVerName + "/" + mcVerName + ".jar";
 		String moddedJar = "";
 		
 		try {
@@ -70,7 +70,7 @@ public class JobInstallForge extends Job {
 			
 		} catch (Exception e) {
 			
-			PCDL.log.severe(e.getMessage());
+			Pcdl.log.severe(e.getMessage());
 			out = false;
 			
 		}

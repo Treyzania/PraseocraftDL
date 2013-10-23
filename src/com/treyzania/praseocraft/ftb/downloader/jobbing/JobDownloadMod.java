@@ -1,6 +1,6 @@
 package com.treyzania.praseocraft.ftb.downloader.jobbing;
 
-import com.treyzania.praseocraft.ftb.downloader.PCDL;
+import com.treyzania.praseocraft.ftb.downloader.Pcdl;
 import com.treyzania.praseocraft.ftb.downloader.resouces.Downloader;
 
 public class JobDownloadMod extends Job {
@@ -20,7 +20,7 @@ public class JobDownloadMod extends Job {
 	@Override
 	public boolean runJob() {
 		
-		boolean out = Downloader.download(this.modAddr, PCDL.packFolder + "/mods/" + this.modLoc);
+		boolean out = Downloader.download(this.modAddr, Pcdl.packFolder + "/mods/" + this.modLoc);
 		/*
 		 * 
 		 * 

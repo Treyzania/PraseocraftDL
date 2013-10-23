@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import com.treyzania.praseocraft.ftb.downloader.PCDL;
+import com.treyzania.praseocraft.ftb.downloader.Pcdl;
 
 public class JobGetMinecraft extends Job {
 
@@ -21,21 +21,21 @@ public class JobGetMinecraft extends Job {
 	public boolean runJob() {
 
 		boolean out = true;
-		String mcVer = PCDL.packfile.metadata.access("mcversion");
+		String mcVer = Pcdl.packfile.metadata.access("mcversion");
 		
 		File src;
 		File dest;
 		
 		try {
 			
-			src = new File(PCDL.getMinecraftDir() + "/versions/" + mcVer);
-			dest = new File(src.getParent() + "/.pcdlmc/packs/" + PCDL.packfile.packVer); // I hope this works too!
+			src = new File(Pcdl.getMinecraftDir() + "/versions/" + mcVer);
+			dest = new File(src.getParent() + "/.pcdlmc/packs/" + Pcdl.packfile.packVer); // I hope this works too!
 			
 			this.copyDirectory(src, dest);
 			
 		} catch (Exception e) {
 			
-			PCDL.log.severe(e.getMessage());
+			Pcdl.log.severe(e.getMessage());
 			out = false;
 			
 		}
@@ -76,7 +76,7 @@ public class JobGetMinecraft extends Job {
 				in = new FileInputStream(sourceLocation);
 				out = new FileOutputStream(targetLocation);
 			} catch (Exception e) {
-				PCDL.log.severe(e.getMessage());
+				Pcdl.log.severe(e.getMessage());
 			}
 
 			// Copy the bits from instream to outstream
@@ -86,7 +86,7 @@ public class JobGetMinecraft extends Job {
 				try {
 					out.write(buf, 0, len);
 				} catch (Exception e) {
-					PCDL.log.severe(e.getMessage());
+					Pcdl.log.severe(e.getMessage());
 				}
 			}
 			
@@ -94,7 +94,7 @@ public class JobGetMinecraft extends Job {
 				in.close();
 				out.close();
 			} catch (Exception e) {
-				PCDL.log.severe(e.getMessage());
+				Pcdl.log.severe(e.getMessage());
 			}
 			
 		}

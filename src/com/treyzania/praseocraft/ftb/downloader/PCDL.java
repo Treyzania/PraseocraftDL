@@ -11,10 +11,10 @@ import java.util.logging.Logger;
 import com.treyzania.praseocraft.ftb.downloader.resouces.LogFormatter;
 import com.treyzania.praseocraft.ftb.downloader.resouces.MasterFrame;
 
-public class PCDL {
+public class Pcdl {
 	
 	public static final String VERSION = "v0.1";
-	public static final String thisPath = PCDL.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+	public static final String thisPath = Pcdl.class.getProtectionDomain().getCodeSource().getLocation().getPath();
 	public static MasterFrame frame;
 	public static PackFile packfile;
 	

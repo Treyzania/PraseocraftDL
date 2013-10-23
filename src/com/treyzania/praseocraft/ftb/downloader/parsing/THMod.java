@@ -6,7 +6,7 @@ import com.treyzania.praseocraft.ftb.downloader.PackFile;
 import com.treyzania.praseocraft.ftb.downloader.jobbing.Job;
 import com.treyzania.praseocraft.ftb.downloader.jobbing.JobDownloadMod;
 
-public class THMod extends TagHandler {
+public class ThMod extends TagHandler {
 
 	@Override
 	public String getHandledTag() {

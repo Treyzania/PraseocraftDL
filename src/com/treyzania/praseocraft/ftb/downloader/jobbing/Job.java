@@ -1,6 +1,6 @@
 package com.treyzania.praseocraft.ftb.downloader.jobbing;
 
-import com.treyzania.praseocraft.ftb.downloader.PCDL;
+import com.treyzania.praseocraft.ftb.downloader.Pcdl;
 
 public class Job {
 
@@ -24,7 +24,7 @@ public class Job {
 	
 	public static void announceSkip(Job j, String msg) {
 		
-		PCDL.log.warning("JOB SKIPPED: \"" + j.toString() + "\" FOR " + msg);
+		Pcdl.log.warning("JOB SKIPPED: \"" + j.toString() + "\" FOR " + msg);
 		
 	}
 
