@@ -39,6 +39,9 @@ public class Pcdl {
 		
 		log.setUseParentHandlers(false); // Wow.  This was extremely important that fixed a HUUUUUGE problem.
 		
+		//NotificationFrame np = new NotificationFrame("This is a secret message.");
+		//np.waitForExit();
+		
 		consoleHandler = new ConsoleHandler();
 		try { fileHandler = new FileHandler("tmp/pcdl-log_" + Long.toString(System.currentTimeMillis()) + ".log");
 		} catch (SecurityException | IOException e) {}
