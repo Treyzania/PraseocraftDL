@@ -15,6 +15,7 @@ import com.treyzania.praseocraft.ftb.downloader.parsing.Handlers;
 import com.treyzania.praseocraft.ftb.downloader.resouces.Domain;
 import com.treyzania.praseocraft.ftb.downloader.resouces.MasterFrame;
 import com.treyzania.praseocraft.ftb.downloader.resouces.MetaCollector;
+import com.treyzania.praseocraft.ftb.downloader.resouces.NotificationFrame;
 import com.treyzania.praseocraft.ftb.downloader.resouces.Worker;
 
 public class PackFile implements Runnable {
@@ -86,6 +87,10 @@ public class PackFile implements Runnable {
 		
 		Pcdl.log.info("Starting workers...");
 		this.startWorkers();
+		
+		Pcdl.frame.beep();
+		NotificationFrame nf = new NotificationFrame("Pack building done!");
+		nf.waitForExit(); // I luuuuv this method!
 		
 	}
 	
@@ -162,6 +167,8 @@ public class PackFile implements Runnable {
 			
 		}
 		
+		//this.readJobs_readoutElements(root, ver, null);
+		
 		// Handle the tags.
 		for (Element ele : elementPool) {
 			
@@ -176,7 +183,7 @@ public class PackFile implements Runnable {
 	@SuppressWarnings("unused")
 	private void readJobs_readoutElements(Element root, Element ver, Element group) {
 		
-		System.out.println("ELEMENTS READOUT: " + root + "," + ver + "," + group);
+		Pcdl.log.finest("ELEMENTS READOUT: " + root + "," + ver + "," + group);
 		
 	}
 	

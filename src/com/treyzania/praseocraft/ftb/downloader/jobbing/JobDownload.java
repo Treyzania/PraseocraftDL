@@ -27,6 +27,8 @@ public class JobDownload extends Job {
 		boolean doDownload = false;
 		boolean good = true;
 		
+		Pcdl.log.fine("JOBS: Downloading file \'" + file.src + "\'.");
+		
 		if (ft == Domain.GENERIC) {
 			doDownload = true;
 		} else {

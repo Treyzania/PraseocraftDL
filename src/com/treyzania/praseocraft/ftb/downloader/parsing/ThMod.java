@@ -1,5 +1,6 @@
 package com.treyzania.praseocraft.ftb.downloader.parsing;
 
+import nu.xom.Attribute;
 import nu.xom.Element;
 
 import com.treyzania.praseocraft.ftb.downloader.PackFile;
@@ -18,11 +19,16 @@ public class ThMod extends TagHandler {
 		
 		String[] loc = element.getValue().split("\\/");
 		
-		String modLocation = loc[loc.length - 1]; // Technically, this is the name of the Zip file that will be in the "/mods/" folder.
+		String modLocation = loc[loc.length - 1]; // Technically, this should be the name of the Zip file that will be in the "/mods/" folder.
 		String modAddress = element.getValue();
 		
 		Job j = new JobDownloadMod(pf.joblist, modLocation, modAddress);
 		pf.joblist.addJob(j);
+		
+		Attribute renameAttr = element.getAttribute("rename");
+		if (renameAttr != null) {
+			j.metadata.define("NewName", renameAttr.getValue());
+		}
 		
 		return true;
 		

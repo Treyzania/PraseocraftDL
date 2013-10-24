@@ -48,7 +48,7 @@ public class Worker implements Runnable {
 			
 		}
 		
-		Pcdl.log.fine("WORKER \'" + this.name + "\'" + "FINISHED!  FAIL COUNT: " + failures + " FAILURES");
+		Pcdl.log.info("WORKER \'" + this.name + "\'" + "FINISHED!  FAIL COUNT: " + failures + " FAILURES");
 		
 	}
 	

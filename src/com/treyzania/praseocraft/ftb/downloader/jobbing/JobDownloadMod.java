@@ -20,7 +20,15 @@ public class JobDownloadMod extends Job {
 	@Override
 	public boolean runJob() {
 		
-		boolean out = Downloader.download(this.modAddr, Pcdl.packFolder + "/mods/" + this.modLoc);
+		String filename = Pcdl.packFolder + "/mods/" + this.modLoc;
+		String possNN = metadata.access("NewName");
+		if (possNN != null && possNN != "") {
+			filename = possNN;
+		}
+		
+		Pcdl.log.fine("JOBS: Downloading mod \'" + this.modAddr + "\'.");
+		
+		boolean out = Downloader.download(this.modAddr, filename);
 		/*
 		 * 
 		 * 

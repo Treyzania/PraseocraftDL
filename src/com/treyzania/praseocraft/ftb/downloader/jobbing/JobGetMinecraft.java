@@ -23,6 +23,8 @@ public class JobGetMinecraft extends Job {
 		boolean out = true;
 		String mcVer = Pcdl.packfile.metadata.access("mcversion");
 		
+		Pcdl.log.fine("JOBS: Attempting to copy the vanilla Minecraft Jar file.  (No promises.)");
+		
 		File src;
 		File dest;
 		

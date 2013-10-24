@@ -35,6 +35,8 @@ public class JobInstallForge extends Job {
 
 		boolean out = true;
 		
+		Pcdl.log.fine("JOBS: Attempting to install MCForge.");
+		
 		String forgeJarZipThingy = "";
 		String mcJar = Pcdl.getMinecraftDir() + "/versions/" + mcVerName + "/" + mcVerName + ".jar";
 		String moddedJar = "";

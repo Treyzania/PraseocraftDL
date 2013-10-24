@@ -25,6 +25,8 @@ public class JobUnzip extends Job {
 		
 		boolean good = true;
 		
+		Pcdl.log.fine("JOBS: Unzipping \'" + this.source + "\' to \'" + this.destinaion + "\'.");
+		
 		try {
 			Unzipper.extract(Pcdl.fs_sysPath(this.source), Pcdl.fs_sysPath(this.destinaion));
 		} catch (ZipException e) {

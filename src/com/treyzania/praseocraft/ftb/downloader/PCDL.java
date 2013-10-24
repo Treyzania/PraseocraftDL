@@ -45,12 +45,23 @@ public class Pcdl {
 		consoleHandler = new ConsoleHandler();
 		try { fileHandler = new FileHandler("tmp/pcdl-log_" + Long.toString(System.currentTimeMillis()) + ".log");
 		} catch (SecurityException | IOException e) {}
-		consoleHandler.setLevel(Level.FINEST);
-		fileHandler.setLevel(Level.FINEST);
+		log.setLevel(Level.ALL);
+		consoleHandler.setLevel(Level.ALL);
+		fileHandler.setLevel(Level.ALL);
 		consoleHandler.setFormatter(new LogFormatter());
 		fileHandler.setFormatter(new LogFormatter());
 		log.addHandler(consoleHandler);
 		log.addHandler(fileHandler);
+		
+		String logTestPrefix = "{LOGTEST}";
+		log.info(logTestPrefix + "Beginning log test...");
+		log.severe(logTestPrefix + "Severe");
+		log.warning(logTestPrefix + "Warning");
+		log.info(logTestPrefix + "Info");
+		log.fine(logTestPrefix + "Fine");
+		log.finer(logTestPrefix + "Finer");
+		log.finest(logTestPrefix + "Finest");
+		log.info(logTestPrefix + "Log test finished.");
 		
 		log.finest(thisPath);
 		log.info("Thank you for using Treyzania's Prasocraft FTB Pack Installer!");
@@ -59,10 +70,6 @@ public class Pcdl {
 		LibLoader.classloadJar();
 		
 		MasterFrame.laf();
-		
-		log.finest("finest");
-		log.finer("finer");
-		log.fine("fine");
 		
 		frame = new MasterFrame();
 		frame.setTitle("Praseocraft FTB Pack Downloader");

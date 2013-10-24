@@ -32,7 +32,7 @@ public class JobWrite extends Job {
 		FileOutputStream fos = null;
 		DataOutputStream dos = null;
 		
-		Pcdl.log.info("JOBS: Writing to file \'" + file + "\'.");
+		Pcdl.log.fine("JOBS: Writing to file \'" + file + "\'.");
 		
 		// Replace bad characters with better ones.
 		String newContent = content
