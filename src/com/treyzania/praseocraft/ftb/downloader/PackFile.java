@@ -199,7 +199,15 @@ public class PackFile implements Runnable {
 	
 	private void createFormattingJobs() {
 		
+		// Initialization.
+		ArrayList<Job> tJobs = new ArrayList<Job>();
 		
+		String tempDir = Util.getTempDir();
+		
+		// Post-processing.
+		for (Job theJob : tJobs) {
+			this.joblist.addJob(theJob);
+		}
 		
 	}
 	

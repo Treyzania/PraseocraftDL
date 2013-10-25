@@ -40,8 +40,7 @@ public class Util {
 		return dir;
 		
 	}
-
-	// Not safe to use yet!  Don't depend on this!
+	
 	public static String getPCDLDir() {
 		
 		String dir = "";
@@ -59,15 +58,14 @@ public class Util {
 		return dir;
 		
 	}
-
-	// Technically not safe yet either!
+	
 	public static String getTempDir() {
 		
 		return (getPCDLDir() + "/tmp");
 		
 	}
 	
-	public static void testDirs() {
+	protected static void testDirs() {
 		
 		Pcdl.log.finest("WORKING DIR: " + System.getProperty("user.dir"));
 		Pcdl.log.finest("MC DIR: " + Util.fs_genericPath(Util.getMinecraftDir()));
