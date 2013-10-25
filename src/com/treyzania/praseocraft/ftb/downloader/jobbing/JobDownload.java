@@ -1,8 +1,8 @@
 package com.treyzania.praseocraft.ftb.downloader.jobbing;
 
+import com.treyzania.praseocraft.ftb.downloader.Domain;
 import com.treyzania.praseocraft.ftb.downloader.Pcdl;
 import com.treyzania.praseocraft.ftb.downloader.parsing.FileOp;
-import com.treyzania.praseocraft.ftb.downloader.resouces.Domain;
 import com.treyzania.praseocraft.ftb.downloader.resouces.Downloader;
 
 public class JobDownload extends Job {

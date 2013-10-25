@@ -16,12 +16,11 @@ public class ThWrite extends TagHandler {
 	}
 
 	@Override
-	public boolean handleTag(PackFile pf, Element element) {
+	public Job handleTag(PackFile pf, Element element) {
 		
 		Job j = new JobWrite(pf.joblist, element);
-		pf.joblist.addJob(j);
 		
-		return true; // Why would this _ever_ fail? (He said right before it exploded...)
+		return j;
 		
 	}
 

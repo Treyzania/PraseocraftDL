@@ -29,7 +29,7 @@ public class JobWrite extends Job {
 		String file = Util.getMinecraftDir() + "/" + e.getAttributeValue("file");
 		String content = e.getValue();
 		
-		File f = new File(file);
+		File f = new File(Util.fs_sysPath(file));
 		FileOutputStream fos = null;
 		DataOutputStream dos = null;
 		
@@ -45,8 +45,13 @@ public class JobWrite extends Job {
 		
 		try {
 			
+			Pcdl.log.finer("File exsistence check: {" + f + "}: " + f.exists());
+			
 			// Check to see if the file needs to be created.
-			if (!f.exists()) f.createNewFile();
+			if (!f.exists()) {
+				f.getParentFile().mkdirs();
+				f.createNewFile();
+			}
 			
 			// Instantiate the output streams.
 			fos = new FileOutputStream(f);

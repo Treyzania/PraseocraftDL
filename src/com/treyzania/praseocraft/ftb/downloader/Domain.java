@@ -1,4 +1,4 @@
-package com.treyzania.praseocraft.ftb.downloader.resouces;
+package com.treyzania.praseocraft.ftb.downloader;
 
 import java.util.Arrays;
 
@@ -29,6 +29,26 @@ public enum Domain {
 			} else {
 				return false;
 			}
+			
+		}
+		
+		public static boolean isCompatible(Domain model, Domain test) {
+			
+			boolean result = false;
+			
+			if (model == Domain.GENERIC || test == Domain.GENERIC) {
+				result = true;
+			}
+			
+			if (model == Domain.CILENT && test == Domain.CILENT) {
+				result = true;
+			}
+			
+			if (model == Domain.SERVER && test == Domain.SERVER) {
+				result = true;
+			}
+			
+			return result;
 			
 		}
 		

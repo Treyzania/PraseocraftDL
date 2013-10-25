@@ -1,6 +1,6 @@
 package com.treyzania.praseocraft.ftb.downloader.parsing;
 
-import com.treyzania.praseocraft.ftb.downloader.resouces.Domain;
+import com.treyzania.praseocraft.ftb.downloader.Domain;
 
 public class FileOp {
 

@@ -15,7 +15,7 @@ public class ThMod extends TagHandler {
 	}
 
 	@Override
-	public boolean handleTag(PackFile pf, Element element) {
+	public Job handleTag(PackFile pf, Element element) {
 		
 		String[] loc = element.getValue().split("\\/");
 		
@@ -23,14 +23,13 @@ public class ThMod extends TagHandler {
 		String modAddress = element.getValue();
 		
 		Job j = new JobDownloadMod(pf.joblist, modLocation, modAddress);
-		pf.joblist.addJob(j);
 		
 		Attribute renameAttr = element.getAttribute("rename");
 		if (renameAttr != null) {
 			j.metadata.define("NewName", renameAttr.getValue());
 		}
 		
-		return true;
+		return j;
 		
 	}
 

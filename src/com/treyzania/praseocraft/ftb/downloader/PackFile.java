@@ -10,9 +10,9 @@ import nu.xom.Element;
 import nu.xom.Elements;
 import nu.xom.ParsingException;
 
+import com.treyzania.praseocraft.ftb.downloader.jobbing.Job;
 import com.treyzania.praseocraft.ftb.downloader.jobbing.Joblist;
 import com.treyzania.praseocraft.ftb.downloader.parsing.Handlers;
-import com.treyzania.praseocraft.ftb.downloader.resouces.Domain;
 import com.treyzania.praseocraft.ftb.downloader.resouces.MasterFrame;
 import com.treyzania.praseocraft.ftb.downloader.resouces.MetaCollector;
 import com.treyzania.praseocraft.ftb.downloader.resouces.NotificationFrame;
@@ -27,6 +27,7 @@ public class PackFile implements Runnable {
 	
 	public Joblist joblist;
 	public Worker[] workers = null;
+	public Domain domain;
 	
 	public Document doc;
 	public MetaCollector metadata;
@@ -40,15 +41,16 @@ public class PackFile implements Runnable {
 		this.joblist = new Joblist();
 		this.metadata = new MetaCollector();
 		this.pfexe = new Thread(this, "PackFile-Thread");
+		this.joblist = new Joblist();
 		
 		this.workers = new Worker[1]; // Expand/abstractify as necessary!
 		for (int i = 0; i < workers.length; i++) {
 			
-			this.workers[i] = new Worker(wNames[i], joblist);
+			this.workers[i] = new Worker(wNames[i], joblist, domain);
 			
 		}
 		
-		this.joblist = new Joblist();
+		
 		
 	}
 	
@@ -172,7 +174,14 @@ public class PackFile implements Runnable {
 		// Handle the tags.
 		for (Element ele : elementPool) {
 			
-			Handlers.handleTag(this, ele);
+			Job j = Handlers.handleTag(this, ele);
+			
+			if (Domain.Calc.isCompatible(this.domain, Domain.Calc.parseDomain(((Element) ele.getParent()).getAttribute("domain").getValue())) && j != null) {
+				// My my, that was a long line...
+				
+				this.joblist.addJob(j);
+				
+			}
 			
 		}
 		
