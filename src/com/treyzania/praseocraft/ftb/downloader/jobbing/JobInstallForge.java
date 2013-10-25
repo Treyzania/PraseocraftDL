@@ -9,6 +9,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
 
+import com.treyzania.praseocraft.ftb.downloader.Util;
 import com.treyzania.praseocraft.ftb.downloader.Pcdl;
 
 public class JobInstallForge extends Job {
@@ -38,7 +39,7 @@ public class JobInstallForge extends Job {
 		Pcdl.log.fine("JOBS: Attempting to install MCForge.");
 		
 		String forgeJarZipThingy = "";
-		String mcJar = Pcdl.getMinecraftDir() + "/versions/" + mcVerName + "/" + mcVerName + ".jar";
+		String mcJar = Util.getMinecraftDir() + "/versions/" + mcVerName + "/" + mcVerName + ".jar";
 		String moddedJar = "";
 		
 		try {

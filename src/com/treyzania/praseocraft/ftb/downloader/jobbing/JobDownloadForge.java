@@ -1,5 +1,6 @@
 package com.treyzania.praseocraft.ftb.downloader.jobbing;
 
+import com.treyzania.praseocraft.ftb.downloader.Util;
 import com.treyzania.praseocraft.ftb.downloader.Pcdl;
 import com.treyzania.praseocraft.ftb.downloader.resouces.Downloader;
 
@@ -25,7 +26,7 @@ public class JobDownloadForge extends Job {
 		Pcdl.log.fine("JOBS: Downloading MCForge version \'" + this.forgeVer + "\' for Minecraft \'" + this.mcVer + "\'.");
 		
 		String forgeAddr = "http://files.minecraftforge.net/minecraftforge/minecraftforge-universal-" + this.mcVer + "-" + this.forgeVer + ".jar";
-		String tempLocation = Pcdl.getTempDir() + "forge-" + this.forgeVer + "-MC" + this.mcVer + ".jar";
+		String tempLocation = Util.getTempDir() + "forge-" + this.forgeVer + "-MC" + this.mcVer + ".jar";
 		
 		out = Downloader.download(forgeAddr, tempLocation);
 		

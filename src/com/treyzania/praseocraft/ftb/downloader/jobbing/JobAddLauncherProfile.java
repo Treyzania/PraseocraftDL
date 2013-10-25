@@ -16,6 +16,7 @@ import argo.jdom.JsonNodeFactories;
 import argo.jdom.JsonRootNode;
 import argo.saj.InvalidSyntaxException;
 
+import com.treyzania.praseocraft.ftb.downloader.Util;
 import com.treyzania.praseocraft.ftb.downloader.Pcdl;
 import com.treyzania.praseocraft.ftb.downloader.PackFile;
 
@@ -42,7 +43,7 @@ public class JobAddLauncherProfile extends Job {
 		
 		boolean out = true;
 		
-		String lpjsonLoc = Pcdl.getMinecraftDir() + "/launcher_profiles.json";
+		String lpjsonLoc = Util.getMinecraftDir() + "/launcher_profiles.json";
 		
 		File lpjsonFile = null;
 		char[] lpjsonContent = "nope!".toCharArray();
@@ -74,7 +75,7 @@ public class JobAddLauncherProfile extends Job {
 		
 		// Actually parse it!
 		String profName = pf.metadata.access("PackName") + "-" + pf.packVer;
-		String profGameDir = Pcdl.getPCDLDir() + "/" + profName;
+		String profGameDir = Util.getPCDLDir() + "/" + profName;
 		String profLastVersionId = pf.metadata.access("MCVersion") + "-Forge" + pf.metadata.access("ForgeVersion");
 		int profResX = 1280;
 		int profResY = 720;

@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import com.treyzania.praseocraft.ftb.downloader.Util;
 import com.treyzania.praseocraft.ftb.downloader.Pcdl;
 
 public class JobGetMinecraft extends Job {
@@ -30,7 +31,7 @@ public class JobGetMinecraft extends Job {
 		
 		try {
 			
-			src = new File(Pcdl.getMinecraftDir() + "/versions/" + mcVer);
+			src = new File(Util.getMinecraftDir() + "/versions/" + mcVer);
 			dest = new File(src.getParent() + "/.pcdlmc/packs/" + Pcdl.packfile.packVer); // I hope this works too!
 			
 			this.copyDirectory(src, dest);

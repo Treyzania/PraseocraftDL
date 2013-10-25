@@ -3,6 +3,7 @@ package com.treyzania.praseocraft.ftb.downloader.jobbing;
 import java.io.IOException;
 import java.util.zip.ZipException;
 
+import com.treyzania.praseocraft.ftb.downloader.Util;
 import com.treyzania.praseocraft.ftb.downloader.Pcdl;
 import com.treyzania.praseocraft.ftb.downloader.resouces.Unzipper;
 
@@ -28,7 +29,7 @@ public class JobUnzip extends Job {
 		Pcdl.log.fine("JOBS: Unzipping \'" + this.source + "\' to \'" + this.destinaion + "\'.");
 		
 		try {
-			Unzipper.extract(Pcdl.fs_sysPath(this.source), Pcdl.fs_sysPath(this.destinaion));
+			Unzipper.extract(Util.fs_sysPath(this.source), Util.fs_sysPath(this.destinaion));
 		} catch (ZipException e) {
 			e.printStackTrace();
 			good = false;

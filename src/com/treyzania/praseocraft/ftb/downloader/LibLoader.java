@@ -16,7 +16,7 @@ public class LibLoader {
 	
 	public static boolean isDownloaded() {
 		
-		File xomJarDir = new File(Pcdl.thisPath + "xom.jar");
+		File xomJarDir = new File(xomJarName);
 		return xomJarDir.exists();
 		
 	}
@@ -24,7 +24,7 @@ public class LibLoader {
 	// Do I need to actually download this file?
 	public static void downloadJar() {
 		
-		Downloader.download(xomDirectLink, Pcdl.thisPath + xomJarName);
+		Downloader.download(xomDirectLink, xomJarName);
 		
 	}
 	

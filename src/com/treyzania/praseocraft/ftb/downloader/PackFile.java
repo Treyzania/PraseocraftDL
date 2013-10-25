@@ -41,7 +41,7 @@ public class PackFile implements Runnable {
 		this.metadata = new MetaCollector();
 		this.pfexe = new Thread(this, "PackFile-Thread");
 		
-		this.workers = new Worker[2]; // Expand/abstractify as necessary!
+		this.workers = new Worker[1]; // Expand/abstractify as necessary!
 		for (int i = 0; i < workers.length; i++) {
 			
 			this.workers[i] = new Worker(wNames[i], joblist);
