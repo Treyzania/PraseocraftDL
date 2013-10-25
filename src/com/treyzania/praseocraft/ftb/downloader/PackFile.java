@@ -11,6 +11,9 @@ import nu.xom.Elements;
 import nu.xom.ParsingException;
 
 import com.treyzania.praseocraft.ftb.downloader.jobbing.Job;
+import com.treyzania.praseocraft.ftb.downloader.jobbing.JobDownloadForge;
+import com.treyzania.praseocraft.ftb.downloader.jobbing.JobGetMinecraft;
+import com.treyzania.praseocraft.ftb.downloader.jobbing.JobInstallForge;
 import com.treyzania.praseocraft.ftb.downloader.jobbing.Joblist;
 import com.treyzania.praseocraft.ftb.downloader.parsing.Handlers;
 import com.treyzania.praseocraft.ftb.downloader.resouces.MasterFrame;
@@ -197,12 +200,31 @@ public class PackFile implements Runnable {
 		
 	}
 	
+	private String determineMCJarLocation() {
+		
+		String loc = Util.getMinecraftDir() + "/lostminecraftdotjar.jar";
+		
+		// TODO Work on this.
+		
+		return loc;
+		
+	}
+	
 	private void createFormattingJobs() {
 		
 		// Initialization.
 		ArrayList<Job> tJobs = new ArrayList<Job>();
 		
-		String tempDir = Util.getTempDir();
+		String forgeZipName = Util.getTempDir() + "forge-" + this.metadata.access("ForgeVersion") + "-MC" + this.metadata.access("MCVersion") + ".jar";
+		String dirForNewMc = this.determineMCJarLocation();
+		
+		Job dlForge = new JobDownloadForge(joblist, this.metadata.access("ForgeVersion"), this.metadata.access("MCVersion"));
+		Job getMc = new JobGetMinecraft(joblist);
+		Job installForge = new JobInstallForge(joblist, this.metadata.access("MCVersion"), forgeZipName, dirForNewMc);
+		
+		tJobs.add(dlForge);
+		tJobs.add(getMc);
+		tJobs.add(installForge);
 		
 		// Post-processing.
 		for (Job theJob : tJobs) {
