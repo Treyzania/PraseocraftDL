@@ -196,7 +196,19 @@ public class PackFile implements Runnable {
 			
 		}
 		
+		this.extractNecessaryMetadata(ver);
+		
 		Pcdl.log.info("If this is being read, then the XML was probably parsed successfully!  " + elementPool);
+		
+	}
+	
+	private void extractNecessaryMetadata(Element versionTag) {
+		
+		String forgeVer = versionTag.getAttribute("forge").getValue();
+		String mcVer = versionTag.getAttribute("mcver").getValue();
+		
+		this.metadata.define("ForgeVersion", forgeVer);
+		this.metadata.define("MCVersion", mcVer);
 		
 	}
 	

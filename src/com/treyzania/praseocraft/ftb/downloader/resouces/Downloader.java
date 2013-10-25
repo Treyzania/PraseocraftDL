@@ -30,34 +30,38 @@ public class Downloader {
 	 */
 	@SuppressWarnings("resource")
 	public static boolean download(String address, String filename) {
-
+		
 		URL website;
 		File file;
 		ReadableByteChannel rbc;
 		FileOutputStream fos;
-
+		
 		boolean good = true;
-
+		
 		try {
-
+			
 			file = new File(filename);
-			file.mkdirs(); // I hope this works as intended.
-
+			
+			if (!file.exists()) { // Now it works as intended.
+				file.getParentFile().mkdirs();
+				file.createNewFile();
+			}
+			
 			website = new URL(address);
 			rbc = Channels.newChannel(website.openStream());
 			fos = new FileOutputStream(file);
-
+			
 			fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
-
+			
 			good = true;
-
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			good = false;
 		}
-
+		
 		return good;
-
+		
 	}
 
 }
