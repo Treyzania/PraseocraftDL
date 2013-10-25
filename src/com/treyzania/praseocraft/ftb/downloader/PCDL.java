@@ -48,7 +48,7 @@ public class Pcdl {
 		Collection<Object> c = p.values();
 		for (int i = 0; i < c.size(); i++) {
 			
-			System.out.println(p.stringPropertyNames().toArray()[i] + ": " + c.toArray()[i]);
+			//System.out.println(p.stringPropertyNames().toArray()[i] + ": " + c.toArray()[i]);
 			
 		}
 		

@@ -36,6 +36,10 @@ public enum Domain {
 			
 			boolean result = false;
 			
+			if (model == null || test == null) {
+				throw new NullPointerException("One of the domains in the test was null.");
+			}
+			
 			if (model == Domain.GENERIC || test == Domain.GENERIC) {
 				result = true;
 			}

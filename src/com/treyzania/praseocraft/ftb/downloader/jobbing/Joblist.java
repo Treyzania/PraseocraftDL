@@ -20,15 +20,13 @@ public class Joblist {
 	
 	public Job dequeueJob() {
 		
-		while (jobs.isEmpty()) {
-			
-			try {
-				Thread.sleep(10);
-			} catch (Exception e) {}
-			
+		Job j = null;
+		
+		if (jobs.size() > 0) {
+			j = jobs.remove(0);
 		}
 		
-		return jobs.remove(0);
+		return j;
 		
 	}
 	

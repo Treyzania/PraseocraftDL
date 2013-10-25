@@ -43,14 +43,16 @@ public class PackFile implements Runnable {
 		this.pfexe = new Thread(this, "PackFile-Thread");
 		this.joblist = new Joblist();
 		
+	}
+
+	private void defineWorkers() {
+		
 		this.workers = new Worker[1]; // Expand/abstractify as necessary!
 		for (int i = 0; i < workers.length; i++) {
 			
 			this.workers[i] = new Worker(wNames[i], joblist, domain);
 			
 		}
-		
-		
 		
 	}
 	
@@ -81,11 +83,15 @@ public class PackFile implements Runnable {
 		} // There will always be one selected because the Client button is selected by default.
 		Pcdl.log.info("Dowload Type: " + d.toString());
 		
+		this.domain = d;
+		
 		Pcdl.dlMode = dString;
 		this.readJobs(d);
 		Pcdl.log.info("Job list created and organized successfully. (Hopefully...)");
 		
 		frame.progressBar.setMaximum(this.joblist.getJobsRemaining());
+		
+		this.defineWorkers();
 		
 		Pcdl.log.info("Starting workers...");
 		this.startWorkers();
@@ -171,21 +177,29 @@ public class PackFile implements Runnable {
 		
 		//this.readJobs_readoutElements(root, ver, null);
 		
+		this.createFormattingJobs();
+		
 		// Handle the tags.
 		for (Element ele : elementPool) {
 			
 			Job j = Handlers.handleTag(this, ele);
 			
 			if (Domain.Calc.isCompatible(this.domain, Domain.Calc.parseDomain(((Element) ele.getParent()).getAttribute("domain").getValue())) && j != null) {
-				// My my, that was a long line...
+				// My my, that was a long line...  I hope it works.
 				
-				this.joblist.addJob(j);
+				this.joblist.addJob(j); // Somewhat anti-climatic.
 				
 			}
 			
 		}
 		
 		Pcdl.log.info("If this is being read, then the XML was probably parsed successfully!  " + elementPool);
+		
+	}
+	
+	private void createFormattingJobs() {
+		
+		
 		
 	}
 	
