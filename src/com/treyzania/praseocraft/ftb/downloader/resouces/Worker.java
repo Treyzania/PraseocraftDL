@@ -1,5 +1,7 @@
 package com.treyzania.praseocraft.ftb.downloader.resouces;
 
+import java.util.ArrayList;
+
 import com.treyzania.praseocraft.ftb.downloader.Domain;
 import com.treyzania.praseocraft.ftb.downloader.Pcdl;
 import com.treyzania.praseocraft.ftb.downloader.jobbing.Job;
@@ -30,6 +32,8 @@ public class Worker implements Runnable {
 	@Override
 	public void run() {
 		
+		ArrayList<Job> fails = new ArrayList<Job>();
+		
 		Pcdl.log.info("WORKER \'" + this.name + "\'" + " STARTED!");
 		
 		int failures = 0;
@@ -57,13 +61,23 @@ public class Worker implements Runnable {
 					
 				}
 				
-				if (!success) failures++;
+				if (!success) {
+					fails.add(j);
+					failures++;
+				}
 				
 			}
 			
 		}
 		
-		Pcdl.log.info("WORKER \'" + this.name + "\'" + " FINISHED!  FAIL COUNT: " + failures + " FAILURES.");
+		StringBuilder sb = new StringBuilder();
+		sb.append("Fails: {");
+		for (Job j : fails) {
+			sb.append(j.getClass().getSimpleName() + ", ");
+		}
+		sb.append("}.");
+		Pcdl.log.info("WORKER \'" + this.name + "\'" + " FINISHED!  FAIL COUNT: " + failures + " FAILURE(S).");
+		if (failures > 0) Pcdl.log.info(sb.toString());
 		
 		isFinished = true;
 		
