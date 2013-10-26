@@ -29,7 +29,8 @@ public class JobGetMinecraft extends Job {
 	public boolean runJob() {
 
 		boolean out = true;
-		String mcVer = Pcdl.packfile.metadata.access("MCVersion");
+		
+		String mcVer = pf.getMCVersion();
 
 		Pcdl.log.fine("JOBS: Attempting to copy the vanilla Minecraft Jar file.  (No promises.)");
 		
@@ -43,7 +44,7 @@ public class JobGetMinecraft extends Job {
 			src = new File(Util.getMinecraftDir() + "/versions/" + mcVer + "/" + mcVer + ".jar");
 			dest = new File(to);
 			
-			Pcdl.log.fine("Data movement: " + src.getPath() + "->" + dest.getPath());
+			Pcdl.log.fine("Data movement: " + src.getPath() + " -> " + dest.getPath());
 			
 			if (!dest.exists()) {
 				dest.getParentFile().mkdirs();

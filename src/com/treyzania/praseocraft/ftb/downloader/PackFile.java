@@ -77,10 +77,10 @@ public class PackFile implements Runnable {
 	
 	public String generatePackJarPath() {
 		
-		String path = this.generatePackPath() + "/lostGameJar.jar";
+		String path = Util.getTempDir() + "/lostGameJar" + Long.toHexString(System.currentTimeMillis()) + ".jar";
 		
 		if (this.domain == Domain.CLIENT) {
-			path = Util.getTempDir() + "/delete_me/derpityderp.jar";
+			path = Util.getMinecraftDir() + "/versions/" + this.generateLauncherVersionName() + "/" + this.generateLauncherVersionName() + ".jar";
 		} else if (this.domain == Domain.SERVER) {
 			path = this.generatePackPath() + "/minecraft_server.jar";
 		}
@@ -290,35 +290,37 @@ public class PackFile implements Runnable {
 		return this.metadata.access("MCVersion");
 	}
 	
+	public String getForgeVersion() {
+		return this.metadata.access("ForgeVersion");
+	}
+	
 	private void createFormattingJobs() {
 		
 		// Initialization.
 		ArrayList<Job> tJobs = new ArrayList<Job>();
 		
-		String forgeZipName = Util.getTempDir() + "forge-" + this.metadata.access("ForgeVersion") + "-MC" + this.metadata.access("MCVersion") + ".jar";
-		String dirForNewMc = this.generatePackJarPath();
+		// Retrieve the locations of temp files.
+		String forgeDir = Util.getTempDir() + "/forge-" + this.getForgeVersion() + "-MC" + this.getMCVersion() + ".jar";
+		String tempMcJarDir = Util.getTempDir() + "/mc-" + this.getMCVersion(); // I don't care if this is server or client, yet.
+		String finalMcJarDir = this.generatePackJarPath();
 		
-		Job dlForge = new JobDownloadForge(joblist, this.metadata.access("ForgeVersion"), this.metadata.access("MCVersion"));
-		tJobs.add(dlForge);
-		
-		if (this.domain == Domain.CLIENT) {
-			Job getMc = new JobGetMinecraft(joblist, this, Util.getTempDir() + "/mc-" + this.getMCVersion() + ".jar");
-			Job cvd = new JobCreateVersionData(joblist, this);
+		// Create and register the jobs.
+		if (this.domain == Domain.CLIENT) { // Client jobs.
+			Job getMc = new JobGetMinecraft(joblist, this, tempMcJarDir);
+			Job dlForge = new JobDownloadForge(joblist, this.getForgeVersion(), this.getMCVersion(), forgeDir);
+			Job installForge = new JobInstallForge(joblist, tempMcJarDir, forgeDir, finalMcJarDir);
 			tJobs.add(getMc);
-			tJobs.add(cvd);
+			tJobs.add(dlForge);
+			tJobs.add(installForge);
 		}
-		
-		if (this.domain == Domain.SERVER) {
-			dirForNewMc = Util.getTempDir() + "/vanillaserver-" + this.metadata.access("MCVersion") + ".jar";
-			Job dlServer = new JobDownloadServer(joblist, dirForNewMc);
+		if (this.domain == Domain.SERVER) { // Server jobs.
+			Job dlServer = new JobDownloadServer(joblist, this.getMCVersion());
+			Job dlForge = new JobDownloadForge(joblist, this.getForgeVersion(), this.getMCVersion(), forgeDir);
+			Job installForge = new JobInstallForge(joblist, tempMcJarDir, forgeDir, finalMcJarDir);
 			tJobs.add(dlServer);
+			tJobs.add(dlForge);
+			tJobs.add(installForge);
 		}
-		
-		//String forgeLoc = Util.getTempDir() + "/forge-" + Pcdl.packfile.metadata.access("ForgeVersion") + "-MC" + Pcdl.packfile.metadata.access("MCVersion") + ".jar";
-		String mcJar = Util.getTempDir() + "/mc-" + this.getMCVersion() + ".jar";
-		//String finalJar = Util.getMinecraftDir() + "/versions/" + Pcdl.packfile.generateLauncherVersionName() + "/" + Pcdl.packfile.generateLauncherVersionName() + ".jar";
-		Job installForge = new JobInstallForge(joblist, mcJar, forgeZipName, dirForNewMc);
-		tJobs.add(installForge);
 		
 		// Post-processing.
 		for (Job theJob : tJobs) {
