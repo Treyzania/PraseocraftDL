@@ -27,7 +27,7 @@ public class JobInstallForge extends Job {
 	}
 
 	/**
-	 * I stole this from
+	 * I stole some of this from
 	 * "http://stackoverflow.com/questions/2223434/appending-files-to-a-zip-file-with-java".
 	 * 
 	 */
@@ -38,30 +38,33 @@ public class JobInstallForge extends Job {
 		
 		Pcdl.log.fine("JOBS: Attempting to install MCForge.");
 		
-		String forgeJarZipThingy = "";
-		String mcJar = Util.getMinecraftDir() + "/versions/" + mcVerName + "/" + mcVerName + ".jar";
-		String moddedJar = "";
+		String forgeJarZipThingy = Util.getTempDir() + "/forge-" + Pcdl.packfile.metadata.access("ForgeVersion") + "-MC" + Pcdl.packfile.metadata.access("MCVersion") + ".jar";
+		String mcJar = Util.getMinecraftDir() + "/versions/" + Pcdl.packfile.metadata.access("MCVersion") + "/" + Pcdl.packfile.metadata.access("MCVersion") + ".jar";
+		String moddedJar = Util.getMinecraftDir() + "/versions/" + Pcdl.packfile.generateVersionName() + "/" + Pcdl.packfile.generateVersionName() + ".jar";
 		
 		try {
 			
 			// read war.zip and write to append.zip
-			ZipFile src = new ZipFile(mcJar);
-			ZipOutputStream append = new ZipOutputStream(new FileOutputStream(forgeJarZipThingy));
+			ZipFile src = new ZipFile(Util.fs_sysPath(mcJar));
+			ZipOutputStream append = new ZipOutputStream(new FileOutputStream(Util.fs_sysPath(forgeJarZipThingy)));
 			
 			// first, copy contents from existing war
 			Enumeration<? extends ZipEntry> entries = src.entries();
 			while (entries.hasMoreElements()) {
+				
 				ZipEntry e = entries.nextElement();
-				System.out.println("copy: " + e.getName());
+				//System.out.println("copy: " + e.getName());
 				append.putNextEntry(e);
+				
 				if (!e.isDirectory()) {
 					copy(src.getInputStream(e), append);
 				}
 				append.closeEntry();
+				
 			}
 			
 			// now append some extra content
-			ZipEntry e = new ZipEntry(moddedJar);
+			ZipEntry e = new ZipEntry(Util.fs_sysPath(forgeJarZipThingy));
 			System.out.println("append: " + e.getName());
 			append.putNextEntry(e);
 			append.write("42\n".getBytes());
@@ -72,6 +75,8 @@ public class JobInstallForge extends Job {
 			append.close();
 			
 		} catch (Exception e) {
+			
+			e.printStackTrace();
 			
 			Pcdl.log.severe(e.getMessage());
 			out = false;

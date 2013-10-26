@@ -46,8 +46,16 @@ public class PackFile implements Runnable {
 		this.pfexe = new Thread(this, "PackFile-Thread");
 		this.joblist = new Joblist();
 		
+		metadata.define("PackName", "PCDL-Generated_Nameless_Pack");
+		
 	}
-
+	
+	public String generateVersionName() {
+		
+		return (this.metadata.access("MCVersion") + "-Forge" + this.metadata.access("ForgeVersion"));
+		
+	}
+	
 	private void defineWorkers() {
 		
 		this.workers = new Worker[1]; // Expand/abstractify as necessary!
@@ -88,9 +96,14 @@ public class PackFile implements Runnable {
 		
 		this.domain = d;
 		
+		Pcdl.log.info("Preparing PackFile, initalizing...");
+		
 		Pcdl.dlMode = dString;
 		this.readJobs(d);
 		Pcdl.log.info("Job list created and organized successfully. (Hopefully...)");
+		
+		Pcdl.log.info("MC Version: " + metadata.access("MCVersion"));
+		Pcdl.log.info("Forge Version: " + metadata.access("ForgeVersion"));
 		
 		frame.progressBar.setMaximum(this.joblist.getJobsRemaining());
 		
@@ -99,9 +112,40 @@ public class PackFile implements Runnable {
 		Pcdl.log.info("Starting workers...");
 		this.startWorkers();
 		
+		waitForWorkersToFinish();
+		
 		Pcdl.frame.beep();
 		NotificationFrame nf = new NotificationFrame("Pack building done!");
 		nf.waitForExit(); // I luuuuv this method!
+		
+	}
+
+	private void waitForWorkersToFinish() {
+		
+		boolean allFinished = false;
+		
+		while (!allFinished) {
+			
+			int onesDone = 0;
+			for (Worker w : this.workers) {
+				
+				if (!w.isFinished) {
+					onesDone++;
+				}
+				
+			}
+			
+			if (onesDone == workers.length) {
+				allFinished = true;
+			}
+			
+			try {
+				Thread.sleep(50);
+			} catch (InterruptedException e) {}
+			
+			System.gc(); // Just to be nice!
+			
+		}
 		
 	}
 	
@@ -135,7 +179,7 @@ public class PackFile implements Runnable {
 		Element ver = null;
 		for (int i = 0; i < verTags.size(); i++) {
 			Element e = verTags.get(i);
-			System.out.println("VER_TAG: " + i + ", " + e.toString() + ", " + e.getAttribute("v"));
+			System.out.println("VER_TAG: " + i + ", " + e.toString() + ", " + e.getAttribute("ver"));
 			if (e.getAttribute("ver").getValue().equals(this.packVer)) {
 				System.out.println("I found it! " + i);
 				ver = verTags.get(i);
@@ -180,8 +224,6 @@ public class PackFile implements Runnable {
 		
 		//this.readJobs_readoutElements(root, ver, null);
 		
-		this.createFormattingJobs();
-		
 		// Handle the tags.
 		for (Element ele : elementPool) {
 			
@@ -197,6 +239,7 @@ public class PackFile implements Runnable {
 		}
 		
 		this.extractNecessaryMetadata(ver);
+		this.createFormattingJobs();
 		
 		Pcdl.log.info("If this is being read, then the XML was probably parsed successfully!  " + elementPool);
 		
@@ -216,12 +259,23 @@ public class PackFile implements Runnable {
 		
 		String loc = Util.getMinecraftDir() + "/lostminecraftdotjar.jar";
 		
-		// TODO Work on this.
+		if (Domain.Calc.isCompatible(this.domain, Domain.CILENT)) {
+			
+			loc = "";
+			
+		}
+		
+		if (Domain.Calc.isCompatible(this.domain, Domain.SERVER)) {
+			
+			loc = "";
+			
+		}
 		
 		return loc;
 		
 	}
 	
+	@SuppressWarnings("unused")
 	private void createFormattingJobs() {
 		
 		// Initialization.
@@ -235,7 +289,7 @@ public class PackFile implements Runnable {
 		Job installForge = new JobInstallForge(joblist, this.metadata.access("MCVersion"), forgeZipName, dirForNewMc);
 		
 		tJobs.add(dlForge);
-		tJobs.add(getMc);
+		//tJobs.add(getMc);
 		tJobs.add(installForge);
 		
 		// Post-processing.

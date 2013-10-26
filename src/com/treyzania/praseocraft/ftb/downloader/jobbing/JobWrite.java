@@ -32,14 +32,12 @@ public class JobWrite extends Job {
 		File f = new File(Util.fs_sysPath(file));
 		FileOutputStream fos = null;
 		DataOutputStream dos = null;
-		
-		Pcdl.log.fine("JOBS: Writing to file \'" + file + "\'.");
-		
+				
 		// Replace bad characters with better ones.
 		String newContent = content
 				.replace("\n", "")
 				.replace("\t", "")
-				.replace("\\n", "\n")
+				.replace("\\n", System.lineSeparator())
 				.replace("\\t", "\t")
 				;
 		

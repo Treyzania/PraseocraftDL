@@ -76,7 +76,7 @@ public class JobAddLauncherProfile extends Job {
 		// Actually parse it!
 		String profName = pf.metadata.access("PackName") + "-" + pf.packVer;
 		String profGameDir = Util.getPCDLDir() + "/" + profName;
-		String profLastVersionId = pf.metadata.access("MCVersion") + "-Forge" + pf.metadata.access("ForgeVersion");
+		String profLastVersionId = pf.generateVersionName();
 		int profResX = 1280;
 		int profResY = 720;
 		
