@@ -3,6 +3,7 @@ package com.treyzania.praseocraft.ftb.downloader.jobbing;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
@@ -37,41 +38,106 @@ public class JobInstallForge2 extends Job {
 
 		try {
 			// read war.zip and write to append.zip
-			ZipFile war = new ZipFile(this.mcJarName);
-			ZipOutputStream append = new ZipOutputStream(new FileOutputStream(this.destZipName));
-
+			ZipFile mcJar = new ZipFile(this.mcJarName);
+			ZipOutputStream destZip = new ZipOutputStream(new FileOutputStream(this.destZipName));
+			
+			int originalsCopied = 0;
+			int forgesCopied = 0;
+			
+			ZipFile forgeZip = new ZipFile(this.forgeZipName);
+			ZipEntry[] forgeZes = this.getEntries(forgeZip);
+			
 			// first, copy contents from existing war
-			Enumeration<? extends ZipEntry> entries = war.entries();
+			Pcdl.log.finer("Copying over Minecraft files...");
+			Enumeration<? extends ZipEntry> entries = mcJar.entries();
 			while (entries.hasMoreElements()) {
+				
 				ZipEntry e = entries.nextElement();
-				System.out.println("copy: " + e.getName());
-				append.putNextEntry(e);
-				if (!e.isDirectory()) {
-					copy(war.getInputStream(e), append);
+				
+				if (!e.getName().toLowerCase().contains("META-INF".toLowerCase()) && !this.testDuplicates(e, forgeZes)) {
+					
+					destZip.putNextEntry(e);
+					if (!e.isDirectory()) {
+						copy(mcJar.getInputStream(e), destZip);
+					}
+					destZip.closeEntry();
+					
+					originalsCopied++;
+					
 				}
-				append.closeEntry();
+				
 			}
-
-			// now append some extra content
-			ZipEntry e = new ZipEntry(this.forgeZipName);
-			System.out.println("append: " + e.getName());
-			append.putNextEntry(e);
-			append.write("42\n".getBytes());
-			append.closeEntry();
-
+			Pcdl.log.finer("\tDone!");
+			
+			Pcdl.log.finer("Copying over MCForge files...");
+			for (int i = 0; i < forgeZes.length; i++) {
+				
+				ZipEntry theZe = forgeZes[i];
+				if (theZe != null) {
+					
+					destZip.putNextEntry(theZe);
+					
+					InputStream is = forgeZip.getInputStream(theZe);
+					for (int j = 0; j < theZe.getSize(); j++) {
+						destZip.write(is.read()); // Not the most efficient, but I don't care.
+					}
+					destZip.closeEntry();
+					
+					forgesCopied++;
+					
+				}
+				
+			}
+			Pcdl.log.finer("\tDone!");
+			
+			Pcdl.log.fine("Done installing MCForge.  MC Files Copied: " + originalsCopied + ".  Forge Files Copied: " + forgesCopied + ".");
+			
 			// close
-			war.close();
-			append.close();
+			mcJar.close();
+			destZip.close();
+			
 		} catch (Exception e) {
 			Pcdl.log.severe(e.getMessage());
 			e.printStackTrace();
 			out = false;
 		}
-
+		
 		return out;
-
+		
+	}
+	
+	private boolean testDuplicates(ZipEntry e, ZipEntry[] forgeZes) {
+		
+		boolean dupe = false; // True if there is some duplicate files.
+		
+		for (ZipEntry fze : forgeZes) {
+			
+			if (fze != null && e.getName() == fze.getName()) {
+				
+				dupe = true;
+				
+			}
+			
+		}
+		
+		return dupe;
+		
 	}
 
+	private ZipEntry[] getEntries(ZipFile zf) {
+		
+		ArrayList<ZipEntry> entries = new ArrayList<ZipEntry>();
+		Enumeration<? extends ZipEntry> zes = zf.entries();
+		
+		while (zes.hasMoreElements()) {
+			entries.add(zes.nextElement());
+		}
+		
+		ZipEntry[] zs = entries.toArray(new ZipEntry[1024 * 8]); // I hope this is enough.
+		return zs;
+		
+	}
+	
 	private void copy(InputStream input, ZipOutputStream output) {
 		
 		int bytesRead;

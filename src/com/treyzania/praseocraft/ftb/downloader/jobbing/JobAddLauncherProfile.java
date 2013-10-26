@@ -86,9 +86,9 @@ public class JobAddLauncherProfile extends Job {
 		lpJson = new String(lpjsonContent); // Actually make it into a String.
 
 		Pcdl.log.finer("ALP: JSON Data Length: " + lpJson.length());
-		// Pcdl.log.finest(lpJson.charAt(0) + "," + lpJson.charAt(1) + "," +
-		// lpJson.charAt(2) + "," + lpJson.charAt(3));
-
+		
+		String profJavaArgs = "-Dfml.ignoreInvalidMinecraftCertificates\u003dtrue";
+		
 		// Actually parse it!
 		String profName = this.name;
 		String profGameDir = Util
@@ -99,9 +99,7 @@ public class JobAddLauncherProfile extends Job {
 
 		JdomParser JDOM_PARSER = new JdomParser();
 		JsonRootNode json = null;
-
-		//System.out.println(lpJson);
-
+		
 		try {
 			json = JDOM_PARSER.parse(lpJson);
 		} catch (InvalidSyntaxException e) {
@@ -115,11 +113,13 @@ public class JobAddLauncherProfile extends Job {
 		Pcdl.log.finest("ALP: json.getFieldList(): " + json.getFieldList());
 
 		Map<JsonStringNode, JsonNode> profilesObj = json.getObjectNode("profiles");
-
+		
 		JsonField[] profFields = new JsonField[] {
 				field("name", string(profName)),
 				field("gameDir", string(profGameDir)),
-				field("lastVersionId", string(profLastVersionId)) };
+				field("lastVersionId", string(profLastVersionId)),
+				field("javaArgs", string(profJavaArgs))
+				};
 		
 		// Just some copypasta...
 		HashMap profileCopy = new HashMap(json.getNode(new Object[] { "profiles" }).getFields());
