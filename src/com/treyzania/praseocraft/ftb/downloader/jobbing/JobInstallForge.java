@@ -1,5 +1,6 @@
 package com.treyzania.praseocraft.ftb.downloader.jobbing;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -42,6 +43,16 @@ public class JobInstallForge extends Job {
 		String mcJar = Util.getMinecraftDir() + "/versions/" + Pcdl.packfile.metadata.access("MCVersion") + "/" + Pcdl.packfile.metadata.access("MCVersion") + ".jar";
 		String moddedJar = Util.getMinecraftDir() + "/versions/" + Pcdl.packfile.generateVersionName() + "/" + Pcdl.packfile.generateVersionName() + ".jar";
 		
+		File tempModdedJar = new File(Util.fs_sysPath(moddedJar));
+		if (!tempModdedJar.exists()) {
+			tempModdedJar.getParentFile().mkdirs();
+			try {
+				tempModdedJar.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
 		try {
 			
 			// read war.zip and write to append.zip
@@ -64,7 +75,7 @@ public class JobInstallForge extends Job {
 			}
 			
 			// now append some extra content
-			ZipEntry e = new ZipEntry(Util.fs_sysPath(forgeJarZipThingy));
+			ZipEntry e = new ZipEntry(Util.fs_sysPath(moddedJar));
 			System.out.println("append: " + e.getName());
 			append.putNextEntry(e);
 			append.write("42\n".getBytes());

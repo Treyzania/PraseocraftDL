@@ -11,6 +11,7 @@ import nu.xom.Elements;
 import nu.xom.ParsingException;
 
 import com.treyzania.praseocraft.ftb.downloader.jobbing.Job;
+import com.treyzania.praseocraft.ftb.downloader.jobbing.JobCreateVersionData;
 import com.treyzania.praseocraft.ftb.downloader.jobbing.JobDownloadForge;
 import com.treyzania.praseocraft.ftb.downloader.jobbing.JobGetMinecraft;
 import com.treyzania.praseocraft.ftb.downloader.jobbing.JobInstallForge;
@@ -112,7 +113,7 @@ public class PackFile implements Runnable {
 		Pcdl.log.info("Starting workers...");
 		this.startWorkers();
 		
-		waitForWorkersToFinish();
+		this.waitForWorkersToFinish();
 		
 		Pcdl.frame.beep();
 		NotificationFrame nf = new NotificationFrame("Pack building done!");
@@ -129,9 +130,7 @@ public class PackFile implements Runnable {
 			int onesDone = 0;
 			for (Worker w : this.workers) {
 				
-				if (!w.isFinished) {
-					onesDone++;
-				}
+				if (w.isFinished) onesDone++;
 				
 			}
 			
@@ -275,7 +274,6 @@ public class PackFile implements Runnable {
 		
 	}
 	
-	@SuppressWarnings("unused")
 	private void createFormattingJobs() {
 		
 		// Initialization.
@@ -287,10 +285,12 @@ public class PackFile implements Runnable {
 		Job dlForge = new JobDownloadForge(joblist, this.metadata.access("ForgeVersion"), this.metadata.access("MCVersion"));
 		Job getMc = new JobGetMinecraft(joblist);
 		Job installForge = new JobInstallForge(joblist, this.metadata.access("MCVersion"), forgeZipName, dirForNewMc);
+		Job cvd = new JobCreateVersionData(joblist, this);
 		
 		tJobs.add(dlForge);
-		//tJobs.add(getMc);
+		tJobs.add(getMc);
 		tJobs.add(installForge);
+		tJobs.add(cvd);
 		
 		// Post-processing.
 		for (Job theJob : tJobs) {

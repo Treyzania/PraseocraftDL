@@ -4,6 +4,8 @@ import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 import com.treyzania.praseocraft.ftb.downloader.PackFile;
@@ -22,8 +24,13 @@ public class JobCreateVersionData extends Job {
 		
 		super(jl);
 		
-		URL fileUrl = JobCreateVersionData.class.getResource("forgeVersionData");  
-		File fvd = new File(fileUrl.getPath());
+		URL fileUrl = null;
+		try {
+			fileUrl = new URL("http://pastebin.com/raw.php?i=866SSjUn");
+		} catch (MalformedURLException e1) {
+			e1.printStackTrace();
+		}
+		File fvd = new File(fileUrl.getFile());
 		char[] data = new char[(int) fvd.length()];
 		String tempJson;
 		
@@ -31,6 +38,7 @@ public class JobCreateVersionData extends Job {
 		
 		try {
 			
+			//fis = new FileInputStream(fvd);
 			fis = new FileInputStream(fvd);
 			
 			for (int i = 0; i < data.length; i++) {
@@ -46,6 +54,7 @@ public class JobCreateVersionData extends Job {
 		tempJson = new String(data);
 		this.forgeJson = tempJson.replace("###PACKID###", pf.generateVersionName());
 		
+		Pcdl.log.finest("Json Data Length: " + forgeJson.length());
 		
 	}
 
@@ -56,10 +65,23 @@ public class JobCreateVersionData extends Job {
 		boolean out = true;
 		
 		PackFile pf = Pcdl.packfile;
-		String abstractPathName = Util.fs_sysPath(Util.getMinecraftDir() + "/verisons/" + pf.generateVersionName() + "/" + pf.generateVersionName());
+		String abstractPathName = Util.fs_sysPath(Util.getMinecraftDir() + "/versions/" + pf.generateVersionName() + "/" + pf.generateVersionName());
 		
 		File verJson = new File(abstractPathName + ".json");
 		DataOutputStream dos = null;
+		
+		System.out.println(abstractPathName + ".json");
+		
+		// Make sure that it exists!
+		if (!verJson.exists()) {
+			verJson.getParentFile().mkdirs();
+			try {
+				verJson.createNewFile();
+			} catch (IOException e) {
+				System.out.println(e.getMessage());
+				e.printStackTrace();
+			}
+		}
 		
 		try {
 			
