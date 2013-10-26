@@ -11,6 +11,7 @@ import nu.xom.Elements;
 import nu.xom.ParsingException;
 
 import com.treyzania.praseocraft.ftb.downloader.jobbing.Job;
+import com.treyzania.praseocraft.ftb.downloader.jobbing.JobAddLauncherProfile;
 import com.treyzania.praseocraft.ftb.downloader.jobbing.JobCreateVersionData;
 import com.treyzania.praseocraft.ftb.downloader.jobbing.JobDownloadForge;
 import com.treyzania.praseocraft.ftb.downloader.jobbing.JobDownloadServer;
@@ -304,14 +305,21 @@ public class PackFile implements Runnable {
 		String tempMcJarDir = Util.getTempDir() + "/mc-" + this.getMCVersion(); // I don't care if this is server or client, yet.
 		String finalMcJarDir = this.generatePackJarPath();
 		
+		String fj = "{Formatting Jobs}";
+		Pcdl.log.fine(fj + "Forge Dir: " + forgeDir);
+		Pcdl.log.fine(fj + "Temp. MC Jar Dir: " + tempMcJarDir);
+		Pcdl.log.fine(fj + "Final MC Jar Dir: " + finalMcJarDir);
+		
 		// Create and register the jobs.
 		if (this.domain == Domain.CLIENT) { // Client jobs.
 			Job getMc = new JobGetMinecraft(joblist, this, tempMcJarDir);
 			Job dlForge = new JobDownloadForge(joblist, this.getForgeVersion(), this.getMCVersion(), forgeDir);
 			Job installForge = new JobInstallForge(joblist, tempMcJarDir, forgeDir, finalMcJarDir);
+			Job alp = new JobAddLauncherProfile(joblist, this.generatePackName(), this);
 			tJobs.add(getMc);
 			tJobs.add(dlForge);
 			tJobs.add(installForge);
+			tJobs.add(alp);
 		}
 		if (this.domain == Domain.SERVER) { // Server jobs.
 			Job dlServer = new JobDownloadServer(joblist, this.getMCVersion());
