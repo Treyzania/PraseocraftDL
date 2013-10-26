@@ -12,11 +12,11 @@ import nu.xom.ParsingException;
 
 import com.treyzania.praseocraft.ftb.downloader.jobbing.Job;
 import com.treyzania.praseocraft.ftb.downloader.jobbing.JobAddLauncherProfile;
-import com.treyzania.praseocraft.ftb.downloader.jobbing.JobCreateVersionData;
 import com.treyzania.praseocraft.ftb.downloader.jobbing.JobDownloadForge;
 import com.treyzania.praseocraft.ftb.downloader.jobbing.JobDownloadServer;
 import com.treyzania.praseocraft.ftb.downloader.jobbing.JobGetMinecraft;
 import com.treyzania.praseocraft.ftb.downloader.jobbing.JobInstallForge;
+import com.treyzania.praseocraft.ftb.downloader.jobbing.JobInstallForge2;
 import com.treyzania.praseocraft.ftb.downloader.jobbing.Joblist;
 import com.treyzania.praseocraft.ftb.downloader.parsing.Handlers;
 import com.treyzania.praseocraft.ftb.downloader.resouces.MasterFrame;
@@ -314,7 +314,7 @@ public class PackFile implements Runnable {
 		if (this.domain == Domain.CLIENT) { // Client jobs.
 			Job getMc = new JobGetMinecraft(joblist, this, tempMcJarDir);
 			Job dlForge = new JobDownloadForge(joblist, this.getForgeVersion(), this.getMCVersion(), forgeDir);
-			Job installForge = new JobInstallForge(joblist, tempMcJarDir, forgeDir, finalMcJarDir);
+			Job installForge = new JobInstallForge2(joblist, tempMcJarDir, forgeDir, finalMcJarDir);
 			Job alp = new JobAddLauncherProfile(joblist, this.generatePackName(), this);
 			tJobs.add(getMc);
 			tJobs.add(dlForge);
