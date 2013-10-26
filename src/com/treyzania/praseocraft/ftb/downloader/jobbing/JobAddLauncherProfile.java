@@ -66,7 +66,7 @@ public class JobAddLauncherProfile extends Job {
 
 			for (int i = 0; i < lpjsonContent.length; i++) {
 				char in = (char) fis.read();
-				System.out.print(in); // Heh, this works properly...
+				//System.out.print(in); // Heh, this works properly...
 				lpjsonContent[i] = in;
 			}
 
@@ -79,7 +79,7 @@ public class JobAddLauncherProfile extends Job {
 
 		} finally {
 
-			System.out.print("\n");
+			//System.out.print("\n");
 
 		}
 
@@ -100,7 +100,7 @@ public class JobAddLauncherProfile extends Job {
 		JdomParser JDOM_PARSER = new JdomParser();
 		JsonRootNode json = null;
 
-		System.out.println(lpJson);
+		//System.out.println(lpJson);
 
 		try {
 			json = JDOM_PARSER.parse(lpJson);

@@ -302,7 +302,7 @@ public class PackFile implements Runnable {
 		
 		// Retrieve the locations of temp files.
 		String forgeDir = Util.getTempDir() + "/forge-" + this.getForgeVersion() + "-MC" + this.getMCVersion() + ".jar";
-		String tempMcJarDir = Util.getTempDir() + "/mc-" + this.getMCVersion(); // I don't care if this is server or client, yet.
+		String tempMcJarDir = Util.getTempDir() + "/mc-" + this.getMCVersion() + ".jar"; // I don't care if this is server or client, yet.
 		String finalMcJarDir = this.generatePackJarPath();
 		
 		String fj = "{Formatting Jobs}";

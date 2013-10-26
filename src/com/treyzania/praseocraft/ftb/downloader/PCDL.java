@@ -70,9 +70,13 @@ public class Pcdl {
 		
 		log.setUseParentHandlers(false); // Wow.  This was extremely important that fixed a HUUUUUGE problem.
 		
+		new File(Util.fs_sysPath(Util.getTempDir() + "/logs/")).getParentFile().mkdirs();
+		
 		consoleHandler = new ConsoleHandler();
-		try { fileHandler = new FileHandler("tmp/pcdl-log_" + Long.toString(System.currentTimeMillis()) + ".log");
-		} catch (SecurityException | IOException e) {}
+		try { fileHandler = new FileHandler(Util.fs_sysPath(Util.getTempDir() + "/logs/pcdl_log-" + Long.toString(System.currentTimeMillis()) + ".log"));
+		} catch (SecurityException | IOException e) {
+			e.printStackTrace();
+		}
 		
 		log.setLevel(Level.ALL);
 		consoleHandler.setLevel(Level.ALL);
