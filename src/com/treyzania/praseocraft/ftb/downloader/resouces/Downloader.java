@@ -6,6 +6,8 @@ import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 
+import com.treyzania.praseocraft.ftb.downloader.Pcdl;
+
 /**
  * 
  * "I hope this works..." -Treyzania From
@@ -57,6 +59,7 @@ public class Downloader {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+			Pcdl.log.warning(e.getMessage() + " -> " + filename);
 			good = false;
 		}
 		

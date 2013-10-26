@@ -17,13 +17,17 @@ public class JobInstallForge extends Job {
 
 	private static final byte[] BUFFER = new byte[4096 * 1024]; // 4 KB buffer.
 
-	public String mcVerName;
+	public String mcJarName;
 	public String forgeZipName;
 	public String destZipName;
 	
-	public JobInstallForge(Joblist jl, String mcVerName, String forgeZipLoc, String destZipName) {
+	public JobInstallForge(Joblist jl, String mcJarName, String forgeZipLoc, String destZipName) {
 		
 		super(jl);
+		
+		this.mcJarName = mcJarName;
+		this.forgeZipName = forgeZipLoc;
+		this.destZipName = destZipName;
 		
 	}
 
@@ -39,8 +43,9 @@ public class JobInstallForge extends Job {
 		
 		Pcdl.log.fine("JOBS: Attempting to install MCForge.");
 		
-		String forgeJarZipThingy = Util.getTempDir() + "/forge-" + Pcdl.packfile.metadata.access("ForgeVersion") + "-MC" + Pcdl.packfile.metadata.access("MCVersion") + ".jar";
-		String mcJar = Util.getMinecraftDir() + "/versions/" + Pcdl.packfile.metadata.access("MCVersion") + "/" + Pcdl.packfile.metadata.access("MCVersion") + ".jar";
+		// For these 3 things here, I was reeeeealy tire when I wrote them, and I don't know hoe they work, so I'm just messing with things until it works.
+		String forgeJarZipThingy = this.forgeZipName;
+		String mcJar = this.mcJarName;
 		String moddedJar = Util.getMinecraftDir() + "/versions/" + Pcdl.packfile.generateLauncherVersionName() + "/" + Pcdl.packfile.generateLauncherVersionName() + ".jar";
 		
 		File tempModdedJar = new File(Util.fs_sysPath(moddedJar));
@@ -64,7 +69,7 @@ public class JobInstallForge extends Job {
 			while (entries.hasMoreElements()) {
 				
 				ZipEntry e = entries.nextElement();
-				//System.out.println("copy: " + e.getName());
+				System.out.println("copy: " + e.getName());
 				append.putNextEntry(e);
 				
 				if (!e.isDirectory()) {
@@ -75,11 +80,11 @@ public class JobInstallForge extends Job {
 			}
 			
 			// now append some extra content
-			ZipEntry e = new ZipEntry(Util.fs_sysPath(moddedJar));
-			System.out.println("append: " + e.getName());
-			append.putNextEntry(e);
-			append.write("42\n".getBytes());
-			append.closeEntry();
+			//ZipEntry e = new ZipEntry(Util.fs_sysPath(moddedJar));
+			//System.out.println("append: " + e.getName());
+			//append.putNextEntry(e);
+			//append.write("42\n".getBytes());
+			//append.closeEntry();
 			
 			// close
 			src.close();

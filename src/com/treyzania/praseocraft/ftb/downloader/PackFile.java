@@ -13,6 +13,7 @@ import nu.xom.ParsingException;
 import com.treyzania.praseocraft.ftb.downloader.jobbing.Job;
 import com.treyzania.praseocraft.ftb.downloader.jobbing.JobCreateVersionData;
 import com.treyzania.praseocraft.ftb.downloader.jobbing.JobDownloadForge;
+import com.treyzania.praseocraft.ftb.downloader.jobbing.JobDownloadServer;
 import com.treyzania.praseocraft.ftb.downloader.jobbing.JobGetMinecraft;
 import com.treyzania.praseocraft.ftb.downloader.jobbing.JobInstallForge;
 import com.treyzania.praseocraft.ftb.downloader.jobbing.Joblist;
@@ -47,7 +48,7 @@ public class PackFile implements Runnable {
 		this.pfexe = new Thread(this, "PackFile-Thread");
 		this.joblist = new Joblist();
 		
-		metadata.define("PackName", "PCDL-Generated_Nameless_Pack");
+		//metadata.define("PackName", "PCDL-Generated_Nameless_Pack");
 		
 	}
 	
@@ -59,7 +60,7 @@ public class PackFile implements Runnable {
 	
 	public String generatePackName() {
 		
-		String name = "PraseocraftDL_Pack-" + System.currentTimeMillis();
+		String name = "PraseocraftDL_Pack-" + Long.toHexString(System.currentTimeMillis());
 		
 		String packName = metadata.access("PackName");
 		if (packName != null) {
@@ -285,6 +286,10 @@ public class PackFile implements Runnable {
 		
 	}
 	
+	public String getMCVersion() {
+		return this.metadata.access("MCVersion");
+	}
+	
 	private void createFormattingJobs() {
 		
 		// Initialization.
@@ -294,14 +299,26 @@ public class PackFile implements Runnable {
 		String dirForNewMc = this.generatePackJarPath();
 		
 		Job dlForge = new JobDownloadForge(joblist, this.metadata.access("ForgeVersion"), this.metadata.access("MCVersion"));
-		Job getMc = new JobGetMinecraft(joblist, this);
-		Job installForge = new JobInstallForge(joblist, this.metadata.access("MCVersion"), forgeZipName, dirForNewMc);
-		Job cvd = new JobCreateVersionData(joblist, this);
-		
 		tJobs.add(dlForge);
-		tJobs.add(getMc);
+		
+		if (this.domain == Domain.CLIENT) {
+			Job getMc = new JobGetMinecraft(joblist, this, Util.getTempDir() + "/mc-" + this.getMCVersion() + ".jar");
+			Job cvd = new JobCreateVersionData(joblist, this);
+			tJobs.add(getMc);
+			tJobs.add(cvd);
+		}
+		
+		if (this.domain == Domain.SERVER) {
+			dirForNewMc = Util.getTempDir() + "/vanillaserver-" + this.metadata.access("MCVersion") + ".jar";
+			Job dlServer = new JobDownloadServer(joblist, dirForNewMc);
+			tJobs.add(dlServer);
+		}
+		
+		//String forgeLoc = Util.getTempDir() + "/forge-" + Pcdl.packfile.metadata.access("ForgeVersion") + "-MC" + Pcdl.packfile.metadata.access("MCVersion") + ".jar";
+		String mcJar = Util.getTempDir() + "/mc-" + this.getMCVersion() + ".jar";
+		//String finalJar = Util.getMinecraftDir() + "/versions/" + Pcdl.packfile.generateLauncherVersionName() + "/" + Pcdl.packfile.generateLauncherVersionName() + ".jar";
+		Job installForge = new JobInstallForge(joblist, mcJar, forgeZipName, dirForNewMc);
 		tJobs.add(installForge);
-		tJobs.add(cvd);
 		
 		// Post-processing.
 		for (Job theJob : tJobs) {
