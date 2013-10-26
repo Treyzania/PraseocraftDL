@@ -32,7 +32,7 @@ public class JobDownload extends Job {
 		if (ft == Domain.GENERIC) {
 			doDownload = true;
 		} else {
-			if (ft == Domain.CILENT && Pcdl.dlMode == "client") {
+			if (ft == Domain.CLIENT && Pcdl.dlMode == "client") {
 				doDownload = true;
 			} else if (ft == Domain.SERVER && Pcdl.dlMode == "server") {
 				doDownload = true;

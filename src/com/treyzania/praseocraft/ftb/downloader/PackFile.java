@@ -51,9 +51,40 @@ public class PackFile implements Runnable {
 		
 	}
 	
-	public String generateVersionName() {
+	public String generateLauncherVersionName() {
 		
 		return (this.metadata.access("MCVersion") + "-Forge" + this.metadata.access("ForgeVersion"));
+		
+	}
+	
+	public String generatePackName() {
+		
+		String name = "PraseocraftDL_Pack-" + System.currentTimeMillis();
+		
+		String packName = metadata.access("PackName");
+		if (packName != null) {
+			name = packName + "-" + this.packVer;
+		}
+		
+		return name;
+		
+	}
+	
+	public String generatePackPath() {
+		return Util.fs_sysPath(Util.getPCDLDir() + "/packs/" + this.generatePackName());
+	}
+	
+	public String generatePackJarPath() {
+		
+		String path = this.generatePackPath() + "/lostGameJar.jar";
+		
+		if (this.domain == Domain.CLIENT) {
+			path = Util.getTempDir() + "/delete_me/derpityderp.jar";
+		} else if (this.domain == Domain.SERVER) {
+			path = this.generatePackPath() + "/minecraft_server.jar";
+		}
+		
+		return path;
 		
 	}
 	
@@ -84,7 +115,7 @@ public class PackFile implements Runnable {
 		
 		if (frame.buttonClient.isSelected()) {
 			
-			d = Domain.CILENT;
+			d = Domain.CLIENT;
 			dString = "client";
 			
 		} else if (frame.buttonServer.isSelected()) {
@@ -254,36 +285,16 @@ public class PackFile implements Runnable {
 		
 	}
 	
-	private String determineMCJarLocation() {
-		
-		String loc = Util.getMinecraftDir() + "/lostminecraftdotjar.jar";
-		
-		if (Domain.Calc.isCompatible(this.domain, Domain.CILENT)) {
-			
-			loc = "";
-			
-		}
-		
-		if (Domain.Calc.isCompatible(this.domain, Domain.SERVER)) {
-			
-			loc = "";
-			
-		}
-		
-		return loc;
-		
-	}
-	
 	private void createFormattingJobs() {
 		
 		// Initialization.
 		ArrayList<Job> tJobs = new ArrayList<Job>();
 		
 		String forgeZipName = Util.getTempDir() + "forge-" + this.metadata.access("ForgeVersion") + "-MC" + this.metadata.access("MCVersion") + ".jar";
-		String dirForNewMc = this.determineMCJarLocation();
+		String dirForNewMc = this.generatePackJarPath();
 		
 		Job dlForge = new JobDownloadForge(joblist, this.metadata.access("ForgeVersion"), this.metadata.access("MCVersion"));
-		Job getMc = new JobGetMinecraft(joblist);
+		Job getMc = new JobGetMinecraft(joblist, this);
 		Job installForge = new JobInstallForge(joblist, this.metadata.access("MCVersion"), forgeZipName, dirForNewMc);
 		Job cvd = new JobCreateVersionData(joblist, this);
 		

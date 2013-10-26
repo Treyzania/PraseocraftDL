@@ -71,14 +71,14 @@ public class JobCreateVersionData extends Job {
 		// End copy.
 		tempJson = sb.toString();
 		
-		this.forgeJson = tempJson.replace("###PACKID###", pf.generateVersionName());
+		this.forgeJson = tempJson.replace("###PACKID###", pf.generateLauncherVersionName());
 		
 		Pcdl.log.finest("Json Data Length: " + forgeJson.length());
 		
 		PackFile pf = Pcdl.packfile;
 		String abstractPathName = Util.fs_sysPath(Util.getMinecraftDir()
-				+ "/versions/" + pf.generateVersionName() + "/"
-				+ pf.generateVersionName());
+				+ "/versions/" + pf.generateLauncherVersionName() + "/"
+				+ pf.generateLauncherVersionName());
 		
 		File verJson = new File(abstractPathName + ".json");
 		FileOutputStream fos = null;

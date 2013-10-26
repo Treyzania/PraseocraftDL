@@ -41,7 +41,7 @@ public class JobInstallForge extends Job {
 		
 		String forgeJarZipThingy = Util.getTempDir() + "/forge-" + Pcdl.packfile.metadata.access("ForgeVersion") + "-MC" + Pcdl.packfile.metadata.access("MCVersion") + ".jar";
 		String mcJar = Util.getMinecraftDir() + "/versions/" + Pcdl.packfile.metadata.access("MCVersion") + "/" + Pcdl.packfile.metadata.access("MCVersion") + ".jar";
-		String moddedJar = Util.getMinecraftDir() + "/versions/" + Pcdl.packfile.generateVersionName() + "/" + Pcdl.packfile.generateVersionName() + ".jar";
+		String moddedJar = Util.getMinecraftDir() + "/versions/" + Pcdl.packfile.generateLauncherVersionName() + "/" + Pcdl.packfile.generateLauncherVersionName() + ".jar";
 		
 		File tempModdedJar = new File(Util.fs_sysPath(moddedJar));
 		if (!tempModdedJar.exists()) {

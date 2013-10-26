@@ -5,7 +5,7 @@ import java.util.Arrays;
 public enum Domain {
 
 	GENERIC,
-	CILENT,
+	CLIENT,
 	SERVER;
 	
 	public static class Calc {
@@ -14,7 +14,7 @@ public enum Domain {
 		
 		public static boolean isClient(Domain dom) {
 			
-			if (dom == Domain.GENERIC || dom == Domain.CILENT) {
+			if (dom == Domain.GENERIC || dom == Domain.CLIENT) {
 				return true;
 			} else {
 				return false;
@@ -44,7 +44,7 @@ public enum Domain {
 				result = true;
 			}
 			
-			if (model == Domain.CILENT && test == Domain.CILENT) {
+			if (model == Domain.CLIENT && test == Domain.CLIENT) {
 				result = true;
 			}
 			
@@ -76,7 +76,7 @@ public enum Domain {
 			}
 			
 			if (sl.contains("client")) {
-				d = Domain.CILENT;
+				d = Domain.CLIENT;
 			}
 			
 			return d;

@@ -19,7 +19,7 @@ public class FileOp {
 	}
 	
 	public boolean isClient() {
-		return this.type == Domain.GENERIC || this.type == Domain.CILENT;
+		return this.type == Domain.GENERIC || this.type == Domain.CLIENT;
 	}
 	
 	public boolean isServer() {
