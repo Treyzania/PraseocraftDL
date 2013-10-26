@@ -1,18 +1,18 @@
 package com.treyzania.praseocraft.ftb.downloader.jobbing;
 
 import com.treyzania.praseocraft.ftb.downloader.Pcdl;
-import com.treyzania.praseocraft.ftb.downloader.resouces.Downloader;
+import com.treyzania.praseocraft.ftb.downloader.Util;
 
 public class JobDownloadMod extends Job {
 
-	public String modLoc;
+	public String modFilename;
 	public String modAddr;
 	
-	public JobDownloadMod(Joblist jl, String modLocation, String modAddress) {
+	public JobDownloadMod(Joblist jl, String modFilename, String modAddress) {
 		
 		super(jl);
 		
-		this.modLoc = modLocation;
+		this.modFilename = modFilename;
 		this.modAddr = modAddress;
 		
 	}
@@ -20,7 +20,7 @@ public class JobDownloadMod extends Job {
 	@Override
 	public boolean runJob() {
 		
-		String filename = Pcdl.packFolder + "/mods/" + this.modLoc;
+		String filename = Pcdl.packfile.generatePackPath() + "/mods/" + this.modFilename;
 		String possNN = metadata.access("NewName");
 		if (possNN != null && possNN != "") {
 			filename = possNN;
@@ -28,7 +28,7 @@ public class JobDownloadMod extends Job {
 		
 		Pcdl.log.fine("JOBS: Downloading mod \'" + this.modAddr + "\'.");
 		
-		boolean out = Downloader.download(this.modAddr, filename);
+		boolean out = Util.download(this.modAddr, filename);
 		/*
 		 * 
 		 * 

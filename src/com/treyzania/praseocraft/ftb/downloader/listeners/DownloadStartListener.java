@@ -17,15 +17,11 @@ public class DownloadStartListener implements ActionListener {
 		
 		MasterFrame frame = Pcdl.frame;
 		
-		//System.out.println("FRAME_WIDTH = " + PCDL.frame.getWidth()
-		//		+ ", FRAME_HEIGHT = " + PCDL.frame.getHeight());
+		String addr = frame.addrField.getText().trim(); // Gotta trim them because we are working with humans!
+		String ver = frame.verField.getText().trim();
 		
-		//int barValue = PCDL.frame.progressBar.getValue();
-		//PCDL.frame.progressBar.setValue(barValue + 10);
-		
-		System.out.println("addr: \"" + frame.addrField.getText() + "\", ver: \"" + frame.verField.getText() + "\"");
-		
-		PackFile pf = new PackFile(frame.addrField.getText().trim(), frame.verField.getText().trim()); // Gotta trim them because we are working with humans!
+		// Make the pack!
+		PackFile pf = new PackFile(addr, ver); 
 		Pcdl.packfile = pf;
 		
 		pf.pfexe.start();

@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Properties;
+import java.util.Scanner;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.FileHandler;
 import java.util.logging.Handler;
@@ -15,19 +16,15 @@ import com.treyzania.praseocraft.ftb.downloader.resouces.MasterFrame;
 
 public class Pcdl {
 	
-	public static final String VERSION = "v0.1";
+	public static final String VERSION = "v1.0";
 	public static MasterFrame frame;
 	public static PackFile packfile;
-	
-	public static String packFolder = "Praseocraft_FTB";
-	//public static String address = "test.xml";
-	
-	public static File tmpDir;
-	public static File packDir;
 	
 	public static Logger log = Logger.getLogger("PCDL");
 	public static Handler consoleHandler;;
 	public static Handler fileHandler;
+	
+	public static boolean makeWindow = true;
 	
 	@Deprecated
 	public static String dlMode = "";
@@ -37,32 +34,74 @@ public class Pcdl {
 		setupLogs();
 		logTest();
 		
-		tmpDir = new File("tmp");
-		packDir = new File(packFolder);
-		tmpDir.mkdir();
+		spewArgs(args);
 		
-		//NotificationFrame np = new NotificationFrame("This is a secret message.");
-		//np.waitForExit();
-		
-		Properties p = System.getProperties();
-		Collection<Object> c = p.values();
-		for (int i = 0; i < c.size(); i++) {
-			
-			//System.out.println(p.stringPropertyNames().toArray()[i] + ": " + c.toArray()[i]);
-			
-		}
+		//boolean isPreset = checkForPresets(args);
 		
 		log.info("Thank you for using Treyzania's Prasocraft FTB Pack Installer!");
 		log.fine("Installer starting up...");
 		
-		LibLoader.classloadJar();
-		
 		MasterFrame.laf();
 		
-		frame = new MasterFrame();
+		frame = new MasterFrame(makeWindow);
 		frame.setTitle("Praseocraft FTB Pack Downloader");
 		
 		log.fine("\t...done!");
+		
+	}
+	
+	@SuppressWarnings({ "unused", "resource" })
+	public static boolean checkForPresets(String[] args) {
+		
+		boolean out = false;
+		
+		if (args.length > 0) {
+			
+			if (args[0] == "--install" || args[0] == "-I") { // Quick install.
+				
+				out = true;
+				makeWindow = false;
+				
+				String xmlLoc = args[1];
+				String _d = args[2];
+				String packVer = args[3];
+				Domain domain = Domain.Calc.parseDomain(_d);
+				Scanner in = new Scanner(System.in);
+				
+				log.info("Hey!  Looks like you want to install the pack right away!");
+				log.info("\tXML Location: " + xmlLoc);
+				log.info("\tMode of Installation: " + _d);
+				log.info("Is this right? [y|n]");
+				String right = in.next().toLowerCase();
+				
+				if (right == "y") {
+					
+					packfile = new PackFile(xmlLoc, packVer);
+					
+				}
+				
+			} else { // Print usage.
+				
+				System.out.println("Usage: java -jar <this_jar>.jar [params]");
+				System.out.println("\t--install, -I");
+				System.out.println("\t\tInstalls immediately."
+						+ "\n\t\tPARAMS: <XML_location> <[client|server]> <pack_version>");
+				
+			}
+			
+		}
+		
+		return out;
+		
+	}
+	
+	private static void spewArgs(String[] args) {
+		
+		for (String arg : args) {
+			
+			log.fine("Argument: " + arg);
+			
+		}
 		
 	}
 	
@@ -70,7 +109,10 @@ public class Pcdl {
 		
 		log.setUseParentHandlers(false); // Wow.  This was extremely important that fixed a HUUUUUGE problem.
 		
-		new File(Util.fs_sysPath(Util.getTempDir() + "/logs/")).getParentFile().mkdirs();
+		File logsfolder = new File(Util.fs_sysPath(Util.getTempDir() + "/logs/"));
+		if (!logsfolder.exists()) {
+			logsfolder.mkdirs();
+		}
 		
 		consoleHandler = new ConsoleHandler();
 		try { fileHandler = new FileHandler(Util.fs_sysPath(Util.getTempDir() + "/logs/pcdl_log-" + Long.toString(System.currentTimeMillis()) + ".log"));
@@ -101,6 +143,18 @@ public class Pcdl {
 		log.finer(logTestPrefix + "Finer");
 		log.finest(logTestPrefix + "Finest");
 		log.info(logTestPrefix + "Log test finished.");
+		
+	}
+	
+	public static void dumpSystemProperties() {
+		
+		Properties p = System.getProperties();
+		Collection<Object> c = p.values();
+		for (int i = 0; i < c.size(); i++) {
+			
+			System.out.println(p.stringPropertyNames().toArray()[i] + ": " + c.toArray()[i]);
+			
+		}
 		
 	}
 	

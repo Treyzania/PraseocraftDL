@@ -47,7 +47,7 @@ public class MasterFrame extends JFrame implements Runnable {
 
 	public JLabel dlStatus;
 
-	public MasterFrame() {
+	public MasterFrame(boolean visible) {
 
 		this.cycle = new Thread("MF-CYCLER");
 
@@ -69,12 +69,10 @@ public class MasterFrame extends JFrame implements Runnable {
 		address.add(new JLabel("Pack host: "));
 		address.add(addrField);
 		address.setVisible(true);
-		//address.setAlignmentX(Component.LEFT_ALIGNMENT);
 
 		packVer.add(new JLabel("Desired version: "));
 		packVer.add(verField);
 		packVer.setVisible(true);
-		//packVer.setAlignmentX(Component.LEFT_ALIGNMENT);
 
 		addrField.setText("");
 
@@ -107,7 +105,7 @@ public class MasterFrame extends JFrame implements Runnable {
 		jobInfo.setToolTipText("PENIS!");
 
 		this.setLayout(new FlowLayout(FlowLayout.LEFT));
-		// this.setLayout(new CardLayout());
+		//this.setLayout(new CardLayout());
 
 		this.add(this.title);
 		this.add(this.author);
@@ -119,12 +117,12 @@ public class MasterFrame extends JFrame implements Runnable {
 		this.add(this.status);
 
 		// Work on this later!
-		// this.add(this.jobInfo);
+		//this.add(this.jobInfo);
 
 		this.setBounds(0, 0, 275, 325);
 		this.setFocusable(true);
 		this.setResizable(false);
-		this.setVisible(true);
+		this.setVisible(visible);
 
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

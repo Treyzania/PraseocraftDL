@@ -1,7 +1,7 @@
 package com.treyzania.praseocraft.ftb.downloader.jobbing;
 
 import com.treyzania.praseocraft.ftb.downloader.Pcdl;
-import com.treyzania.praseocraft.ftb.downloader.resouces.Downloader;
+import com.treyzania.praseocraft.ftb.downloader.Util;
 
 public class JobDownloadForge extends Job {
 
@@ -28,7 +28,7 @@ public class JobDownloadForge extends Job {
 		
 		String forgeAddr = "http://files.minecraftforge.net/minecraftforge/minecraftforge-universal-" + this.mcVer + "-" + this.forgeVer + ".jar";
 		
-		out = Downloader.download(forgeAddr, this.dlDir);
+		out = Util.download(forgeAddr, this.dlDir);
 		
 		return out;
 		

@@ -1,13 +1,13 @@
 package com.treyzania.praseocraft.ftb.downloader.resouces;
 
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
-import com.treyzania.praseocraft.ftb.downloader.listeners.CloseButtonPush;
 
 public class NotificationFrame extends JFrame {
 
@@ -82,6 +82,37 @@ public class NotificationFrame extends JFrame {
 		
 		return;
 		
+	}
+	
+	public static void wait(String message) {
+		
+		NotificationFrame nf = new NotificationFrame(message);
+		nf.waitForExit();
+		
+	}
+	
+	public static class CloseButtonPush implements ActionListener {
+
+		private NotificationFrame mFrame;
+		
+		public CloseButtonPush(NotificationFrame frame) {
+			
+			this.mFrame = frame;
+			
+		}
+		
+		@Override
+		public void actionPerformed(ActionEvent event) {
+			
+			/*
+			 * Not perfect, but gets the job done.
+			 * It should also let any of the waitForExit() calls to return.
+			 */
+			
+			mFrame.dispose();
+			
+		}
+
 	}
 	
 }

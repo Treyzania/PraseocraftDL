@@ -1,7 +1,6 @@
 package com.treyzania.praseocraft.ftb.downloader.jobbing;
 
 import com.treyzania.praseocraft.ftb.downloader.Util;
-import com.treyzania.praseocraft.ftb.downloader.resouces.Downloader;
 
 public class JobDownloadServer extends Job {
 
@@ -21,7 +20,7 @@ public class JobDownloadServer extends Job {
 		boolean out = true;
 		
 		String serverJarLocation = "http://s3.amazonaws.com/Minecraft.Download/versions/" + this.mcVer + "/minecraft_server." + this.mcVer + ".jar";
-		out = Downloader.download(serverJarLocation, Util.fs_sysPath(Util.getTempDir() + "/vanillaserver-" + this.mcVer + ".jar")); // I hope this works.
+		out = Util.download(serverJarLocation, Util.fs_sysPath(Util.getTempDir() + "/vanillaserver-" + this.mcVer + ".jar")); // I hope this works.
 		
 		return out;
 	}

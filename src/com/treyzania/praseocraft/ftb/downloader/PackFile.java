@@ -16,7 +16,6 @@ import com.treyzania.praseocraft.ftb.downloader.jobbing.JobDownloadForge;
 import com.treyzania.praseocraft.ftb.downloader.jobbing.JobDownloadServer;
 import com.treyzania.praseocraft.ftb.downloader.jobbing.JobGetMinecraft;
 import com.treyzania.praseocraft.ftb.downloader.jobbing.JobInstallForge;
-import com.treyzania.praseocraft.ftb.downloader.jobbing.JobInstallForge2;
 import com.treyzania.praseocraft.ftb.downloader.jobbing.Joblist;
 import com.treyzania.praseocraft.ftb.downloader.parsing.Handlers;
 import com.treyzania.praseocraft.ftb.downloader.resouces.MasterFrame;
@@ -29,7 +28,7 @@ public class PackFile implements Runnable {
 	private static final String[] wNames = {"Alpha", "Bravo", "Charlie", "Delta", "Echo", "Foxtrot", "Golf", "Hotel"};
 	
 	public final String packAddr; // The place the pack file is hosted.
-	public final String packVer; // The "ver" attribute of the "verison" tag.  Can be a fancy name like the Android devs do.  (ie. "Jelly Bean")
+	public final String packVer; // The "ver" attribute of the "version" tag.  Can be a fancy name like the Android devs do.  (ie. "Jelly Bean")
 	
 	public Joblist joblist;
 	public Worker[] workers = null;
@@ -37,7 +36,7 @@ public class PackFile implements Runnable {
 	
 	public Document doc;
 	public MetaCollector metadata;
-	public Thread pfexe; 
+	public Thread pfexe;
 	
 	public PackFile(String addr, String ver) {
 		
@@ -48,8 +47,6 @@ public class PackFile implements Runnable {
 		this.metadata = new MetaCollector();
 		this.pfexe = new Thread(this, "PackFile-Thread");
 		this.joblist = new Joblist();
-		
-		//metadata.define("PackName", "PCDL-Generated_Nameless_Pack");
 		
 	}
 	
@@ -102,10 +99,9 @@ public class PackFile implements Runnable {
 	}
 	
 	@SuppressWarnings("deprecation")
-	public void init() {
+	public void executeSequence() {
 		
 		MasterFrame frame = Pcdl.frame;
-		Pcdl.packDir.mkdir();
 		
 		Pcdl.log.info("Pack Location: " + frame.addrField.getText());
 		
@@ -115,6 +111,7 @@ public class PackFile implements Runnable {
 		Domain d = null;
 		String dString = "";
 		
+		// Determine the download type.  (Domain)
 		if (frame.buttonClient.isSelected()) {
 			
 			d = Domain.CLIENT;
@@ -136,6 +133,7 @@ public class PackFile implements Runnable {
 		this.readJobs(d);
 		Pcdl.log.info("Job list created and organized successfully. (Hopefully...)");
 		
+		// Dump some generic information.
 		Pcdl.log.info("MC Version: " + metadata.access("MCVersion"));
 		Pcdl.log.info("Forge Version: " + metadata.access("ForgeVersion"));
 		
@@ -144,13 +142,12 @@ public class PackFile implements Runnable {
 		this.defineWorkers();
 		
 		Pcdl.log.info("Starting workers...");
-		this.startWorkers();
 		
+		this.startWorkers();
 		this.waitForWorkersToFinish();
 		
 		Pcdl.frame.beep();
-		NotificationFrame nf = new NotificationFrame("Pack building done!");
-		nf.waitForExit(); // I luuuuv this method!
+		NotificationFrame.wait("Pack building done!");
 		
 	}
 
@@ -314,7 +311,7 @@ public class PackFile implements Runnable {
 		if (this.domain == Domain.CLIENT) { // Client jobs.
 			Job getMc = new JobGetMinecraft(joblist, this, tempMcJarDir);
 			Job dlForge = new JobDownloadForge(joblist, this.getForgeVersion(), this.getMCVersion(), forgeDir);
-			Job installForge = new JobInstallForge2(joblist, tempMcJarDir, forgeDir, finalMcJarDir);
+			Job installForge = new JobInstallForge(joblist, tempMcJarDir, forgeDir, finalMcJarDir);
 			Job alp = new JobAddLauncherProfile(joblist, this.generatePackName(), this);
 			tJobs.add(getMc);
 			tJobs.add(dlForge);
@@ -337,13 +334,6 @@ public class PackFile implements Runnable {
 		
 	}
 	
-	@SuppressWarnings("unused")
-	private void readJobs_readoutElements(Element root, Element ver, Element group) {
-		
-		Pcdl.log.finest("ELEMENTS READOUT: " + root + "," + ver + "," + group);
-		
-	}
-	
 	public void startWorkers() {
 		
 		for (Worker w : workers) {
@@ -357,7 +347,8 @@ public class PackFile implements Runnable {
 	@Override
 	public void run() {
 		
-		this.init();
+		// I guess this is the only thing.
+		this.executeSequence();
 		
 	}
 	

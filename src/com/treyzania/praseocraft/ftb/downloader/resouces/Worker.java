@@ -20,12 +20,10 @@ public class Worker implements Runnable {
 		
 		this.name = name;
 		this.list = jl;
-		this.jobExecutor = new Thread(this, "WT_Thread-" + this.name);
+		this.jobExecutor = new Thread(this, "WorkerThread-" + this.name);
 		this.dom = domainOfOperation;
 		
-		Pcdl.log.info("WORKER \'" + this.name + "\'" + " CREATED!");
-		
-		System.out.println(list);
+		Pcdl.log.finer("Worker \'" + this.name + "\'" + " created!");
 		
 	}
 	
@@ -34,22 +32,16 @@ public class Worker implements Runnable {
 		
 		ArrayList<Job> fails = new ArrayList<Job>();
 		
-		Pcdl.log.info("WORKER \'" + this.name + "\'" + " STARTED!");
+		Pcdl.log.info("Worker \'" + this.name + "\'" + " started!");
 		
 		int failures = 0;
-		
-		//Pcdl.log.info("{WORKER:" + this.name + "}Job count: " + list.jobs.size());
-		//Pcdl.log.finest("{WORKER:" + this.name + "}My domain: " + this.dom + ".");
 		
 		while (!list.isEmpty()) {
 			
 			Job j = list.dequeueJob();
 			
-			//Pcdl.log.finest("{WORKER:" + this.name + "}Job domain: " + j.getDomain() + ".");
-			
 			if (Domain.Calc.isCompatible(this.dom, j.getDomain())) {
 				
-				//Pcdl.log.finer("WORKER \'" + this.name + "\' EXECUTING JOB: \'" + j.toString() + "\'");
 				boolean success = j.runJob();
 				
 				synchronized (Pcdl.frame.progressBar) {
@@ -70,13 +62,14 @@ public class Worker implements Runnable {
 			
 		}
 		
+		// Build a failure profile.
 		StringBuilder sb = new StringBuilder();
-		sb.append("Fails: {");
-		for (Job j : fails) {
-			sb.append(j.getClass().getSimpleName() + ", ");
-		}
+		sb.append("Jobs failed: {");
+		for (Job j : fails) { sb.append(j.getClass().getSimpleName() + ", "); } // Meh, a one-liner.
 		sb.append("}.");
-		Pcdl.log.info("WORKER \'" + this.name + "\'" + " FINISHED!  FAIL COUNT: " + failures + " FAILURE(S).");
+		
+		// And print out the counters and such.
+		Pcdl.log.info("Worker \'" + this.name + "\'" + " finshed!  Failure count: " + failures + " failure(s).");
 		if (failures > 0) Pcdl.log.info(sb.toString());
 		
 		isFinished = true;

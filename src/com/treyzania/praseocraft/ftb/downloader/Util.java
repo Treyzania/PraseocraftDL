@@ -1,5 +1,18 @@
 package com.treyzania.praseocraft.ftb.downloader;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.URL;
+import java.nio.channels.Channels;
+import java.nio.channels.ReadableByteChannel;
+import java.util.Enumeration;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipException;
+import java.util.zip.ZipFile;
+
 public class Util {
 
 	// Do I need these two methods?
@@ -72,6 +85,110 @@ public class Util {
 		Pcdl.log.finest("TEMP DIR: " + Util.fs_genericPath(Util.getTempDir()));
 		Pcdl.log.finest("SYSPATH TEST: " + Util.fs_sysPath(Util.getTempDir() + "/dicks/and/balls/hi.txt"));
 		
+	}
+
+	/**
+	 * Only this isn't fully mine.
+	 * 
+	 * @param address
+	 * @param filename
+	 */
+	@SuppressWarnings("resource")
+	public static boolean download(String address, String filename) {
+		
+		URL website;
+		File file;
+		ReadableByteChannel rbc;
+		FileOutputStream fos;
+		
+		boolean good = true;
+		
+		try {
+			
+			file = new File(fs_sysPath(filename));
+			
+			if (!file.exists()) { // Now it works as intended.
+				file.getParentFile().mkdirs();
+				file.createNewFile();
+			}
+			
+			website = new URL(address);
+			rbc = Channels.newChannel(website.openStream());
+			fos = new FileOutputStream(file);
+			
+			fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
+			
+			good = true;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Pcdl.log.warning(e.getMessage() + " -> " + filename);
+			good = false;
+		}
+		
+		return good;
+		
+	}
+
+	/**
+	 * Only this isn't fully mine.
+	 * 
+	 * @param zipFile
+	 * @param outputDir
+	 * @throws ZipException
+	 * @throws IOException
+	 */
+	public static void extract(String zipFile, String outputDir) throws ZipException, IOException {
+		
+	    System.out.println(zipFile);
+	    int BUFFER = 2048;
+	    File file = new File(zipFile);
+	
+	    @SuppressWarnings("resource")
+		ZipFile zip = new ZipFile(file);
+	    String newPath = outputDir;
+	
+	    new File(newPath).mkdir();
+	    Enumeration<? extends ZipEntry> zipFileEntries = zip.entries();
+	
+	    // Process each entry
+	    while (zipFileEntries.hasMoreElements()) {
+	    	
+	        // grab a zip file entry
+	        ZipEntry entry = (ZipEntry) zipFileEntries.nextElement();
+	        String currentEntry = entry.getName();
+	        File destFile = new File(newPath, currentEntry);
+	        //destFile = new File(newPath, destFile.getName());
+	        File destinationParent = destFile.getParentFile();
+	
+	        // create the parent directory structure if needed
+	        destinationParent.mkdirs();
+	
+	        if (!entry.isDirectory()) {
+	        	
+	            BufferedInputStream is = new BufferedInputStream(zip.getInputStream(entry));
+	            int currentByte;
+	            // establish buffer for writing file
+	            byte data[] = new byte[BUFFER];
+	
+	            // write the current file to disk
+	            FileOutputStream fos = new FileOutputStream(destFile);
+	            BufferedOutputStream dest = new BufferedOutputStream(fos,
+	            BUFFER);
+	
+	            // read and write until last byte is encountered
+	            while ((currentByte = is.read(data, 0, BUFFER)) != -1) {
+	                dest.write(data, 0, currentByte);
+	            }
+	            
+	            dest.flush();
+	            dest.close();
+	            is.close();
+	            
+	        }
+	        
+	    }
+	    
 	}
 
 }

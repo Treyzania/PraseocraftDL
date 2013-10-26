@@ -19,7 +19,7 @@ public class ThMod extends TagHandler {
 		
 		String[] loc = element.getValue().split("\\/");
 		
-		String modLocation = loc[loc.length - 1]; // Technically, this should be the name of the Zip file that will be in the "/mods/" folder.
+		String modLocation = loc[loc.length - 1]; // Technically speaking, this should be the name of the Zip file that will be in the "/mods/" folder.
 		String modAddress = element.getValue();
 		
 		Job j = new JobDownloadMod(pf.joblist, modLocation, modAddress);
