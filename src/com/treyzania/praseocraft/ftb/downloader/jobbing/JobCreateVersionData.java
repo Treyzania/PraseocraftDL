@@ -1,28 +1,39 @@
 package com.treyzania.praseocraft.ftb.downloader.jobbing;
 
-import java.io.DataOutputStream;
+import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-
+import java.net.UnknownHostException;
 import com.treyzania.praseocraft.ftb.downloader.PackFile;
 import com.treyzania.praseocraft.ftb.downloader.Pcdl;
 import com.treyzania.praseocraft.ftb.downloader.Util;
 
 public class JobCreateVersionData extends Job {
-
+	
 	private String forgeJson = "";
 	
-	static {
-		
-	}
+	private static final int BUFFER_SIZE = 1024 * 10;
+	private static final int ZERO = 0;
+	private final byte[] dataBuffer = new byte[BUFFER_SIZE];
+	
+	public PackFile pf;
 	
 	public JobCreateVersionData(Joblist jl, PackFile pf) {
 		
 		super(jl);
+		
+		this.pf = pf;
+		
+	}
+	
+	@SuppressWarnings("resource")
+	@Override
+	public boolean runJob() {
+		
+		boolean out = true;
 		
 		URL fileUrl = null;
 		try {
@@ -30,45 +41,47 @@ public class JobCreateVersionData extends Job {
 		} catch (MalformedURLException e1) {
 			e1.printStackTrace();
 		}
-		File fvd = new File(fileUrl.getFile());
-		char[] data = new char[(int) fvd.length()];
+		
 		String tempJson;
 		
-		FileInputStream fis = null;
+		//File fvd = null;
+		
+		//FileInputStream fis = null;
+		
+		//System.out.println("Generic version data length: " + fvd.length());
+		
+		// Begin copy.
+		final StringBuilder sb = new StringBuilder();
 		
 		try {
 			
-			//fis = new FileInputStream(fvd);
-			fis = new FileInputStream(fvd);
+			final BufferedInputStream in = new BufferedInputStream(fileUrl.openStream());
 			
-			for (int i = 0; i < data.length; i++) {
-				data[i] = (char) fis.read();
+			int bytesRead = ZERO;
+
+			while ((bytesRead = in.read(dataBuffer, ZERO, BUFFER_SIZE)) >= ZERO) {
+				sb.append(new String(dataBuffer, ZERO, bytesRead));
 			}
 			
-		} catch (Exception e) {
-			Pcdl.log.severe("Error with Forge handling!  Can not succeed!");
-		} finally {
-			fis = null;
+		} catch (UnknownHostException e) {
+			;
+		} catch (IOException e) {
+			;
 		}
+		// End copy.
+		tempJson = sb.toString();
 		
-		tempJson = new String(data);
 		this.forgeJson = tempJson.replace("###PACKID###", pf.generateVersionName());
 		
 		Pcdl.log.finest("Json Data Length: " + forgeJson.length());
 		
-	}
-
-	@SuppressWarnings("resource")
-	@Override
-	public boolean runJob() {
-		
-		boolean out = true;
-		
 		PackFile pf = Pcdl.packfile;
-		String abstractPathName = Util.fs_sysPath(Util.getMinecraftDir() + "/versions/" + pf.generateVersionName() + "/" + pf.generateVersionName());
+		String abstractPathName = Util.fs_sysPath(Util.getMinecraftDir()
+				+ "/versions/" + pf.generateVersionName() + "/"
+				+ pf.generateVersionName());
 		
 		File verJson = new File(abstractPathName + ".json");
-		DataOutputStream dos = null;
+		FileOutputStream fos = null;
 		
 		System.out.println(abstractPathName + ".json");
 		
@@ -85,14 +98,18 @@ public class JobCreateVersionData extends Job {
 		
 		try {
 			
-			dos = new DataOutputStream(new FileOutputStream(verJson));			
-			dos.writeUTF(forgeJson);
+			fos = new FileOutputStream(verJson);
+			
+			for (int i = 0; i < this.forgeJson.length(); i++) { // No DataOutputStream doesn't work.
+				fos.write(this.forgeJson.charAt(i));
+			}
 			
 		} catch (Exception e) {
-			Pcdl.log.severe("Cannot continue, manual intervention required!  Error message: " + e.getMessage());
+			Pcdl.log.severe("Cannot continue, manual intervention required!  Error message: "
+					+ e.getMessage());
 			out = false;
 		} finally {
-			dos = null;
+			fos = null;
 		}
 		
 		return out;
