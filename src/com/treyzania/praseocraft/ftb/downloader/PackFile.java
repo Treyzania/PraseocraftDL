@@ -1,6 +1,9 @@
 package com.treyzania.praseocraft.ftb.downloader;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
 import nu.xom.Attribute;
@@ -190,9 +193,40 @@ public class PackFile implements Runnable {
 		boolean out = true;
 		Builder b = new Builder();
 		
+		String xml = "";
+		String newXml = "";
+		StringBuilder xmlSb = new StringBuilder();
+		URL xmlUrl = null;
 		try {
-			this.doc = b.build(this.packAddr);
+			xmlUrl = new URL(this.packAddr);
+		} catch (MalformedURLException e1) {
+			Pcdl.log.severe(e1.getMessage());
+		}
+		
+		InputStream is;
+		try {
+			
+			is = xmlUrl.openStream();
+			while (is.available() > 0) {
+				xmlSb.append(is.read());
+			}
+			
+		} catch (IOException e1) {
+			Pcdl.log.severe(e1.getMessage());
+		}
+		
+		xml = xmlSb.toString();
+		
+		// Add more lines if needed.  I hope that nobody actually had to use any XML entities.
+		newXml = Util.removeUTF8BOM(xml)
+				.replace("&", "&amp;")
+				;
+		
+		// Actually build it.
+		try {
+			this.doc = b.build("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<f>Data</f>", null);
 		} catch (ParsingException | IOException e) {
+			Pcdl.log.severe("Document build error: " + e.getMessage());
 			System.out.println(e.getMessage());
 			out = false;
 		}

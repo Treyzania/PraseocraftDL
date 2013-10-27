@@ -190,5 +190,17 @@ public class Util {
 	    }
 	    
 	}
-
+	
+	public static String removeUTF8BOM(String s) {
+		
+		String UTF8_BOM = "\uFEFF";
+		String ns = "";
+		
+    	if (s.startsWith(UTF8_BOM)) {
+    		ns = s.substring(1);
+    	}
+    	
+    	return ns;
+    }
+	
 }
