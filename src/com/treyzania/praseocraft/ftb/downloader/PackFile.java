@@ -195,40 +195,15 @@ public class PackFile implements Runnable {
 		Builder b = null;
 		b = new Builder();
 		
-		String xml = "";
+		String xml = Util.readWebpage(this.packAddr);
 		String newXml = "";
-		StringBuilder xmlSb = new StringBuilder();
-		URL xmlUrl = null;
-		try {
-			xmlUrl = new URL(this.packAddr);
-		} catch (MalformedURLException e1) {
-			Pcdl.log.severe(e1.getMessage());
-			out = false;
-		}
 		
-		InputStream is;
-		try {
-			
-			is = xmlUrl.openStream();
-			while (is.available() > 0) {
-				xmlSb.append(is.read());
-			}
-			
-		} catch (IOException e1) {
-			e1.printStackTrace();
-			Pcdl.log.severe(e1.getMessage());
-			out = false;
-		}
-		
-		xml = xmlSb.toString();
+		Pcdl.log.info("Raw XML Length: " + xml.length() + " chars.");
 		
 		// Add more lines if needed.  I hope that nobody actually had to use any XML entities.
-		newXml = Util.removeUTF8BOM(xml)
+		newXml = xml
 				.replace("&", "&amp;")
 				;
-		
-		Pcdl.log.info("XML Data Size: " + newXml.length() + " B.");
-		System.out.println(newXml);
 		
 		// Actually build it.
 		try {

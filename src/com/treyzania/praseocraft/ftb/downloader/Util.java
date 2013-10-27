@@ -2,9 +2,13 @@ package com.treyzania.praseocraft.ftb.downloader;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
@@ -188,6 +192,42 @@ public class Util {
 	        }
 	        
 	    }
+	    
+	}
+	
+	public static String readWebpage(String addr) {
+		
+		URL url;
+	    InputStream is = null;
+	    BufferedReader br;
+	    String line = "";
+	    
+	    StringBuilder builder = new StringBuilder();
+	    
+	    try {
+	    	
+	    	url = new URL(addr);
+	    	is = url.openStream();  // throws an IOException
+	    	br = new BufferedReader(new InputStreamReader(is));
+	    	
+	        while ((line = br.readLine()) != null) {
+	        	builder.append(line);
+	        }
+	        
+	    } catch (MalformedURLException mue) {
+	    	mue.printStackTrace();
+	    } catch (IOException ioe) {
+	    	ioe.printStackTrace();
+	    } finally {
+	    	
+	    	try {
+	    		if (is != null) is.close();
+	        } catch (IOException ioe) {
+	        	// nothing to see here
+	        }
+	    }
+	    
+	    return (builder.toString());
 	    
 	}
 	

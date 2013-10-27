@@ -26,9 +26,16 @@ public class JobDownloadMod extends Job {
 			filename = possNN;
 		}
 		
-		Pcdl.log.fine("JOBS: Downloading mod \'" + this.modAddr + "\'.");
+		String newAddr = this.modAddr
+				.replace("&amp;", "&")
+				;
 		
-		boolean out = Util.download(this.modAddr, filename);
+		String newFilename = filename
+				.replace("%20", "_");
+		
+		Pcdl.log.fine("JOBS: Downloading mod \'" + newAddr + "\' , to " + newFilename + " .");
+		
+		boolean out = Util.download(newAddr, newFilename);
 		/*
 		 * 
 		 * 
