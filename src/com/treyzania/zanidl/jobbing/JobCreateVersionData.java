@@ -9,7 +9,7 @@ import java.net.URL;
 import java.net.UnknownHostException;
 
 import com.treyzania.zanidl.PackFile;
-import com.treyzania.zanidl.ZaniDL_;
+import com.treyzania.zanidl.ZaniDL;
 import com.treyzania.zanidl.Util;
 
 public class JobCreateVersionData extends Job {
@@ -74,9 +74,9 @@ public class JobCreateVersionData extends Job {
 		
 		this.forgeJson = tempJson.replace("###PACKID###", pf.generateLauncherVersionName());
 		
-		ZaniDL_.log.finest("Json Data Length: " + forgeJson.length());
+		ZaniDL.log.finest("Json Data Length: " + forgeJson.length());
 		
-		PackFile pf = ZaniDL_.packfile;
+		PackFile pf = ZaniDL.packfile;
 		String abstractPathName = Util.fs_sysPath(Util.getMinecraftDir()
 				+ "/versions/" + pf.generateLauncherVersionName() + "/"
 				+ pf.generateLauncherVersionName());
@@ -106,7 +106,7 @@ public class JobCreateVersionData extends Job {
 			}
 			
 		} catch (Exception e) {
-			ZaniDL_.log.severe("Cannot continue, manual intervention required!  Error message: "
+			ZaniDL.log.severe("Cannot continue, manual intervention required!  Error message: "
 					+ e.getMessage());
 			out = false;
 		} finally {

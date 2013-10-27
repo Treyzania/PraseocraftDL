@@ -23,7 +23,7 @@ import argo.jdom.JsonStringNode;
 import argo.saj.InvalidSyntaxException;
 
 import com.treyzania.zanidl.PackFile;
-import com.treyzania.zanidl.ZaniDL_;
+import com.treyzania.zanidl.ZaniDL;
 import com.treyzania.zanidl.Util;
 
 import static argo.jdom.JsonNodeFactories.*;
@@ -71,7 +71,7 @@ public class JobAddLauncherProfile extends Job {
 			
 		} catch (Exception e) {
 
-			ZaniDL_.log.severe(e.getMessage());
+			ZaniDL.log.severe(e.getMessage());
 			out = false;
 
 		}
@@ -123,7 +123,7 @@ public class JobAddLauncherProfile extends Job {
 			FileOutputStream fos = new FileOutputStream(lpjsonFile);
 			fos.write(output.getBytes());
 		} catch (Exception e) {
-			ZaniDL_.log.warning(e.getMessage());
+			ZaniDL.log.warning(e.getMessage());
 			out = false;
 		}
 		

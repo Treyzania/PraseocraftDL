@@ -3,7 +3,7 @@ package com.treyzania.zanidl.resouces;
 import java.util.ArrayList;
 
 import com.treyzania.zanidl.Domain;
-import com.treyzania.zanidl.ZaniDL_;
+import com.treyzania.zanidl.ZaniDL;
 import com.treyzania.zanidl.jobbing.Job;
 import com.treyzania.zanidl.jobbing.Joblist;
 
@@ -23,7 +23,7 @@ public class Worker implements Runnable {
 		this.jobExecutor = new Thread(this, "WorkerThread-" + this.name);
 		this.dom = domainOfOperation;
 		
-		ZaniDL_.log.finer("Worker \'" + this.name + "\'" + " created!");
+		ZaniDL.log.finer("Worker \'" + this.name + "\'" + " created!");
 		
 	}
 	
@@ -32,7 +32,7 @@ public class Worker implements Runnable {
 		
 		ArrayList<Job> fails = new ArrayList<Job>();
 		
-		ZaniDL_.log.info("Worker \'" + this.name + "\'" + " started!");
+		ZaniDL.log.info("Worker \'" + this.name + "\'" + " started!");
 		
 		int failures = 0;
 		
@@ -44,12 +44,12 @@ public class Worker implements Runnable {
 				
 				boolean success = j.runJob();
 				
-				synchronized (ZaniDL_.frame.progressBar) {
+				synchronized (ZaniDL.frame.progressBar) {
 					
-					int oldValue = ZaniDL_.frame.progressBar.getValue();
+					int oldValue = ZaniDL.frame.progressBar.getValue();
 					int newValue = oldValue + 1;
 					
-					ZaniDL_.frame.progressBar.setValue(newValue);
+					ZaniDL.frame.progressBar.setValue(newValue);
 					
 				}
 				
@@ -69,8 +69,8 @@ public class Worker implements Runnable {
 		sb.append("}.");
 		
 		// And print out the counters and such.
-		ZaniDL_.log.info("Worker \'" + this.name + "\'" + " finshed!  Failure count: " + failures + " failure(s).");
-		if (failures > 0) ZaniDL_.log.info(sb.toString());
+		ZaniDL.log.info("Worker \'" + this.name + "\'" + " finshed!  Failure count: " + failures + " failure(s).");
+		if (failures > 0) ZaniDL.log.info(sb.toString());
 		
 		isFinished = true;
 		

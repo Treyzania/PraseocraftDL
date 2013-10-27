@@ -3,7 +3,7 @@ package com.treyzania.zanidl.parsing;
 import java.util.ArrayList;
 
 import com.treyzania.zanidl.PackFile;
-import com.treyzania.zanidl.ZaniDL_;
+import com.treyzania.zanidl.ZaniDL;
 import com.treyzania.zanidl.jobbing.Job;
 
 import nu.xom.Element;
@@ -35,7 +35,7 @@ public class Handlers {
 			
 		}
 		
-		ZaniDL_.log.info(tagHandler == null ? "Tag (" + ele.getQualifiedName() + ") not supported!  Ignoring!" : "Using tag handler: " + tagHandler.getClass().getSimpleName());
+		ZaniDL.log.info(tagHandler == null ? "Tag (" + ele.getQualifiedName() + ") not supported!  Ignoring!" : "Using tag handler: " + tagHandler.getClass().getSimpleName());
 		if (tagHandler != null) {
 			j = tagHandler.handleTag(pf, ele);
 		}

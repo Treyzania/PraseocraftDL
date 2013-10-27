@@ -13,7 +13,7 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import com.treyzania.zanidl.ZaniDL_;
+import com.treyzania.zanidl.ZaniDL;
 import com.treyzania.zanidl.State;
 import com.treyzania.zanidl.listeners.DownloadStartListener;
 
@@ -63,7 +63,7 @@ public class MasterFrame extends JFrame implements Runnable {
 		this.status = new JPanel();
 		this.jobInfo = new JPanel();
 
-		title.add(new JLabel("ZaniDL " + ZaniDL_.VERSION));
+		title.add(new JLabel("ZaniDL " + ZaniDL.VERSION));
 		author.add(new JLabel("Written by Treyzania"));
 		title.setVisible(true);
 		author.setVisible(true);
@@ -177,7 +177,7 @@ public class MasterFrame extends JFrame implements Runnable {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (ClassNotFoundException | InstantiationException
 				| IllegalAccessException | UnsupportedLookAndFeelException e) {
-			ZaniDL_.log.fine("Look and Feel error!  (It doesn't feel right!)");
+			ZaniDL.log.fine("Look and Feel error!  (It doesn't feel right!)");
 		}
 
 	}

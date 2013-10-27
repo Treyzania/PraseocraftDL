@@ -85,10 +85,10 @@ public class Util {
 	
 	protected static void testDirs() {
 		
-		ZaniDL_.log.finest("WORKING DIR: " + System.getProperty("user.dir"));
-		ZaniDL_.log.finest("MC DIR: " + Util.fs_genericPath(Util.getMinecraftDir()));
-		ZaniDL_.log.finest("TEMP DIR: " + Util.fs_genericPath(Util.getTempDir()));
-		ZaniDL_.log.finest("SYSPATH TEST: " + Util.fs_sysPath(Util.getTempDir() + "/dicks/and/balls/hi.txt"));
+		ZaniDL.log.finest("WORKING DIR: " + System.getProperty("user.dir"));
+		ZaniDL.log.finest("MC DIR: " + Util.fs_genericPath(Util.getMinecraftDir()));
+		ZaniDL.log.finest("TEMP DIR: " + Util.fs_genericPath(Util.getTempDir()));
+		ZaniDL.log.finest("SYSPATH TEST: " + Util.fs_sysPath(Util.getTempDir() + "/dicks/and/balls/hi.txt"));
 		
 	}
 
@@ -118,7 +118,7 @@ public class Util {
 			}
 			
 		} catch (Exception e) {
-			ZaniDL_.log.warning("Error, could not create file to download to!  Aborting!");
+			ZaniDL.log.warning("Error, could not create file to download to!  Aborting!");
 			if (file.exists()) file.delete();
 			good = false;
 		}
@@ -128,7 +128,7 @@ public class Util {
 		try { // Access the URL.
 			website = new URL(address);
 		} catch (Exception e) {
-			ZaniDL_.log.warning("Mod downloading error!  Message: " + e.getMessage());
+			ZaniDL.log.warning("Mod downloading error!  Message: " + e.getMessage());
 			file.delete();
 			good = false;
 		}
@@ -144,7 +144,7 @@ public class Util {
 			
 		} catch (Exception e) {
 			
-			ZaniDL_.log.warning("Could not connect to the file!  That's an error!  Message: " + responseCode);
+			ZaniDL.log.warning("Could not connect to the file!  That's an error!  Message: " + responseCode);
 			file.delete();
 			good = false;
 			
@@ -160,7 +160,7 @@ public class Util {
 		} catch (Exception e) {
 			
 			e.printStackTrace();
-			ZaniDL_.log.warning(e.getMessage() + " -> " + filename);
+			ZaniDL.log.warning(e.getMessage() + " -> " + filename);
 			
 			file.delete();
 			

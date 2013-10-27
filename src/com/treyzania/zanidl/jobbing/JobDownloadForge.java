@@ -1,6 +1,6 @@
 package com.treyzania.zanidl.jobbing;
 
-import com.treyzania.zanidl.ZaniDL_;
+import com.treyzania.zanidl.ZaniDL;
 import com.treyzania.zanidl.Util;
 
 public class JobDownloadForge extends Job {
@@ -24,7 +24,7 @@ public class JobDownloadForge extends Job {
 		
 		boolean out = true;
 		
-		ZaniDL_.log.fine("JOBS: Downloading MCForge version \'" + this.forgeVer + "\' for Minecraft \'" + this.mcVer + "\'.");
+		ZaniDL.log.fine("JOBS: Downloading MCForge version \'" + this.forgeVer + "\' for Minecraft \'" + this.mcVer + "\'.");
 		
 		String forgeAddr = "http://files.minecraftforge.net/minecraftforge/minecraftforge-universal-" + this.mcVer + "-" + this.forgeVer + ".jar";
 		

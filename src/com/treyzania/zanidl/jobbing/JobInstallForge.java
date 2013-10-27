@@ -10,7 +10,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
 
-import com.treyzania.zanidl.ZaniDL_;
+import com.treyzania.zanidl.ZaniDL;
 
 public class JobInstallForge extends Job {
 
@@ -57,7 +57,7 @@ public class JobInstallForge extends Job {
 			ZipEntry[] forgeZes = this.getEntries(forgeZip);
 			
 			// first, copy contents from existing war
-			ZaniDL_.log.finer("Copying over Minecraft files...");
+			ZaniDL.log.finer("Copying over Minecraft files...");
 			Enumeration<? extends ZipEntry> entries = mcJar.entries();
 			while (entries.hasMoreElements()) {
 				
@@ -76,9 +76,9 @@ public class JobInstallForge extends Job {
 				}
 				
 			}
-			ZaniDL_.log.finer("\tDone!");
+			ZaniDL.log.finer("\tDone!");
 			
-			ZaniDL_.log.finer("Copying over MCForge files...");
+			ZaniDL.log.finer("Copying over MCForge files...");
 			for (int i = 0; i < forgeZes.length; i++) {
 				
 				ZipEntry theZe = forgeZes[i];
@@ -97,16 +97,16 @@ public class JobInstallForge extends Job {
 				}
 				
 			}
-			ZaniDL_.log.finer("\tDone!");
+			ZaniDL.log.finer("\tDone!");
 			
-			ZaniDL_.log.fine("Done installing MCForge.  MC Files Copied: " + originalsCopied + ".  Forge Files Copied: " + forgesCopied + ".");
+			ZaniDL.log.fine("Done installing MCForge.  MC Files Copied: " + originalsCopied + ".  Forge Files Copied: " + forgesCopied + ".");
 			
 			// close
 			mcJar.close();
 			destZip.close();
 			
 		} catch (Exception e) {
-			ZaniDL_.log.severe(e.getMessage());
+			ZaniDL.log.severe(e.getMessage());
 			e.printStackTrace();
 			out = false;
 		}
