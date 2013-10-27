@@ -1,5 +1,6 @@
 package com.treyzania.praseocraft.ftb.downloader;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -191,7 +192,8 @@ public class PackFile implements Runnable {
 	public boolean buildDocument() {
 		
 		boolean out = true;
-		Builder b = new Builder();
+		Builder b = null;
+		b = new Builder();
 		
 		String xml = "";
 		String newXml = "";
@@ -201,6 +203,7 @@ public class PackFile implements Runnable {
 			xmlUrl = new URL(this.packAddr);
 		} catch (MalformedURLException e1) {
 			Pcdl.log.severe(e1.getMessage());
+			out = false;
 		}
 		
 		InputStream is;
@@ -212,7 +215,9 @@ public class PackFile implements Runnable {
 			}
 			
 		} catch (IOException e1) {
+			e1.printStackTrace();
 			Pcdl.log.severe(e1.getMessage());
+			out = false;
 		}
 		
 		xml = xmlSb.toString();
@@ -222,9 +227,12 @@ public class PackFile implements Runnable {
 				.replace("&", "&amp;")
 				;
 		
+		Pcdl.log.info("XML Data Size: " + newXml.length() + " B.");
+		System.out.println(newXml);
+		
 		// Actually build it.
 		try {
-			this.doc = b.build("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<f>Data</f>", null);
+			this.doc = b.build(new ByteArrayInputStream(newXml.getBytes("UTF-8")));
 		} catch (ParsingException | IOException e) {
 			Pcdl.log.severe("Document build error: " + e.getMessage());
 			System.out.println(e.getMessage());
