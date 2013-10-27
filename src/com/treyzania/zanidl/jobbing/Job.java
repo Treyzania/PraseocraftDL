@@ -1,7 +1,7 @@
 package com.treyzania.zanidl.jobbing;
 
 import com.treyzania.zanidl.Domain;
-import com.treyzania.zanidl.ZaniDl;
+import com.treyzania.zanidl.ZaniDL_;
 import com.treyzania.zanidl.resouces.MetaCollector;
 
 public class Job {
@@ -45,7 +45,7 @@ public class Job {
 	
 	public static void announceSkip(Job j, String msg) {
 		
-		ZaniDl.log.warning("JOB SKIPPED: \"" + j.toString() + "\" FOR " + msg);
+		ZaniDL_.log.warning("JOB SKIPPED: \"" + j.toString() + "\" FOR " + msg);
 		
 	}
 

@@ -1,7 +1,7 @@
 package com.treyzania.zanidl.jobbing;
 
 import com.treyzania.zanidl.Domain;
-import com.treyzania.zanidl.ZaniDl;
+import com.treyzania.zanidl.ZaniDL_;
 import com.treyzania.zanidl.Util;
 import com.treyzania.zanidl.parsing.FileOp;
 
@@ -27,14 +27,14 @@ public class JobDownload extends Job {
 		boolean doDownload = false;
 		boolean good = true;
 		
-		ZaniDl.log.fine("JOBS: Downloading file \'" + file.src + "\'.");
+		ZaniDL_.log.fine("JOBS: Downloading file \'" + file.src + "\'.");
 		
 		if (ft == Domain.GENERIC) {
 			doDownload = true;
 		} else {
-			if (ft == Domain.CLIENT && ZaniDl.dlMode == "client") {
+			if (ft == Domain.CLIENT && ZaniDL_.dlMode == "client") {
 				doDownload = true;
-			} else if (ft == Domain.SERVER && ZaniDl.dlMode == "server") {
+			} else if (ft == Domain.SERVER && ZaniDL_.dlMode == "server") {
 				doDownload = true;
 			} else {
 				Job.announceSkip(this, "Incorrect group type for download type.");
@@ -44,7 +44,7 @@ public class JobDownload extends Job {
 		
 		if (doDownload) {
 			
-			good = Util.download(file.src, Util.fs_sysPath(ZaniDl.packfile.generatePackPath() + "/" + file.loc));
+			good = Util.download(file.src, Util.fs_sysPath(ZaniDL_.packfile.generatePackPath() + "/" + file.loc));
 			
 		}
 		

@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.nio.channels.FileChannel;
 
 import com.treyzania.zanidl.PackFile;
-import com.treyzania.zanidl.ZaniDl;
+import com.treyzania.zanidl.ZaniDL_;
 import com.treyzania.zanidl.Util;
 
 public class JobGetMinecraft extends Job {
@@ -32,7 +32,7 @@ public class JobGetMinecraft extends Job {
 		
 		String mcVer = pf.getMCVersion();
 
-		ZaniDl.log.fine("JOBS: Attempting to copy the vanilla Minecraft Jar file.  (No promises.)");
+		ZaniDL_.log.fine("JOBS: Attempting to copy the vanilla Minecraft Jar file.  (No promises.)");
 		
 		File src;
 		File dest;
@@ -44,7 +44,7 @@ public class JobGetMinecraft extends Job {
 			src = new File(Util.getMinecraftDir() + "/versions/" + mcVer + "/" + mcVer + ".jar");
 			dest = new File(to);
 			
-			ZaniDl.log.fine("Data movement: " + src.getPath() + " -> " + dest.getPath());
+			ZaniDL_.log.fine("Data movement: " + src.getPath() + " -> " + dest.getPath());
 			
 			if (!dest.exists()) {
 				dest.getParentFile().mkdirs();
@@ -68,7 +68,7 @@ public class JobGetMinecraft extends Job {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			ZaniDl.log.severe(e.getMessage());
+			ZaniDL_.log.severe(e.getMessage());
 			out = false;
 		} finally {
 			fis = null;

@@ -6,7 +6,7 @@ import java.io.FileOutputStream;
 
 import nu.xom.Element;
 
-import com.treyzania.zanidl.ZaniDl;
+import com.treyzania.zanidl.ZaniDL_;
 import com.treyzania.zanidl.Util;
 
 public class JobWrite extends Job {
@@ -43,7 +43,7 @@ public class JobWrite extends Job {
 		
 		try {
 			
-			ZaniDl.log.finer("File exsistence check: {" + f + "}: " + f.exists());
+			ZaniDL_.log.finer("File exsistence check: {" + f + "}: " + f.exists());
 			
 			// Check to see if the file needs to be created.
 			if (!f.exists()) {
@@ -65,7 +65,7 @@ public class JobWrite extends Job {
 			
 		} catch (Exception e) {
 			
-			ZaniDl.log.warning(e.getMessage());
+			ZaniDL_.log.warning(e.getMessage());
 			out = false;
 			
 		} finally {

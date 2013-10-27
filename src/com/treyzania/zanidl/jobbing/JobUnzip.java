@@ -3,7 +3,7 @@ package com.treyzania.zanidl.jobbing;
 import java.io.IOException;
 import java.util.zip.ZipException;
 
-import com.treyzania.zanidl.ZaniDl;
+import com.treyzania.zanidl.ZaniDL_;
 import com.treyzania.zanidl.Util;
 
 public class JobUnzip extends Job {
@@ -25,7 +25,7 @@ public class JobUnzip extends Job {
 		
 		boolean good = true;
 		
-		ZaniDl.log.fine("JOBS: Unzipping \'" + this.source + "\' to \'" + this.destinaion + "\'.");
+		ZaniDL_.log.fine("JOBS: Unzipping \'" + this.source + "\' to \'" + this.destinaion + "\'.");
 		
 		try {
 			Util.extract(Util.fs_sysPath(this.source), Util.fs_sysPath(this.destinaion));

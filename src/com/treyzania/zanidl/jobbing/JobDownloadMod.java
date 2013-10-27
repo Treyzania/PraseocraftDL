@@ -1,6 +1,6 @@
 package com.treyzania.zanidl.jobbing;
 
-import com.treyzania.zanidl.ZaniDl;
+import com.treyzania.zanidl.ZaniDL_;
 import com.treyzania.zanidl.Util;
 
 public class JobDownloadMod extends Job {
@@ -20,7 +20,7 @@ public class JobDownloadMod extends Job {
 	@Override
 	public boolean runJob() {
 		
-		String filename = ZaniDl.packfile.generatePackPath() + "/mods/" + this.modFilename;
+		String filename = ZaniDL_.packfile.generatePackPath() + "/mods/" + this.modFilename;
 		String possNN = metadata.access("NewName");
 		if (possNN != null && possNN != "") {
 			filename = possNN;
@@ -33,7 +33,7 @@ public class JobDownloadMod extends Job {
 		String newFilename = filename
 				.replace("%20", "_");
 		
-		ZaniDl.log.fine("JOBS: Downloading mod \'" + newAddr + "\' , to " + newFilename + " .");
+		ZaniDL_.log.fine("JOBS: Downloading mod \'" + newAddr + "\' , to " + newFilename + " .");
 		
 		boolean out = Util.download(newAddr, newFilename);
 		

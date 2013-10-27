@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 import com.treyzania.zanidl.resouces.LogFormatter;
 import com.treyzania.zanidl.resouces.MasterFrame;
 
-public class ZaniDl {
+public class ZaniDL_ {
 	
 	public static final String VERSION = "v1.01";
 	public static MasterFrame frame;

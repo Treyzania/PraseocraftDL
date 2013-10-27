@@ -107,12 +107,12 @@ public class PackFile implements Runnable {
 	@SuppressWarnings("deprecation")
 	public void executeSequence() {
 		
-		MasterFrame frame = ZaniDl.frame;
+		MasterFrame frame = ZaniDL_.frame;
 		
-		ZaniDl.log.info("Pack Location: " + frame.addrField.getText());
+		ZaniDL_.log.info("Pack Location: " + frame.addrField.getText());
 		
 		boolean docbuild = this.buildDocument();
-		ZaniDl.log.info(docbuild ? "Document build successfully!" : "Document build failure!  That's an ERROR!");
+		ZaniDL_.log.info(docbuild ? "Document build successfully!" : "Document build failure!  That's an ERROR!");
 		
 		Domain d = null;
 		String dString = "";
@@ -129,38 +129,38 @@ public class PackFile implements Runnable {
 			dString = "server";
 			
 		} // There will always be one selected because the Client button is selected by default.
-		ZaniDl.log.info("Dowload Type: " + d.toString());
+		ZaniDL_.log.info("Dowload Type: " + d.toString());
 		
 		this.domain = d;
 		
-		ZaniDl.log.info("Preparing PackFile, initalizing...");
+		ZaniDL_.log.info("Preparing PackFile, initalizing...");
 		
-		ZaniDl.dlMode = dString;
+		ZaniDL_.dlMode = dString;
 		this.readJobs(d);
 		
 		if (!this.errored) {
 			
-			ZaniDl.log.info("Job list created and organized successfully. (Hopefully...)");
+			ZaniDL_.log.info("Job list created and organized successfully. (Hopefully...)");
 			
 			// Dump some generic information.
-			ZaniDl.log.info("MC Version: " + metadata.access("MCVersion"));
-			ZaniDl.log.info("Forge Version: " + metadata.access("ForgeVersion"));
+			ZaniDL_.log.info("MC Version: " + metadata.access("MCVersion"));
+			ZaniDL_.log.info("Forge Version: " + metadata.access("ForgeVersion"));
 			
 			frame.progressBar.setMaximum(this.joblist.getJobsRemaining());
 			
 			this.defineWorkers();
 			
-			ZaniDl.log.info("Starting workers...");
+			ZaniDL_.log.info("Starting workers...");
 			
 			this.startWorkers();
 			this.waitForWorkersToFinish();
 			
-			ZaniDl.frame.beep();
+			ZaniDL_.frame.beep();
 			NotificationFrame.wait("Pack building done!");
 			
-			ZaniDl.log.info("Pack Path: " + Util.fs_sysPath(this.generatePackPath()));
-			ZaniDl.log.info("Pack Name: " + this.generatePackName());
-			ZaniDl.log.info("(More stastics coming later, such as build times!)");
+			ZaniDL_.log.info("Pack Path: " + Util.fs_sysPath(this.generatePackPath()));
+			ZaniDL_.log.info("Pack Name: " + this.generatePackName());
+			ZaniDL_.log.info("(More stastics coming later, such as build times!)");
 			
 		}
 		
@@ -202,7 +202,7 @@ public class PackFile implements Runnable {
 		String xml = Util.readWebpage(this.packAddr);
 		String newXml = "";
 		
-		ZaniDl.log.info("Raw XML Length: " + xml.length() + " chars.");
+		ZaniDL_.log.info("Raw XML Length: " + xml.length() + " chars.");
 		
 		// Add more lines if needed.  I hope that nobody actually had to use any XML entities.
 		newXml = xml
@@ -213,7 +213,7 @@ public class PackFile implements Runnable {
 		try {
 			this.doc = b.build(new ByteArrayInputStream(newXml.getBytes("UTF-8")));
 		} catch (ParsingException | IOException e) {
-			ZaniDl.log.severe("Document build error: " + e.getMessage());
+			ZaniDL_.log.severe("Document build error: " + e.getMessage());
 			System.out.println(e.getMessage());
 			out = false;
 		}
@@ -248,12 +248,12 @@ public class PackFile implements Runnable {
 		try {
 			groupTags = ver.getChildElements("group");
 		} catch (Exception e) {
-			ZaniDl.log.warning("Version element not properly selected, notifing!");
-			ZaniDl.frame.dlStatus.setText("That's not a proper verison!");
+			ZaniDL_.log.warning("Version element not properly selected, notifing!");
+			ZaniDL_.frame.dlStatus.setText("That's not a proper verison!");
 		}
 		
 		if (groupTags != null) {
-			ZaniDl.frame.dlStatus.setText(MasterFrame.noErrorsText);
+			ZaniDL_.frame.dlStatus.setText(MasterFrame.noErrorsText);
 		} else {
 			return;
 		}
@@ -309,9 +309,9 @@ public class PackFile implements Runnable {
 			
 		}
 		
-		ZaniDl.log.info("Pack Name: " + this.metadata.access("PackName"));
+		ZaniDL_.log.info("Pack Name: " + this.metadata.access("PackName"));
 		
-		ZaniDl.log.info("If this is being read, then the XML was probably parsed successfully!  " + elementPool);
+		ZaniDL_.log.info("If this is being read, then the XML was probably parsed successfully!  " + elementPool);
 		
 	}
 	
@@ -344,9 +344,9 @@ public class PackFile implements Runnable {
 		String finalMcJarDir = this.generatePackJarPath();
 		
 		String fj = "{Formatting Jobs}";
-		ZaniDl.log.fine(fj + "Forge Dir: " + forgeDir);
-		ZaniDl.log.fine(fj + "Temp. MC Jar Dir: " + tempMcJarDir);
-		ZaniDl.log.fine(fj + "Final MC Jar Dir: " + finalMcJarDir);
+		ZaniDL_.log.fine(fj + "Forge Dir: " + forgeDir);
+		ZaniDL_.log.fine(fj + "Temp. MC Jar Dir: " + tempMcJarDir);
+		ZaniDL_.log.fine(fj + "Final MC Jar Dir: " + finalMcJarDir);
 		
 		// Create and register the jobs.
 		if (this.domain == Domain.CLIENT) { // Client jobs.
