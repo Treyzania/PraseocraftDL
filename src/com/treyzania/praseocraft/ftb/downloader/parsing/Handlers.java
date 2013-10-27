@@ -35,7 +35,7 @@ public class Handlers {
 			
 		}
 		
-		Pcdl.log.info(tagHandler == null ? "Tag (" + ele.getQualifiedName() + ") not supported!  Ignoring!" : "Using tag handler: " + tagHandler.toString());
+		Pcdl.log.info(tagHandler == null ? "Tag (" + ele.getQualifiedName() + ") not supported!  Ignoring!" : "Using tag handler: " + tagHandler.getClass().getSimpleName());
 		if (tagHandler != null) {
 			j = tagHandler.handleTag(pf, ele);
 		}

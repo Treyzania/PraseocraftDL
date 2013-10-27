@@ -1,5 +1,6 @@
 package com.treyzania.praseocraft.ftb.downloader.jobbing;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -37,6 +38,14 @@ public class JobInstallForge extends Job {
 		boolean out = true;
 
 		try {
+			
+			// Make the file before hand, so we don't get errors and such.
+			File dz = new File(this.destZipName);
+			if (!dz.exists()) {
+				dz.getParentFile().mkdirs();
+				dz.createNewFile();
+			}
+			
 			// read war.zip and write to append.zip
 			ZipFile mcJar = new ZipFile(this.mcJarName);
 			ZipOutputStream destZip = new ZipOutputStream(new FileOutputStream(this.destZipName));

@@ -16,7 +16,7 @@ import com.treyzania.praseocraft.ftb.downloader.resouces.MasterFrame;
 
 public class Pcdl {
 	
-	public static final String VERSION = "v1.0";
+	public static final String VERSION = "v1.01";
 	public static MasterFrame frame;
 	public static PackFile packfile;
 	

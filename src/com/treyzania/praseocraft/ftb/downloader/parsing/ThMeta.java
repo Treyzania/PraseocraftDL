@@ -22,6 +22,8 @@ public class ThMeta extends TagHandler {
 		
 		pf.metadata.define(name, val);
 		
+		System.out.println("Handling metadata! KEY: \'" + name + "\' VALUE: \'" + val + "\'");
+		
 		return null;
 		
 	}

@@ -27,6 +27,7 @@ public class PackFile implements Runnable {
 	
 	private static final String[] wNames = {"Alpha", "Bravo", "Charlie", "Delta", "Echo", "Foxtrot", "Golf", "Hotel"};
 	
+	public final long time;
 	public final String packAddr; // The place the pack file is hosted.
 	public final String packVer; // The "ver" attribute of the "version" tag.  Can be a fancy name like the Android devs do.  (ie. "Jelly Bean")
 	
@@ -48,6 +49,8 @@ public class PackFile implements Runnable {
 		this.pfexe = new Thread(this, "PackFile-Thread");
 		this.joblist = new Joblist();
 		
+		this.time = System.currentTimeMillis();
+				
 	}
 	
 	public String generateLauncherVersionName() {
@@ -58,7 +61,7 @@ public class PackFile implements Runnable {
 	
 	public String generatePackName() {
 		
-		String name = "PraseocraftDL_Pack-" + Long.toHexString(System.currentTimeMillis());
+		String name = "PraseocraftDL_Pack-" + Long.toHexString(this.time);
 		
 		String packName = metadata.access("PackName");
 		if (packName != null) {
@@ -75,7 +78,7 @@ public class PackFile implements Runnable {
 	
 	public String generatePackJarPath() {
 		
-		String path = Util.getTempDir() + "/lostGameJar" + Long.toHexString(System.currentTimeMillis()) + ".jar";
+		String path = Util.getTempDir() + "/lostGameJar" + Long.toHexString(this.time) + ".jar";
 		
 		if (this.domain == Domain.CLIENT) {
 			path = Util.getMinecraftDir() + "/versions/" + this.generateLauncherVersionName() + "/" + this.generateLauncherVersionName() + ".jar";
@@ -149,6 +152,10 @@ public class PackFile implements Runnable {
 		Pcdl.frame.beep();
 		NotificationFrame.wait("Pack building done!");
 		
+		Pcdl.log.info("Pack Path: " + Util.fs_sysPath(this.generatePackPath()));
+		Pcdl.log.info("Pack Name: " + this.generatePackName());
+		Pcdl.log.info("(More stastics coming later, such as build times!)");
+		
 	}
 
 	private void waitForWorkersToFinish() {
@@ -215,10 +222,8 @@ public class PackFile implements Runnable {
 			}
 		}
 		
-		//this.readJobs_readoutElements(root, ver, null);
-		
 		Elements groupTags = ver.getChildElements("group");
-		Elements globalMetaTags = root.getChildElements("meta");
+		Elements globalMetaTags = ver.getChildElements("meta");
 		
 		// Deal with the global Metas.
 		for (int i = 0; i < globalMetaTags.size(); i++) {
@@ -251,14 +256,16 @@ public class PackFile implements Runnable {
 			
 		}
 		
-		//this.readJobs_readoutElements(root, ver, null);
+		// These two lines are important.
+		this.extractNecessaryMetadata(ver);
+		this.createFormattingJobs();
 		
 		// Handle the tags.
 		for (Element ele : elementPool) {
 			
 			Job j = Handlers.handleTag(this, ele);
 			
-			if (Domain.Calc.isCompatible(this.domain, Domain.Calc.parseDomain(((Element) ele.getParent()).getAttribute("domain").getValue())) && j != null) {
+			if (j != null && Domain.Calc.isCompatible(this.domain, Domain.Calc.parseDomain(((Element) ele.getParent()).getAttribute("domain").getValue()))) {
 				// My my, that was a long line...  I hope it works.
 				
 				this.joblist.addJob(j); // Somewhat anti-climatic.
@@ -267,8 +274,7 @@ public class PackFile implements Runnable {
 			
 		}
 		
-		this.extractNecessaryMetadata(ver);
-		this.createFormattingJobs();
+		Pcdl.log.info("Pack Name: " + this.metadata.access("PackName"));
 		
 		Pcdl.log.info("If this is being read, then the XML was probably parsed successfully!  " + elementPool);
 		
