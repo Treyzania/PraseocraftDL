@@ -34,7 +34,9 @@ public class Util {
 		String adj = path;
 		
 		if (os.contains("windows")) {
-			adj = adj.replace('/', '\\');
+			adj = adj.replace("/", "\\");
+		} else {
+			adj = adj.replace("\\\\", "/");
 		}
 		
 		return adj;
@@ -43,7 +45,7 @@ public class Util {
 
 	public static String getMinecraftDir() {
 		
-		String dir = System.getProperty("user.dir") + "/mc-pcdl/";
+		String dir = System.getProperty("user.dir") + "/mc-zidl/";
 		String os = System.getProperty("os.name").toLowerCase();
 		String userHome = System.getProperty("user.home");
 		
@@ -59,18 +61,18 @@ public class Util {
 		
 	}
 	
-	public static String getPCDLDir() {
+	public static String getZanidlDir() {
 		
 		String dir = "";
 		String os = System.getProperty("os.name").toLowerCase();
 		String userHome = System.getProperty("user.home");
 		
 		if (os.contains("windows")) {
-			dir = userHome + "/AppData/Roaming/.mc-pcdl";
+			dir = userHome + "/AppData/Roaming/.mc-zidl";
 		} else if (os.contains("linux") || os.contains("debian") || os.contains("ubuntu")) { // I hope this is good enough
-			dir = userHome + "/mc-pcdl";
+			dir = userHome + "/mc-zidl";
 		} else if (os.contains("osx")) {
-			dir = userHome + "/mc-pcdl";
+			dir = userHome + "/mc-zidl";
 		}
 		
 		return dir;
@@ -79,7 +81,7 @@ public class Util {
 	
 	public static String getTempDir() {
 		
-		return (getPCDLDir() + "/tmp");
+		return (getZanidlDir() + "/tmp");
 		
 	}
 	
@@ -88,7 +90,7 @@ public class Util {
 		ZaniDL.log.finest("WORKING DIR: " + System.getProperty("user.dir"));
 		ZaniDL.log.finest("MC DIR: " + Util.fs_genericPath(Util.getMinecraftDir()));
 		ZaniDL.log.finest("TEMP DIR: " + Util.fs_genericPath(Util.getTempDir()));
-		ZaniDL.log.finest("SYSPATH TEST: " + Util.fs_sysPath(Util.getTempDir() + "/dicks/and/balls/hi.txt"));
+		//ZaniDL.log.finest("SYSPATH TEST: " + Util.fs_sysPath(Util.getTempDir() + "/dicks/and/balls/hi.txt"));
 		
 	}
 
@@ -137,11 +139,9 @@ public class Util {
 		
 		int responseCode = -1;
 		try { // Open the connection and the channel.
-			
 			HttpURLConnection conn = (HttpURLConnection) website.openConnection();
 			responseCode = conn.getResponseCode();
 			rbc = Channels.newChannel(conn.getInputStream());
-			
 		} catch (Exception e) {
 			
 			ZaniDL.log.warning("Could not connect to the file!  That's an error!  Message: " + responseCode);

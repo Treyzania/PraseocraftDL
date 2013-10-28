@@ -8,6 +8,7 @@ import nu.xom.Element;
 
 import com.treyzania.zanidl.ZaniDL;
 import com.treyzania.zanidl.Util;
+import com.treyzania.zanidl.resouces.ErrorProfile;
 
 public class JobWrite extends Job {
 
@@ -22,7 +23,7 @@ public class JobWrite extends Job {
 	}
 
 	@Override
-	public boolean runJob() {
+	public boolean runJob(ErrorProfile errorProfile) {
 		
 		boolean out = true;
 		

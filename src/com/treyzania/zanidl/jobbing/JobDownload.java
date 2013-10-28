@@ -4,6 +4,7 @@ import com.treyzania.zanidl.Domain;
 import com.treyzania.zanidl.ZaniDL;
 import com.treyzania.zanidl.Util;
 import com.treyzania.zanidl.parsing.FileOp;
+import com.treyzania.zanidl.resouces.ErrorProfile;
 
 public class JobDownload extends Job {
 
@@ -20,7 +21,7 @@ public class JobDownload extends Job {
 	
 	@SuppressWarnings("deprecation")
 	@Override
-	public boolean runJob() {
+	public boolean runJob(ErrorProfile errorProfile) {
 		
 		Domain ft = file.type;
 		

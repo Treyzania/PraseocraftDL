@@ -25,6 +25,7 @@ import argo.saj.InvalidSyntaxException;
 import com.treyzania.zanidl.PackFile;
 import com.treyzania.zanidl.ZaniDL;
 import com.treyzania.zanidl.Util;
+import com.treyzania.zanidl.resouces.ErrorProfile;
 
 import static argo.jdom.JsonNodeFactories.*;
 
@@ -45,7 +46,7 @@ public class JobAddLauncherProfile extends Job {
 	
 	@SuppressWarnings({ "resource", "rawtypes", "unchecked" })
 	@Override
-	public boolean runJob() {
+	public boolean runJob(ErrorProfile errorProfile) {
 		
 		boolean out = true;
 		

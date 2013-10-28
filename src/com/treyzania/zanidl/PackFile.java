@@ -3,6 +3,8 @@ package com.treyzania.zanidl;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Set;
 
 import nu.xom.Attribute;
 import nu.xom.Builder;
@@ -19,6 +21,7 @@ import com.treyzania.zanidl.jobbing.JobGetMinecraft;
 import com.treyzania.zanidl.jobbing.JobInstallForge;
 import com.treyzania.zanidl.jobbing.Joblist;
 import com.treyzania.zanidl.parsing.Handlers;
+import com.treyzania.zanidl.resouces.ErrorProfile;
 import com.treyzania.zanidl.resouces.MasterFrame;
 import com.treyzania.zanidl.resouces.MetaCollector;
 import com.treyzania.zanidl.resouces.NotificationFrame;
@@ -42,6 +45,8 @@ public class PackFile implements Runnable {
 	public MetaCollector metadata;
 	public Thread pfexe;
 	
+	public HashMap<Job, ErrorProfile> jobErrors;
+	
 	public PackFile(String addr, String ver) {
 		
 		this.packAddr = addr;
@@ -64,7 +69,7 @@ public class PackFile implements Runnable {
 	
 	public String generatePackName() {
 		
-		String name = "PraseocraftDL_Pack-" + Long.toHexString(this.time);
+		String name = "ZaniDL_Pack-" + Long.toHexString(this.time);
 		
 		String packName = metadata.access("PackName");
 		if (packName != null) {
@@ -76,12 +81,12 @@ public class PackFile implements Runnable {
 	}
 	
 	public String generatePackPath() {
-		return Util.fs_sysPath(Util.getPCDLDir() + "/packs/" + this.generatePackName());
+		return Util.fs_sysPath(Util.getZanidlDir() + "/packs/" + this.generatePackName());
 	}
 	
 	public String generatePackJarPath() {
 		
-		String path = Util.getTempDir() + "/lostGameJar" + Long.toHexString(this.time) + ".jar";
+		String path = Util.getTempDir() + "/lostGameJar" + Long.toString(this.time) + ".jar";
 		
 		if (this.domain == Domain.CLIENT) {
 			path = Util.getMinecraftDir() + "/versions/" + this.generateLauncherVersionName() + "/" + this.generateLauncherVersionName() + ".jar";
@@ -188,6 +193,19 @@ public class PackFile implements Runnable {
 			} catch (InterruptedException e) {}
 			
 			System.gc(); // Just to be nice!
+			
+		}
+		
+		this.jobErrors = new HashMap<Job, ErrorProfile>();
+		for (Worker w : this.workers) { // Lets hope these two loops work right.
+			
+			Set<Job> jobs = w.errors.keySet();
+			
+			for (Job j : jobs) {
+				
+				this.jobErrors.put(j, w.errors.get(j));
+				
+			}
 			
 		}
 		

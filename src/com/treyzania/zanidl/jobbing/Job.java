@@ -2,6 +2,7 @@ package com.treyzania.zanidl.jobbing;
 
 import com.treyzania.zanidl.Domain;
 import com.treyzania.zanidl.ZaniDL;
+import com.treyzania.zanidl.resouces.ErrorProfile;
 import com.treyzania.zanidl.resouces.MetaCollector;
 
 public class Job {
@@ -35,7 +36,7 @@ public class Job {
 		return this.mDomain;
 	}
 	
-	public boolean runJob() {
+	public boolean runJob(ErrorProfile errorProfile) {
 		
 		// Nothing.
 		

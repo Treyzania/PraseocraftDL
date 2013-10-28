@@ -9,6 +9,7 @@ import java.nio.channels.FileChannel;
 import com.treyzania.zanidl.PackFile;
 import com.treyzania.zanidl.ZaniDL;
 import com.treyzania.zanidl.Util;
+import com.treyzania.zanidl.resouces.ErrorProfile;
 
 public class JobGetMinecraft extends Job {
 
@@ -26,7 +27,7 @@ public class JobGetMinecraft extends Job {
 
 	@SuppressWarnings({ "resource" })
 	@Override
-	public boolean runJob() {
+	public boolean runJob(ErrorProfile errorProfile) {
 
 		boolean out = true;
 		
