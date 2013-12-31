@@ -11,8 +11,6 @@ import javax.swing.JProgressBar;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-
 import com.treyzania.zanidl.ZaniDL;
 import com.treyzania.zanidl.State;
 import com.treyzania.zanidl.listeners.DownloadStartListener;
@@ -28,7 +26,7 @@ public class MasterFrame extends JFrame implements Runnable {
 	
 	public Thread cycle;
 
-	public JPanel title;
+	public JPanel titlePanel;
 	public JPanel author;
 	public JPanel address;
 	public JPanel packVer;
@@ -50,10 +48,10 @@ public class MasterFrame extends JFrame implements Runnable {
 	public JLabel dlStatus;
 
 	public MasterFrame(boolean visible) {
-
-		this.cycle = new Thread("MF-CYCLER");
-
-		this.title = new JPanel();
+		
+		this.cycle = new Thread(this, "MF-CYCLER");
+		
+		this.titlePanel = new JPanel();
 		this.author = new JPanel();
 		this.address = new JPanel();
 		this.packVer = new JPanel();
@@ -62,22 +60,22 @@ public class MasterFrame extends JFrame implements Runnable {
 		this.bar = new JPanel();
 		this.status = new JPanel();
 		this.jobInfo = new JPanel();
-
-		title.add(new JLabel("ZaniDL " + ZaniDL.VERSION));
+		
+		titlePanel.add(new JLabel("ZaniDL " + ZaniDL.VERSION));
 		author.add(new JLabel("Written by Treyzania"));
-		title.setVisible(true);
+		titlePanel.setVisible(true);
 		author.setVisible(true);
-
+		
 		address.add(new JLabel("Pack host: "));
 		address.add(addrField);
 		address.setVisible(true);
-
+		
 		packVer.add(new JLabel("Desired version: "));
 		packVer.add(verField);
 		packVer.setVisible(true);
-
+		
 		addrField.setText("");
-
+		
 		dlType = new ButtonGroup();
 		buttonClient = new JRadioButton("Client");
 		buttonClient.setSelected(true);
@@ -87,29 +85,24 @@ public class MasterFrame extends JFrame implements Runnable {
 		radio.add(this.buttonClient);
 		radio.add(this.buttonServer);
 		radio.setVisible(true);
-
+		
 		dlButton = new JButton("Download and Install");
 		dlButton.addActionListener(new DownloadStartListener());
 		download.add(dlButton);
 		download.setVisible(true);
-
-		dlStatus = new JLabel(noErrorsText);
-		status.add(this.dlStatus);
-		status.setVisible(true);
-
+		
+		//dlStatus = new JLabel(noErrorsText);
+		//status.add(this.dlStatus);
+		//status.setVisible(true);
+		
 		progressBar = new JProgressBar(0, 1);
 		progressBar.setValue(0);
 		progressBar.setStringPainted(true);
 		bar.add(progressBar);
-
-		jobInfo.add(new JLabel("weiners"));
-		jobInfo.setBackground(Color.GREEN);
-		jobInfo.setToolTipText("PENIS!");
-
+		
 		this.setLayout(new FlowLayout(FlowLayout.LEFT));
-		//this.setLayout(new CardLayout());
-
-		this.add(this.title);
+		
+		this.add(this.titlePanel);
 		this.add(this.author);
 		this.add(this.address);
 		this.add(this.packVer);
@@ -117,22 +110,17 @@ public class MasterFrame extends JFrame implements Runnable {
 		this.add(this.download);
 		this.add(this.bar);
 		this.add(this.status);
-
-		// Work on this later!
-		//this.add(this.jobInfo);
-
-		this.setBounds(0, 0, 275, 325);
+		
+		this.setBounds(0, 0, 280, 300);
 		this.setFocusable(true);
 		this.setResizable(false);
 		this.setVisible(visible);
-
+		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+		
 		this.revalidate();
 		this.repaint();
-
-		cycle.start();
-
+		
 	}
 
 	public void updateState(State s) {
@@ -157,7 +145,7 @@ public class MasterFrame extends JFrame implements Runnable {
 		while (true) {
 			
 			// Do I need to individually repaint these all?
-			title.repaint();
+			titlePanel.repaint();
 			address.repaint();
 			radio.repaint();
 			download.repaint();
@@ -175,9 +163,8 @@ public class MasterFrame extends JFrame implements Runnable {
 
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (ClassNotFoundException | InstantiationException
-				| IllegalAccessException | UnsupportedLookAndFeelException e) {
-			ZaniDL.log.fine("Look and Feel error!  (It doesn't feel right!)");
+		} catch (Exception e) {
+			ZaniDL.log.warning("Look and Feel error!  (It doesn't feel right!)");
 		}
 
 	}

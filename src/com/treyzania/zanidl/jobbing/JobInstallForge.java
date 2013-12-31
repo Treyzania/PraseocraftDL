@@ -11,7 +11,6 @@ import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
 
 import com.treyzania.zanidl.ZaniDL;
-import com.treyzania.zanidl.resouces.ErrorProfile;
 
 public class JobInstallForge extends Job {
 
@@ -34,7 +33,7 @@ public class JobInstallForge extends Job {
 	}
 
 	@Override
-	public boolean runJob(ErrorProfile errorProfile) {
+	public boolean runJob() {
 
 		boolean out = true;
 

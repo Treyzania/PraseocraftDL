@@ -11,7 +11,6 @@ import java.net.UnknownHostException;
 import com.treyzania.zanidl.PackFile;
 import com.treyzania.zanidl.ZaniDL;
 import com.treyzania.zanidl.Util;
-import com.treyzania.zanidl.resouces.ErrorProfile;
 
 public class JobCreateVersionData extends Job {
 	
@@ -33,7 +32,7 @@ public class JobCreateVersionData extends Job {
 	
 	@SuppressWarnings("resource")
 	@Override
-	public boolean runJob(ErrorProfile errorProfile) {
+	public boolean runJob() {
 		
 		boolean out = true;
 		

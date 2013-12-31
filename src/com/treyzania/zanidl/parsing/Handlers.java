@@ -35,7 +35,7 @@ public class Handlers {
 			
 		}
 		
-		ZaniDL.log.info(tagHandler == null ? "Tag (" + ele.getQualifiedName() + ") not supported!  Ignoring!" : "Using tag handler: " + tagHandler.getClass().getSimpleName());
+		ZaniDL.log.finest(tagHandler == null ? "Tag (" + ele.getQualifiedName() + ") not supported!  Ignoring!" : "Using tag handler: " + tagHandler.getClass().getSimpleName());
 		if (tagHandler != null) {
 			j = tagHandler.handleTag(pf, ele);
 		}

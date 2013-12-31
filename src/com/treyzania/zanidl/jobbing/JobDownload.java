@@ -4,9 +4,8 @@ import com.treyzania.zanidl.Domain;
 import com.treyzania.zanidl.ZaniDL;
 import com.treyzania.zanidl.Util;
 import com.treyzania.zanidl.parsing.FileOp;
-import com.treyzania.zanidl.resouces.ErrorProfile;
 
-public class JobDownload extends Job {
+public class JobDownload extends Job implements IDownloads {
 
 	public final FileOp file;
 	public boolean isToUnzip = false;
@@ -21,7 +20,7 @@ public class JobDownload extends Job {
 	
 	@SuppressWarnings("deprecation")
 	@Override
-	public boolean runJob(ErrorProfile errorProfile) {
+	public boolean runJob() {
 		
 		Domain ft = file.type;
 		
@@ -51,6 +50,18 @@ public class JobDownload extends Job {
 		
 		return good;
 		
+	}
+
+	@Override
+	public String[] getCodeNames() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int[] getReturnCodes() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

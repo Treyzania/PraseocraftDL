@@ -25,8 +25,6 @@ import argo.saj.InvalidSyntaxException;
 import com.treyzania.zanidl.PackFile;
 import com.treyzania.zanidl.ZaniDL;
 import com.treyzania.zanidl.Util;
-import com.treyzania.zanidl.resouces.ErrorProfile;
-
 import static argo.jdom.JsonNodeFactories.*;
 
 @SuppressWarnings("unused")
@@ -46,7 +44,7 @@ public class JobAddLauncherProfile extends Job {
 	
 	@SuppressWarnings({ "resource", "rawtypes", "unchecked" })
 	@Override
-	public boolean runJob(ErrorProfile errorProfile) {
+	public boolean runJob() {
 		
 		boolean out = true;
 		
@@ -107,7 +105,7 @@ public class JobAddLauncherProfile extends Job {
 				field("javaArgs", string(profJavaArgs))
 				};
 		
-		// Just some copypasta... (Fufufufufuuuu...)
+		// Just some copypasta... (Fufufufufuuuu... Thanks cpw!)
 		HashMap profileCopy = new HashMap(json.getNode(new Object[] { "profiles" }).getFields());
 		HashMap rootCopy = new HashMap(json.getFields());
 		profileCopy.put(JsonNodeFactories.string(profName),JsonNodeFactories.object(profFields));

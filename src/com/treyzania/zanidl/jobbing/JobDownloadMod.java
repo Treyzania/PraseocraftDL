@@ -2,7 +2,6 @@ package com.treyzania.zanidl.jobbing;
 
 import com.treyzania.zanidl.ZaniDL;
 import com.treyzania.zanidl.Util;
-import com.treyzania.zanidl.resouces.ErrorProfile;
 
 public class JobDownloadMod extends Job {
 
@@ -19,7 +18,7 @@ public class JobDownloadMod extends Job {
 	}
 
 	@Override
-	public boolean runJob(ErrorProfile errorProfile) {
+	public boolean runJob() {
 		
 		String filename = ZaniDL.packfile.generatePackPath() + "/mods/" + this.modFilename;
 		String possNN = metadata.access("NewName");
@@ -40,7 +39,7 @@ public class JobDownloadMod extends Job {
 		
 		/*
 		 * 
-		 * The comment that was here is no longer relevant.  But it still lives on.SWWWWW
+		 * The comment that was here is no longer relevant.  But it still lives on.
 		 * 
 		 */
 		

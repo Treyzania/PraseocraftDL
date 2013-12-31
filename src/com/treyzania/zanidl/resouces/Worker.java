@@ -1,14 +1,13 @@
 package com.treyzania.zanidl.resouces;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import com.treyzania.zanidl.Domain;
 import com.treyzania.zanidl.ZaniDL;
 import com.treyzania.zanidl.jobbing.Job;
 import com.treyzania.zanidl.jobbing.Joblist;
 
 public class Worker implements Runnable {
+	
+	public static final String[] WORKER_NAMES = {"Alpha", "Bravo", "Charlie", "Delta", "Echo", "Foxtrot", "Golf", "Hotel"};
 
 	public final String name;
 	public final Domain dom;
@@ -16,8 +15,6 @@ public class Worker implements Runnable {
 	public Thread jobExecutor;
 	
 	public boolean isFinished = false;
-	
-	public HashMap<Job, ErrorProfile> errors;
 	
 	public Worker(String name, Joblist jl, Domain domainOfOperation) {
 		
@@ -33,8 +30,6 @@ public class Worker implements Runnable {
 	@Override
 	public void run() {
 		
-		HashMap<Job, ErrorProfile> fails = new HashMap<Job, ErrorProfile>();
-		
 		ZaniDL.log.info("Worker \'" + this.name + "\'" + " started!");
 		
 		int failures = 0;
@@ -45,21 +40,18 @@ public class Worker implements Runnable {
 			
 			if (Domain.Calc.isCompatible(this.dom, j.getDomain())) {
 				
-				ErrorProfile ep = new ErrorProfile();
+				boolean success = j.runJob();
 				
-				boolean success = j.runJob(ep);
-				
-				synchronized (ZaniDL.frame.progressBar) {
+				synchronized (ZaniDL.masFrame.progressBar) {
 					
-					int oldValue = ZaniDL.frame.progressBar.getValue();
+					int oldValue = ZaniDL.masFrame.progressBar.getValue();
 					int newValue = oldValue + 1;
 					
-					ZaniDL.frame.progressBar.setValue(newValue);
+					ZaniDL.masFrame.progressBar.setValue(newValue);
 					
 				}
 				
 				if (!success) {
-					fails.put(j, ep);
 					failures++;
 				}
 				
@@ -70,32 +62,12 @@ public class Worker implements Runnable {
 		// Build a failure profile.
 		StringBuilder sb = new StringBuilder();
 		sb.append("Jobs failed: {");
-		for (Job j : fails.keySet()) { sb.append(j.getClass().getSimpleName() + ", "); } // Meh, a one-liner.
+		//for (Job j : fails.keySet()) { sb.append(j.getClass().getSimpleName() + ", "); } // Meh, a one-liner.
 		sb.append("}.");
 		
 		// And print out the counters and such.
 		ZaniDL.log.info("Worker \'" + this.name + "\'" + " finshed!  Failure count: " + failures + " failure(s).");
-		if (failures > 0) ZaniDL.log.info(sb.toString());
-		for (int i = 0; i < fails.size(); i++) {
-			
-			Job j = (Job) fails.keySet().toArray()[i];
-			ErrorProfile ep = fails.get(j);
-			
-			if (ep.errors.size() > 0) {
-				
-				ZaniDL.log.fine("Job " + j.getClass().getSimpleName() + " failed for:");
-
-				for (String reason : ep.errors) {
-					ZaniDL.log.fine("\t" + reason);
-				} 
-				
-				ZaniDL.log.fine("\n"); // Spacing.
-				
-			}
-			
-		}
 		
-		this.errors = fails;
 		isFinished = true;
 		
 	}

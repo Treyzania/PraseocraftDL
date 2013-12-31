@@ -1,7 +1,6 @@
 package com.treyzania.zanidl.jobbing;
 
 import com.treyzania.zanidl.Util;
-import com.treyzania.zanidl.resouces.ErrorProfile;
 
 public class JobDownloadServer extends Job {
 
@@ -16,7 +15,7 @@ public class JobDownloadServer extends Job {
 	}
 
 	@Override
-	public boolean runJob(ErrorProfile errorProfile) {
+	public boolean runJob() {
 		
 		boolean out = true;
 		

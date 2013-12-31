@@ -15,7 +15,7 @@ public class DownloadStartListener implements ActionListener {
 		ZaniDL.log.info("Download sequence started!");
 		ZaniDL.log.info("Preparing to start downloads...");
 		
-		MasterFrame frame = ZaniDL.frame;
+		MasterFrame frame = ZaniDL.masFrame;
 		
 		String addr = frame.addrField.getText().trim(); // Gotta trim them because we are working with humans!
 		String ver = frame.verField.getText().trim();

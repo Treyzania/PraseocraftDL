@@ -3,9 +3,6 @@ package com.treyzania.zanidl;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Set;
-
 import nu.xom.Attribute;
 import nu.xom.Builder;
 import nu.xom.Document;
@@ -21,15 +18,12 @@ import com.treyzania.zanidl.jobbing.JobGetMinecraft;
 import com.treyzania.zanidl.jobbing.JobInstallForge;
 import com.treyzania.zanidl.jobbing.Joblist;
 import com.treyzania.zanidl.parsing.Handlers;
-import com.treyzania.zanidl.resouces.ErrorProfile;
 import com.treyzania.zanidl.resouces.MasterFrame;
 import com.treyzania.zanidl.resouces.MetaCollector;
 import com.treyzania.zanidl.resouces.NotificationFrame;
 import com.treyzania.zanidl.resouces.Worker;
 
 public class PackFile implements Runnable {
-	
-	private static final String[] wNames = {"Alpha", "Bravo", "Charlie", "Delta", "Echo", "Foxtrot", "Golf", "Hotel"};
 	
 	public boolean errored = false;
 	
@@ -44,8 +38,6 @@ public class PackFile implements Runnable {
 	public Document doc;
 	public MetaCollector metadata;
 	public Thread pfexe;
-	
-	public HashMap<Job, ErrorProfile> jobErrors;
 	
 	public PackFile(String addr, String ver) {
 		
@@ -103,7 +95,7 @@ public class PackFile implements Runnable {
 		this.workers = new Worker[1]; // Expand/abstractify as necessary!
 		for (int i = 0; i < workers.length; i++) {
 			
-			this.workers[i] = new Worker(wNames[i], joblist, domain);
+			this.workers[i] = new Worker(Worker.WORKER_NAMES[i], joblist, domain);
 			
 		}
 		
@@ -112,7 +104,7 @@ public class PackFile implements Runnable {
 	@SuppressWarnings("deprecation")
 	public void executeSequence() {
 		
-		MasterFrame frame = ZaniDL.frame;
+		MasterFrame frame = ZaniDL.masFrame;
 		
 		ZaniDL.log.info("Pack Location: " + frame.addrField.getText());
 		
@@ -160,7 +152,7 @@ public class PackFile implements Runnable {
 			this.startWorkers();
 			this.waitForWorkersToFinish();
 			
-			ZaniDL.frame.beep();
+			ZaniDL.masFrame.beep();
 			NotificationFrame.wait("Pack building done!");
 			
 			ZaniDL.log.info("Pack Path: " + Util.fs_sysPath(this.generatePackPath()));
@@ -193,19 +185,6 @@ public class PackFile implements Runnable {
 			} catch (InterruptedException e) {}
 			
 			System.gc(); // Just to be nice!
-			
-		}
-		
-		this.jobErrors = new HashMap<Job, ErrorProfile>();
-		for (Worker w : this.workers) { // Lets hope these two loops work right.
-			
-			Set<Job> jobs = w.errors.keySet();
-			
-			for (Job j : jobs) {
-				
-				this.jobErrors.put(j, w.errors.get(j));
-				
-			}
 			
 		}
 		
@@ -266,14 +245,7 @@ public class PackFile implements Runnable {
 		try {
 			groupTags = ver.getChildElements("group");
 		} catch (Exception e) {
-			ZaniDL.log.warning("Version element not properly selected, notifing!");
-			ZaniDL.frame.dlStatus.setText("That's not a proper verison!");
-		}
-		
-		if (groupTags != null) {
-			ZaniDL.frame.dlStatus.setText(MasterFrame.noErrorsText);
-		} else {
-			return;
+			ZaniDL.log.warning("[ERR]Version element not properly selected!");
 		}
 		
 		Elements globalMetaTags = ver.getChildElements("meta");

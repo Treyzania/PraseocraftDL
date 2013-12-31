@@ -2,7 +2,6 @@ package com.treyzania.zanidl.jobbing;
 
 import com.treyzania.zanidl.ZaniDL;
 import com.treyzania.zanidl.Util;
-import com.treyzania.zanidl.resouces.ErrorProfile;
 
 public class JobDownloadForge extends Job {
 
@@ -21,7 +20,7 @@ public class JobDownloadForge extends Job {
 	}
 
 	@Override
-	public boolean runJob(ErrorProfile errorProfile) {
+	public boolean runJob() {
 		
 		boolean out = true;
 		

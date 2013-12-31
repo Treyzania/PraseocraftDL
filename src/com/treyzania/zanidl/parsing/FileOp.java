@@ -2,6 +2,11 @@ package com.treyzania.zanidl.parsing;
 
 import com.treyzania.zanidl.Domain;
 
+/**
+ * I reeeeeeeally gotta get rid of this class.  But it still works properly, for now.
+ * 
+ * @author Treyzania
+ */
 public class FileOp {
 
 	public String src;

@@ -263,9 +263,10 @@ public class Util {
 	        } catch (IOException ioe) {
 	        	// nothing to see here
 	        }
+	    	
 	    }
 	    
-	    return (builder.toString());
+	    return builder.toString();
 	    
 	}
 	
