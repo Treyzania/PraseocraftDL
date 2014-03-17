@@ -10,7 +10,7 @@ public class LogFormatter extends Formatter {
 	public String format(LogRecord r) {
 		
 		Date date = new Date(r.getMillis());
-		String[] srcPkg = r.getSourceClassName().split("\\."); // Won't work properly for sub-classes.  Who the fuck cares?
+		String[] srcPkg = r.getSourceClassName().split("\\."); // Won't work properly for sub-classes.  Who the hell cares?
 		
 		return (date.toString() + "[" + r.getLoggerName() + "][" + srcPkg[srcPkg.length - 1] + ":" + r.getSourceMethodName() + "][" + r.getLevel() + "]" + r.getMessage() + "\n");
 		

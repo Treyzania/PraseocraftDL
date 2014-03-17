@@ -28,7 +28,7 @@ public class ZaniDL {
 	public static Handler fileHandler;
 	public static Handler guiConsoleHandler;
 	
-	public static boolean makeWindow = true;
+	public static boolean makeWindow = true; // Why do I still have this here?
 	
 	@Deprecated
 	public static String dlMode = "";
