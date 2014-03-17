@@ -22,12 +22,12 @@ public class ConsoleFrame extends JFrame {
 		titleLabel = new JLabel("Console");
 		titlePanel.add(this.titleLabel);
 		
-		console = new ConsolePanel(50, 20);
+		console = new ConsolePanel(100, 20);
 		
 		this.add(this.titlePanel);
 		this.add(this.console);
 		
-		this.setBounds(0, 0, 450, 425);
+		this.setBounds(0, 0, 850, 425);
 		this.setFocusable(true);
 		this.setResizable(false);
 		this.setVisible(true);

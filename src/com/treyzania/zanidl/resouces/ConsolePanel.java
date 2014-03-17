@@ -44,11 +44,16 @@ public class ConsolePanel extends JPanel {
 	private void config() {
 		
 		console.setVisible(true);
+		console.setEditable(false);
 		
 		// Thanks to http://stackoverflow.com/questions/2483572/making-a-jscrollpane-automatically-scroll-all-the-way-down
-		scroll.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() {  
-	        public void adjustmentValueChanged(AdjustmentEvent e) {  
-	            e.getAdjustable().setValue(e.getAdjustable().getMaximum());  
+		scroll.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() {
+			String oldText = console.getText();
+	        public void adjustmentValueChanged(AdjustmentEvent e) {
+	        	if (!console.getText().equals(oldText)) {
+	        		e.getAdjustable().setValue(e.getAdjustable().getMaximum());
+	        		oldText = console.getText();
+	        	}
 	        }
 	    });
 		
